@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -256,20 +257,26 @@ class FlounderDrawer extends StatelessWidget {
   final ValueChanged<String?>? onDropdownValueChanged;
 
   // TextFieldProperties
+  final Map controllerMap;
+
+  // ButtonProperties
+  final VoidCallback onSaveButtonPressed;
 
   const FlounderDrawer({
     Key? key,
     required this.state,
     required this.dropdownValue,
     required this.onDropdownValueChanged,
+    required this.onSaveButtonPressed,
+    required this.controllerMap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Map textFieldValues = {
-            'Talk': state.settings.talkLength,
+      'Talk'      : state.settings.talkLength,
       'Discussion': state.settings.discussionLength,
-      'Reminder@': state.settings.reminderAt,
+      'Reminder@' : state.settings.reminderAt,
     };
 
     List<Widget> customSection = [];
@@ -277,8 +284,13 @@ class FlounderDrawer extends StatelessWidget {
     textFieldValues.forEach((key, value) {
       customSection.add(
         TextFormField(
-          initialValue: value.toString(),
+          //initialValue: value.toString(),
+          controller: controllerMap[key]..text = textFieldValues[key].toString(),
           style: TextStyle(fontSize: 25, color: Colors.white),
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly
+          ],
           decoration: InputDecoration(
             border: UnderlineInputBorder(),
             labelText: key,
@@ -308,7 +320,7 @@ class FlounderDrawer extends StatelessWidget {
     customSection.add(
       ElevatedButton(
         child: Text('Save', style: TextStyle(fontSize: 35, color: Colors.white)),
-        onPressed: () {},
+        onPressed: onSaveButtonPressed,
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(state.mode.color),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -320,7 +332,6 @@ class FlounderDrawer extends StatelessWidget {
         ),
       ),
     );
-
 
     return Drawer(
       backgroundColor: const Color(0xff1f1f1f),
@@ -389,19 +400,27 @@ class _FlounderHomeState extends State<FlounderHome> {
     presets[FlounderState.DEFAULT_PRESET_KEY]
   );
 
-  // Widget values
+  // Widget properties
   String dropdownValue = FlounderState.DEFAULT_PRESET_KEY;
+
+  final Map textEditingControllers = {
+    'Talk'      : TextEditingController(),
+    'Discussion': TextEditingController(),
+    'Reminder@' : TextEditingController(),
+  };
 
 
   // The Timer for async execution of timer changes
   // This initializer executes on empty function once
   Timer runner = Timer(Duration.zero, () {});
 
+
   void _playSound() async {
     /*AudioPlayer player = AudioPlayer();
     await player.setAsset('ding.mp3');
     player.play();*/
   }
+
 
   void _onPlayButtonPressed() {
     setState(() {
@@ -460,6 +479,38 @@ class _FlounderHomeState extends State<FlounderHome> {
     });
   }
 
+  void _onSaveButtonPressed() {
+    setState(() {
+      String talkText       = textEditingControllers['Talk'].text;
+      String discussionText = textEditingControllers['Discussion'].text;
+      String reminderText   = textEditingControllers['Reminder@'].text;
+
+      if (talkText != "") {
+        state.settings.talkLength = int.parse(talkText);
+      }
+      if (discussionText != "") {
+        state.settings.discussionLength = int.parse(discussionText);
+      }
+      if (reminderText != "") {
+        state.settings.reminderAt = int.parse(reminderText);
+      }
+
+      state.resetTimer();
+    });
+  }
+
+
+  @override
+  void dispose() {
+    // Clean up the TextEditingController's
+    textEditingControllers.forEach((key, value) {
+      value.dispose();
+    });
+
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -486,7 +537,12 @@ class _FlounderHomeState extends State<FlounderHome> {
         onDropdownValueChanged: (String? value) {
           _onDropdownValueChanged(value);
           Navigator.of(context).pop();
-        }
+        },
+        onSaveButtonPressed: () {
+          _onSaveButtonPressed();
+          Navigator.of(context).pop();
+        },
+        controllerMap: textEditingControllers,
       );}),
     );
   }
