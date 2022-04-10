@@ -466,18 +466,23 @@ class _FlounderHomeState extends State<FlounderHome> {
     });
   }
 
+
   void _onBellButtonPressed() {
     setState(() { state.settings.remindMe = !state.settings.remindMe; });
   }
+
 
   void _onDropdownValueChanged(String? value) {
     setState(() {
       dropdownValue = value!;
 
-      state.settings = presets[dropdownValue];
-      state.resetTimer();
+      if (value != 'Custom') {
+        state.settings = presets[dropdownValue];
+        state.resetTimer();
+      }
     });
   }
+
 
   void _onSaveButtonPressed() {
     setState(() {
@@ -495,7 +500,11 @@ class _FlounderHomeState extends State<FlounderHome> {
         state.settings.reminderAt = int.parse(reminderText);
       }
 
+      // Reset the timer
       state.resetTimer();
+
+      // Set the value of the dropdown menu to 'custom'
+      dropdownValue = 'Custom';
     });
   }
 
@@ -536,7 +545,7 @@ class _FlounderHomeState extends State<FlounderHome> {
         dropdownValue: dropdownValue,
         onDropdownValueChanged: (String? value) {
           _onDropdownValueChanged(value);
-          Navigator.of(context).pop();
+          if (value != 'Custom') { Navigator.of(context).pop(); }
         },
         onSaveButtonPressed: () {
           _onSaveButtonPressed();
@@ -564,6 +573,12 @@ void main() {
       child: Text(value.toString(), style: TextStyle(color: Colors.white)),
     )
   ));
+  dropdownItems.add(
+    DropdownMenuItem<String>(
+      value: 'Custom',
+      child: Text('Custom', style: TextStyle(color: Colors.white))
+    ),
+  );
 
   // Set some window properties on desktop platforms
   if ( !kIsWeb ) {
