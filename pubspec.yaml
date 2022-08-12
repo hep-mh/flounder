@@ -29,18 +29,18 @@ dependencies:
 
 flutter_icons:
   android: true
-  image_path_android: "icons/flutter.png"
+  image_path_android: "assets/flutter.png"
   ios: true
-  image_path_ios: "icons/flutter.png"
+  image_path_ios: "assets/flutter.png"
   remove_alpha_ios: true
   web:
       generate: true
-      image_path: "icons/flutter.png"
+      image_path: "assets/flutter.png"
       background_color: "#00000000"
       theme_color: "#ff1f1f1f"
   windows:
     generate: true
-    image_path: "icons/flutter.png"
+    image_path: "assets/flutter.png"
     icon_size: 48
 
 
