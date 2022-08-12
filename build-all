@@ -1,0 +1,4 @@
+#! /bin/bash
+
+flutter build web
+flutter build linux

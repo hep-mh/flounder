@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#00000000",
   "theme_color": "#ff1f1f1f",
-  "description": "A new Flutter project.",
+  "description": "A cross-platform counter that can be used for the time-management in scientific talks",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,
   "icons": [
