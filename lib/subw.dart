@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'state.dart';
 
 
-final double MAGIC_WIDTH = 740;
+const double MAGIC_WIDTH = 740;
 
 
 double _dynamicSize(double contextWidth, double minSize, double maxSize) {
@@ -28,9 +28,9 @@ class _FlounderHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final double contextWidth  = MediaQuery.of(context).size.width;
 
-    final double padding   = 20;
-    final double maxWidth  = MAGIC_WIDTH - 2*padding;
-    final double maxHeight = 150;
+    const double padding   = 20;
+    const double maxWidth  = MAGIC_WIDTH - 2*padding;
+    const double maxHeight = 150;
 
     double width = maxWidth;
     // The width needs to be adapted according
@@ -56,7 +56,7 @@ class _FlounderHeader extends StatelessWidget {
       child: Padding(
         // We omit the padding at the bottom as this
         // is handled by FlounderTimer instead
-        padding: EdgeInsets.fromLTRB(padding, padding, padding, 0),
+        padding: const EdgeInsets.fromLTRB(padding, padding, padding, 0),
         child: Container(
           height: height, width: width,
           child: FittedBox(fit: BoxFit.contain, child: Text(state.mode.id)),
@@ -90,19 +90,19 @@ class _FlounderTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double padding = 20;
+    const double padding = 20;
 
     return Expanded(
       child: Center(
         child: Padding(
           // For now, a constant -- context independent --
           // padding seems to look fine in all conditions
-          padding: EdgeInsets.all(padding),
+          padding: const EdgeInsets.all(padding),
           child: FittedBox(
             fit: BoxFit.contain,
             child: Text(
               _buildTimerText(),
-              style: TextStyle(
+              style: const TextStyle(
                 // This is the maximal font size, which will
                 // be scaled down by the FittedBox if needed
                 fontSize: 400,
@@ -158,7 +158,7 @@ class FlounderActionBar extends StatelessWidget {
     return BottomAppBar(
       color: state.mode.color,
       //shape: const CircularNotchedRectangle(),
-      child: new Row(
+      child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -176,7 +176,7 @@ class FlounderActionBar extends StatelessWidget {
               SizedBox(width: iconSize/4),
               Text(
                 state.settings.reminderAt.toString() + ' min',
-                style: TextStyle(fontSize: 20)
+                style: const TextStyle(fontSize: 20)
               ),
             ],
           ),
@@ -185,14 +185,14 @@ class FlounderActionBar extends StatelessWidget {
             children: <Widget>[
               Text(
                 (state.settings.talkLength + state.settings.discussionLength).toString() + ' min',
-                style: TextStyle(fontSize: 20)
+                style: const TextStyle(fontSize: 20)
               ),
               SizedBox(width: iconSize/4),
               IconButton(
-                icon: Icon(Icons.access_time_rounded),
+                icon: const Icon(Icons.access_time_rounded),
                 onPressed: onPressedR,
                 iconSize: iconSize,
-                color: (state.mode.id == 'Idle') ? Colors.black : Color(0x2b2b2bff),
+                color: (state.mode.id == 'Idle') ? Colors.black : const Color(0x2b2b2bff),
               ),
             ],
           ),
@@ -272,17 +272,17 @@ class FlounderDrawer extends StatelessWidget {
         TextFormField(
           //initialValue: value.toString(),
           controller: controllers[key]..text = textFieldValues[key].toString(),
-          style: TextStyle(fontSize: 25, color: Colors.white),
+          style: const TextStyle(fontSize: 25, color: Colors.white),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
             FilteringTextInputFormatter.digitsOnly
           ],
           decoration: InputDecoration(
-            border: UnderlineInputBorder(),
+            border: const UnderlineInputBorder(),
             labelText: key,
-            labelStyle: TextStyle(fontSize: 20, color: Colors.white),
+            labelStyle: const TextStyle(fontSize: 20, color: Colors.white),
             suffixText: 'min',
-            suffixStyle: TextStyle(fontSize: 25, color: Colors.white),
+            suffixStyle: const TextStyle(fontSize: 25, color: Colors.white),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
@@ -292,7 +292,7 @@ class FlounderDrawer extends StatelessWidget {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Colors.white,
                 width: 1,
               ),
@@ -300,12 +300,12 @@ class FlounderDrawer extends StatelessWidget {
           ),
         ),
       );
-      customSection.add(SizedBox(height: 15));
+      customSection.add(const SizedBox(height: 15));
     });
     // Add the button to save the configuration
     customSection.add(
       ElevatedButton(
-        child: Text('Save', style: TextStyle(fontSize: 35, color: Colors.white)),
+        child: const Text('Save', style: TextStyle(fontSize: 35, color: Colors.white)),
         onPressed: onSaveButtonPressed,
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(state.mode.color),
@@ -322,13 +322,13 @@ class FlounderDrawer extends StatelessWidget {
     return Drawer(
       backgroundColor: const Color(0xff1f1f1f),
       child: ListView(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         children: <Widget>[
           Text(
             'Presets:',
             style: TextStyle(fontSize: 35, color: state.mode.color),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           DropdownButton<String>(
             underline: Container(height: 0, color: state.mode.color),
             isExpanded: true,
@@ -336,15 +336,15 @@ class FlounderDrawer extends StatelessWidget {
             items: dropdownItems,
             dropdownColor: state.mode.color,
             onChanged: onDropdownValueChanged,
-            style: TextStyle(color: Colors.black, fontSize: 25),
+            style: const TextStyle(color: Colors.black, fontSize: 25),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             'Custom:',
             style: TextStyle(fontSize: 35, color: state.mode.color),
           ),
-          SizedBox(height: 15)
-        ]..addAll(customSection),
+          const SizedBox(height: 15), ...customSection
+        ],
       ),
     );
   } // FlounderDrawer.build

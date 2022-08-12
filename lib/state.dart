@@ -12,6 +12,7 @@ class Settings {
     }
   }
 
+  @override
   String toString() {
     String talkStr       = talkLength.toString();
     String discussionStr = discussionLength.toString();

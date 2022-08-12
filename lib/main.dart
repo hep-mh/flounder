@@ -9,8 +9,8 @@ import 'state.dart';
 import 'home.dart';
 
 
-final double MIN_WIDTH   = 450;
-final double MIN_HEIGHT  = 600;
+const double MIN_WIDTH   = 450;
+const double MIN_HEIGHT  = 600;
 
 
 void main() {
@@ -22,11 +22,11 @@ void main() {
   presets.forEach((key, value) => dropdownItems.add(
     DropdownMenuItem<String>(
       value: key,
-      child: Text(value.toString(), style: TextStyle(color: Colors.white)),
+      child: Text(value.toString(), style: const TextStyle(color: Colors.white)),
     )
   ));
   dropdownItems.add(
-    DropdownMenuItem<String>(
+    const DropdownMenuItem<String>(
       value: 'Custom',
       child: Text('Custom', style: TextStyle(color: Colors.white))
     ),
@@ -37,7 +37,7 @@ void main() {
     WidgetsFlutterBinding.ensureInitialized();
     if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
       setWindowTitle('Flounder');
-      setWindowMinSize(Size(MIN_WIDTH, MIN_HEIGHT));
+      setWindowMinSize(const Size(MIN_WIDTH, MIN_HEIGHT));
     }
   }
 
