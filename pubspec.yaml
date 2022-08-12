@@ -1,11 +1,11 @@
 name: flounder
-description: A new Flutter project.
 
+description: A cross-platform counter that can be used for the time-management in scientific talks.
 
 publish_to: 'none'
 
+version: 0.1.0+1
 
-version: 1.0.0+1
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
@@ -14,14 +14,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/window_size
+
   audioplayers: ^1.0.1
 
-
   cupertino_icons: ^1.0.2
+
 
 dev_dependencies:
   flutter_test:
