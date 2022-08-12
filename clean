@@ -1,3 +1,5 @@
+#! /bin/bash
+
 flutter clean
 rm -rf build
 rm -rf ~/.pub-cache

@@ -22,7 +22,21 @@ dependencies:
 
   audioplayers: ^1.0.1
 
+  flutter_launcher_icons: ^0.10.0
+
   cupertino_icons: ^1.0.2
+
+
+flutter_icons:
+  web:
+      generate: true
+      image_path: "flounder.png"
+      background_color: "#ff1f1f1f"
+      theme_color: "#ff1f1f1f"
+  windows:
+    generate: true
+    image_path: "flounder.png"
+    icon_size: 48
 
 
 dev_dependencies:
