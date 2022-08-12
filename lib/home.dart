@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
@@ -66,7 +65,7 @@ class _FlounderHomeState extends State<FlounderHome> {
       if ( state.mode.id == 'Idle' ) {
         state.mode = ModeRegister.TALK;
 
-        runner = Timer.periodic(Duration(seconds: 1), (Timer t) {
+        runner = Timer.periodic(const Duration(seconds: 1), (Timer t) {
           setState(() {
             // Check if a reminder needs to be given
             if ( state.timer == state.settings.reminderAt*60 ) {
