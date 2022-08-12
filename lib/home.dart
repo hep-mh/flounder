@@ -74,7 +74,7 @@ class _FlounderHomeState extends State<FlounderHome> {
             }
 
             // Check if switch to discussion/overtime is necessary
-            if ( state.timer == 0 ) {
+            if ( state.timer == 0 && state.mode.id != 'Overtime' ) {
               _playSound();
 
               switch(state.mode.id) {
@@ -90,10 +90,10 @@ class _FlounderHomeState extends State<FlounderHome> {
                   break;
                 }
               }
+            } else {
+              // Increment the timer
+              state.timer += state.mode.increment;
             }
-
-            // Increment the timer
-            state.timer += state.mode.increment;
           });
         });
       } else {
