@@ -35,7 +35,7 @@ class FlounderHome extends StatefulWidget {
 
 class _FlounderHomeState extends State<FlounderHome> {
   FlounderState state = FlounderState(
-    presets[FlounderState.DEFAULT_PRESET_KEY]
+    presets[FlounderState.DEFAULT_PRESET_KEY].copy()
   );
 
   // Widget properties
@@ -116,7 +116,7 @@ class _FlounderHomeState extends State<FlounderHome> {
       dropdownValue = value!;
 
       if (value != 'Custom') {
-        state.settings = presets[dropdownValue];
+        state.settings = presets[dropdownValue].copy();
         state.resetTimer();
       }
     });

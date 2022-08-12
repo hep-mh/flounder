@@ -29,18 +29,20 @@ dependencies:
 
 flutter_icons:
   android: true
-  image_path_android: "assets/flutter.png"
+  image_path_android: "assets/flounder.png"
+  adaptive_icon_foregorund: "assets/flounder.png"
+  adaptive_icon_background: "#00000000"
   ios: true
-  image_path_ios: "assets/flutter.png"
+  image_path_ios: "assets/flounder.png"
   remove_alpha_ios: true
   web:
       generate: true
-      image_path: "assets/flutter.png"
+      image_path: "assets/flounder.png"
       background_color: "#00000000"
       theme_color: "#ff1f1f1f"
   windows:
     generate: true
-    image_path: "assets/flutter.png"
+    image_path: "assets/flounder.png"
     icon_size: 48
 
 

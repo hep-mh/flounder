@@ -19,6 +19,10 @@ class Settings {
 
     return talkStr + '+' + discussionStr;
   }
+
+  Settings copy() {
+    return Settings(talkLength, discussionLength, reminderAt, remindMe);
+  }
 } // Settings
 
 
