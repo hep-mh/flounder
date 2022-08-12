@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:just_audio/just_audio.dart';
+import 'package:audioplayers/audioplayers.dart';
+//import 'package:just_audio/just_audio.dart';
 
 import 'state.dart';
 import 'widgets.dart';
@@ -54,9 +55,9 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   void _playSound() async {
     AudioPlayer player = AudioPlayer();
-    await player.setUrl('https://hep-mh.com/files/ding.mp3');
-    //await player.setAsset('ding.mp3');
-    player.play();
+
+    //await player.play( UrlSource('https://hep-mh.com/files/ding.mp3') );
+    await player.play( AssetSource('ding.mp3') );
   }
 
 

@@ -18,7 +18,7 @@ dependencies:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/window_size
-  just_audio: ^0.9.20
+  audioplayers: ^1.0.1
 
 
   cupertino_icons: ^1.0.2
