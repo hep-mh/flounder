@@ -11,7 +11,7 @@ const double MAGIC_WIDTH = 740;
 
 double _getActionBarScale(double contextWidth, double contextHeight, [double factor = 1]) {
   double maxSize = factor*min(40, 0.1*contextHeight);
-  double minSize = maxSize/20;
+  double minSize = maxSize/factor/2;
 
   double size = maxSize;
   if ( contextWidth < MAGIC_WIDTH ) {
