@@ -3,7 +3,7 @@
   "short_name": "flounder",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#00000000",
+  "background_color": "#ffffffff",
   "theme_color": "#ff1f1f1f",
   "description": "A cross-platform counter that can be used for the time-management in scientific talks",
   "orientation": "portrait-primary",
