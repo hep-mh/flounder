@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,7 +9,10 @@ import 'state.dart';
 const double MAGIC_WIDTH = 740;
 
 
-double _dynamicSize(double contextWidth, double minSize, double maxSize) {
+double _getActionBarScale(double contextWidth, double contextHeight, [double factor = 1]) {
+  double maxSize = factor*min(40, 0.1*contextHeight);
+  double minSize = maxSize/20;
+
   double size = maxSize;
   if ( contextWidth < MAGIC_WIDTH ) {
     final double scale = contextWidth/MAGIC_WIDTH;
@@ -27,6 +32,7 @@ class _FlounderHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double contextWidth  = MediaQuery.of(context).size.width;
+    final double contextHeight = MediaQuery.of(context).size.height;
 
     const double padding   = 20;
     const double maxWidth  = MAGIC_WIDTH - 2*padding;
@@ -42,11 +48,21 @@ class _FlounderHeader extends StatelessWidget {
       width = contextWidth - 2*padding;
     }
     // -->
-    final double ratio = width/maxWidth;
+    final double widthRatio = width/maxWidth;
 
-    // Adjust the height in such a way that the
+    // Let the header only cover at most a certain
+    // percentage of the full height
+    double height = min(maxHeight, 0.25*contextHeight);
+    // -->
+    final double heightRatio = height/maxHeight;
+
+    // Adjust height/width in such a way that the
     // ratio remains constant
-    final double height = ratio*maxHeight;
+    if ( widthRatio < heightRatio ) {
+      height = widthRatio*maxHeight;
+    } else {
+      width  = heightRatio*maxWidth;
+    }
 
     // Finally, the corner radius is best
     // adapted to the actual height of the box
@@ -151,8 +167,8 @@ class FlounderActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double iconSize = _dynamicSize(
-      MediaQuery.of(context).size.width, 20, 40
+    final double iconSize = _getActionBarScale(
+      MediaQuery.of(context).size.width, MediaQuery.of(context).size.height
     );
 
     return BottomAppBar(
@@ -176,7 +192,7 @@ class FlounderActionBar extends StatelessWidget {
               SizedBox(width: iconSize/4),
               Text(
                 state.settings.reminderAt.toString() + ' min',
-                style: const TextStyle(fontSize: 20)
+                style: TextStyle(fontSize: 0.75*iconSize)
               ),
             ],
           ),
@@ -185,7 +201,7 @@ class FlounderActionBar extends StatelessWidget {
             children: <Widget>[
               Text(
                 (state.settings.talkLength + state.settings.discussionLength).toString() + ' min',
-                style: const TextStyle(fontSize: 20)
+                style: TextStyle(fontSize: 0.75*iconSize)
               ),
               SizedBox(width: iconSize/4),
               IconButton(
@@ -216,8 +232,8 @@ class FlounderActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double buttonSize = _dynamicSize(
-      MediaQuery.of(context).size.width, 20, 80
+    final double buttonSize = _getActionBarScale(
+      MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 2
     );
 
     return SizedBox(
