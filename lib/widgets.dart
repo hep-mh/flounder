@@ -50,8 +50,10 @@ class _FlounderHeader extends StatelessWidget {
     // -->
     final double widthRatio = width/maxWidth;
 
-    // Let the header only cover at most a certain
-    // percentage of the full height
+    // The height needs to be adjusted according
+    // to the contextHeight. Here, we force the
+    // header to at most cover 25% of the full
+    // height of the window
     double height = min(maxHeight, 0.25*contextHeight);
     // -->
     final double heightRatio = height/maxHeight;
