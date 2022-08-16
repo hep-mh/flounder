@@ -56,7 +56,6 @@ class _FlounderHomeState extends State<FlounderHome> {
   void _playSound() async {
     AudioPlayer player = AudioPlayer();
 
-    //await player.play( UrlSource('https://hep-mh.com/files/ding.mp3') );
     await player.play( AssetSource('ding.mp3') );
   }
 

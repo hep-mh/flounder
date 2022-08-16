@@ -9,10 +9,6 @@ import 'state.dart';
 import 'home.dart';
 
 
-const double MIN_WIDTH   = 450;
-const double MIN_HEIGHT  = 600;
-
-
 void main() {
   // Ensure initialization of all Flutter bindings
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +35,7 @@ void main() {
   if ( !kIsWeb ) {
     if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
       setWindowTitle('Flounder');
-      setWindowMinSize(const Size(MIN_WIDTH, MIN_HEIGHT));
+      setWindowMinSize(const Size(450, 600));
     }
   }
 
