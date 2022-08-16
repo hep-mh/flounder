@@ -21,6 +21,7 @@ dependencies:
   window_manager: ^0.2.5
   flutter_launcher_icons: ^0.10.0
   cupertino_icons: ^1.0.2
+  msix: ^3.6.3
 
 
 flutter_icons:
@@ -40,6 +41,14 @@ flutter_icons:
     generate: true
     image_path: "assets/main-icon.png"
     icon_size: 48
+
+
+msix_config:
+  display_name: Flounder
+  publisher_display_name: hep-mh.com
+  identity_name: com.hepmh.Flounder
+  msix_version: 0.1.0.1
+  # logo_path:
 
 
 dev_dependencies:

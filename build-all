@@ -1,5 +1,19 @@
 #! /bin/bash
 
+# Create icons
+flutter pub run flutter_launcher_icons:main
+
+# Build web app
 flutter build web
+
+# Build linux app
 flutter build linux
+
+# Build android app
 flutter build apk
+# -->
+mv build/app/outputs/apk/release/app-release.apk packages/Flounder.apk
+
+# Build windows app
+#flutter build windows
+#flutter pub run msix:create
