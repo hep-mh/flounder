@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:audioplayers/audioplayers.dart';
-//import 'package:just_audio/just_audio.dart';
+import 'package:wakelock/wakelock.dart';
 
 import 'state.dart';
 import 'widgets.dart';
@@ -60,9 +62,23 @@ class _FlounderHomeState extends State<FlounderHome> {
   }
 
 
+  void _toggleWakelock(bool enable) {
+    if (kIsWeb) {
+      Wakelock.toggle(enable: enable);
+    } else {
+      // Wacklock currently does not work on Linux
+      if (!Platform.isLinux) { Wakelock.toggle(enable: enable); }
+    }
+  }
+
+
   void _onPlayButtonPressed() {
     setState(() {
+      // START TIMER
       if ( state.mode.id == 'Idle' ) {
+        // Enable the wakelock when the timer is started
+        _toggleWakelock(true);
+
         state.mode = ModeRegister.TALK;
 
         runner = Timer.periodic(const Duration(seconds: 1), (Timer t) {
@@ -95,7 +111,11 @@ class _FlounderHomeState extends State<FlounderHome> {
             }
           });
         });
+      // STOP TIMER
       } else {
+        // Disable the wakelock when the timer is stopped
+        _toggleWakelock(false);
+
         state.mode = ModeRegister.IDLE;
         state.resetTimer();
 
