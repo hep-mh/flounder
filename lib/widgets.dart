@@ -9,21 +9,6 @@ import 'state.dart';
 const double MAGIC_WIDTH = 740;
 
 
-double _getActionBarScale(double contextWidth, double contextHeight, [double factor = 1]) {
-  double maxSize = factor*min(40, 0.1*contextHeight);
-  double minSize = maxSize/factor/2;
-
-  double size = maxSize;
-  if ( contextWidth < MAGIC_WIDTH ) {
-    final double scale = contextWidth/MAGIC_WIDTH;
-
-    size = minSize + (maxSize - minSize)*scale;
-  }
-
-  return size;
-}
-
-
 class _FlounderHeader extends StatelessWidget {
   final FlounderState state;
 
@@ -152,6 +137,21 @@ class FlounderBody extends StatelessWidget {
     );
   } // FlounderBody.build
 } // FlounderBody
+
+
+double _getActionBarScale(double contextWidth, double contextHeight, [double factor = 1]) {
+  double maxSize = factor*min(40, 0.1*contextHeight);
+  double minSize = maxSize/factor/2;
+
+  double size = maxSize;
+  if ( contextWidth < MAGIC_WIDTH ) {
+    final double scale = contextWidth/MAGIC_WIDTH;
+
+    size = minSize + (maxSize - minSize)*scale;
+  }
+
+  return size;
+}
 
 
 class FlounderActionBar extends StatelessWidget {

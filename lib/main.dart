@@ -14,6 +14,9 @@ const double MIN_HEIGHT  = 600;
 
 
 void main() {
+  // Ensure initialization of all Flutter bindings
+  WidgetsFlutterBinding.ensureInitialized();
+
   if ( kDebugMode ) {
     presets['2+1'] = Settings(2, 1, 2, true);
   }
@@ -34,7 +37,6 @@ void main() {
 
   // Set some window properties on desktop platforms
   if ( !kIsWeb ) {
-    WidgetsFlutterBinding.ensureInitialized();
     if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
       setWindowTitle('Flounder');
       setWindowMinSize(const Size(MIN_WIDTH, MIN_HEIGHT));

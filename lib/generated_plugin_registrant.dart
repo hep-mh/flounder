@@ -7,11 +7,13 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:audioplayers_web/audioplayers_web.dart';
+import 'package:wakelock_web/wakelock_web.dart';
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 // ignore: public_member_api_docs
 void registerPlugins(Registrar registrar) {
   AudioplayersPlugin.registerWith(registrar);
+  WakelockWeb.registerWith(registrar);
   registrar.registerMessageHandler();
 }
