@@ -12,8 +12,6 @@ import 'home.dart';
 void main() async {
   // Ensure initialization of all Flutter bindings
   WidgetsFlutterBinding.ensureInitialized();
-  // Ensure special treatment for window_manager
-  await windowManager.ensureInitialized();
 
   if ( kDebugMode ) {
     presets['2+1'] = Settings(2, 1, 2, true);
@@ -36,6 +34,9 @@ void main() async {
   // Set some window properties on desktop platforms
   if ( !kIsWeb ) {
     if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
+      // Ensure initialization of window_manager
+      await windowManager.ensureInitialized();
+
       WindowOptions windowOptions = const WindowOptions(
         title: 'Flounder',
         minimumSize: Size(450, 600)
