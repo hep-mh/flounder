@@ -45,7 +45,7 @@ flutter_icons:
 
 msix_config:
   display_name: Flounder
-  publisher_display_name: hep-mh.com
+  publisher_display_name: Marco Hufnagel
   identity_name: com.hepmh.Flounder
   msix_version: 0.1.0.1
   # logo_path:
