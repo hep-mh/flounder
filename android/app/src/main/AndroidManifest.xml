@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flounder">
+    package="com.hepmh.flounder">
    <application
-        android:label="flounder"
+        android:label="Flounder"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
