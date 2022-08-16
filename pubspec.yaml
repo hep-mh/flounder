@@ -22,6 +22,7 @@ dependencies:
 
   audioplayers: ^1.0.1
   wakelock: ^0.6.2
+  shared_preferences: ^2.0.15
   flutter_launcher_icons: ^0.10.0
   cupertino_icons: ^1.0.2
 
