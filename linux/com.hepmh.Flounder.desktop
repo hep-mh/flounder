@@ -1,8 +1,8 @@
 [Desktop Entry]
-Version=1.0
 Type=Application
 
 Name=Flounder
+GenericName=Timer
 Comment=A cross-platform counter that can be used for the time-management in scientific talks
 Categories=Utility;Amusement;
 
