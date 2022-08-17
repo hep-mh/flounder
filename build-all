@@ -14,6 +14,7 @@ flutter build linux
 # -->
 tar czf build/linux/x64/release/Flounder.tar.gz --directory=build/linux/x64/release/bundle/ .
 cp build/linux/x64/release/Flounder.tar.gz packages/Flounder.tar.gz
+#flatpak-builder --force-clean build/flatpak linux/com.hepmh.Flounder.json
 
 # Build android app
 echo -ne "\n\e[38;5;72m• Building Android app •\e[0m\r"
