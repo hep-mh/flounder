@@ -12,9 +12,10 @@ flutter build web
 echo -ne "\n\e[38;5;220m• Building Linux app •\e[0m\r"
 flutter build linux
 # -->
-tar czf build/linux/x64/release/Flounder.tar.gz --directory=build/linux/x64/release/bundle/ .
-cp build/linux/x64/release/Flounder.tar.gz packages/Flounder.tar.gz
-#flatpak-builder --force-clean build/flatpak linux/com.hepmh.Flounder.json
+tar czf packages/Flounder.tar.gz --directory=build/linux/x64/release/bundle/ .
+# -->
+flatpak-builder --repo=build/flatpak_repo build/flatpak --force-clean linux/com.hepmh.Flounder.json
+flatpak build-bundle build/flatpak_repo/ packages/Flounder.flatpak com.hepmh.Flounder
 
 # Build android app
 echo -ne "\n\e[38;5;72m• Building Android app •\e[0m\r"
