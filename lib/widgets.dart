@@ -129,11 +129,13 @@ class FlounderBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _FlounderHeader(state: state),
-        _FlounderTimer (state: state)
-      ],
+    return SafeArea(
+        child: Column(
+        children: [
+          _FlounderHeader(state: state),
+          _FlounderTimer (state: state)
+        ],
+      ),
     );
   } // FlounderBody.build
 } // FlounderBody
