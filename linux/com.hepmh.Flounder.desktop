@@ -2,7 +2,7 @@
 Type=Application
 
 Name=Flounder
-GenericName=Timer
+GenericName=Talk Timer
 Comment=A cross-platform counter that can be used for the time-management in scientific talks
 Categories=Utility;Amusement;
 
