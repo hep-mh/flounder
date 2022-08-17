@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class Settings {
   int  talkLength;
   int  discussionLength;

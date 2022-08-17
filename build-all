@@ -1,22 +1,27 @@
 #! /bin/bash
 
 # Create icons
+echo -e "\e[38;5;209m• Generating launcher icons •\e[0m"
 flutter pub run flutter_launcher_icons:main
 
 # Build web app
+echo -e "\n\e[38;5;134m• Building web app •\e[0m"
 flutter build web
 
 # Build linux app
+echo -e "\n\e[38;5;220m• Building Linux app •\e[0m"
 flutter build linux
 # -->
 tar czf build/linux/x64/release/Flounder.tar.gz --directory=build/linux/x64/release/bundle/ .
 cp build/linux/x64/release/Flounder.tar.gz packages/Flounder.tar.gz
 
 # Build android app
+echo -e "\n\e[38;5;72m• Building Android app •\e[0m"
 flutter build apk
 # -->
 cp build/app/outputs/flutter-apk/app-release.apk packages/Flounder.apk
 
 # Build windows app
+echo -e "\n\e[38;5;75m• Building Windows app •\e[0m"
 #flutter build windows
 #flutter pub run msix:create
