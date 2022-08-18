@@ -1,4 +1,4 @@
-name: flounder
+name: Flounder
 
 description: A cross-platform counter that can be used for the time-management in scientific talks.
 
@@ -34,7 +34,7 @@ flutter_icons:
   remove_alpha_ios: true
   web:
       generate: true
-      image_path: "assets/web-icon.png"
+      image_path: "assets/desktop-icon.png"
       background_color: "#ffffff"
       theme_color: "#ffffff"
   windows:

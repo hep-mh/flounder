@@ -3,6 +3,10 @@
 # Create icons
 echo -e "\e[38;5;209m• Generating launcher icons •\e[0m"
 flutter pub run flutter_launcher_icons:main
+# Use a different icon for the maskable web icon
+# flutter_launcher_icons does not currently support that
+convert assets/web-icon.png -resize 192x192 web/icons/Icon-maskable-192.png
+convert assets/web-icon.png -resize 512x512 web/icons/Icon-maskable-512.png
 
 # Build web app
 echo -ne "\n\e[38;5;134m• Building web app •\e[0m\r"
