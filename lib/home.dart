@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:wakelock/wakelock.dart';
@@ -164,6 +165,21 @@ class _FlounderHomeState extends State<FlounderHome> {
       // Set the value of the dropdown menu to 'custom'
       dropdownValue = 'Custom';
     });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    if (!kIsWeb) {
+      if (Platform.isAndroid) {
+        SystemChrome.setSystemUIOverlayStyle(
+          const SystemUiOverlayStyle(
+            systemNavigationBarColor: Color(0xff1f1f1f)
+          )
+        );
+      }
+    }
   }
 
 
