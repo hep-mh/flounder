@@ -1,10 +1,10 @@
-name: Flounder
+name: flounder
 
 description: A cross-platform counter that can be used for the time-management in scientific talks.
 
 publish_to: 'none'
 
-version: 0.1.0+1
+version: 0.2.0
 
 
 environment:
@@ -47,7 +47,7 @@ msix_config:
   display_name: Flounder
   publisher_display_name: Marco Hufnagel
   identity_name: com.hepmh.Flounder
-  msix_version: 0.1.0.1
+  msix_version: 0.2.0.0
   # logo_path:
 
 

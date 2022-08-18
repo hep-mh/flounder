@@ -8,7 +8,7 @@
   <name>Flounder</name>
   <summary>A cross-platform counter that can be used for the time-management in scientific talks</summary>
   <developer_name>Marco Hufnagel</developer_name>
-  <url type="homepage">https://counter.hep-mh.com</url>
+  <url type="homepage">https://timer.hep-mh.com</url>
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
   <supports>
@@ -21,6 +21,6 @@
   <launchable type="desktop-id">com.hepmh.Flounder.desktop</launchable>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="0.1.0+1" date="2022-08-17" />
+    <release version="0.2.0" date="2022-08-17" />
   </releases>
 </component>
