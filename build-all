@@ -1,33 +1,33 @@
 #! /bin/bash
 
-# Create icons
+# ICONS
 echo -e "\e[38;5;209m• Generating launcher icons •\e[0m"
 flutter pub run flutter_launcher_icons:main
-# Use a different icon for the maskable web icon
+# Use a different file for the maskable web icon
 # flutter_launcher_icons does not currently support that
 convert assets/web-icon.png -resize 192x192 web/icons/Icon-maskable-192.png
 convert assets/web-icon.png -resize 512x512 web/icons/Icon-maskable-512.png
 
-# Build web app
+# WEB
 echo -ne "\n\e[38;5;134m• Building web app •\e[0m\r"
 flutter build web
 
-# Build linux app
+# LINUX
 echo -ne "\n\e[38;5;220m• Building Linux app •\e[0m\r"
 flutter build linux
-# -->
+# Create a .tar.gz file in the packages/ directory
 tar czf packages/Flounder.tar.gz --directory=build/linux/x64/release/bundle/ .
-# -->
+# Build a .flatpak file and save it in the packages/ directory
 flatpak-builder --repo=build/flatpak_repo build/flatpak --force-clean linux/com.hepmh.Flounder.json
 flatpak build-bundle build/flatpak_repo/ packages/Flounder.flatpak com.hepmh.Flounder
 
-# Build android app
+# ANDROID
 echo -ne "\n\e[38;5;72m• Building Android app •\e[0m\r"
 flutter build apk
-# -->
+# Copy the .apk file to the packages/ directory
 cp build/app/outputs/flutter-apk/app-release.apk packages/Flounder.apk
 
-# Build windows app
+# WINDOWS
 echo -ne "\n\e[38;5;75m• Building Windows app •\e[0m\r"
 #flutter build windows
 #flutter pub run msix:create
