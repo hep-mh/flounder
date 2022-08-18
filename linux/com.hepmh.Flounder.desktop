@@ -4,7 +4,7 @@ Type=Application
 Name=Flounder
 GenericName=Talk Timer
 Comment=A cross-platform counter that can be used for the time-management in scientific talks
-Categories=Utility;Amusement;
+Categories=Utility;
 
 Icon=com.hepmh.Flounder
 Exec=flounder
