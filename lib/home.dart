@@ -77,7 +77,7 @@ class _FlounderHomeState extends State<FlounderHome> {
         // Enable the wakelock when the timer is started
         _toggleWakelock(true);
 
-        state.mode = ModeRegister.TALK;
+        state.mode = ModeRegister.talk;
 
         runner = Timer.periodic(const Duration(seconds: 1), (Timer t) {
           setState(() {
@@ -93,13 +93,13 @@ class _FlounderHomeState extends State<FlounderHome> {
               switch(state.mode.id) {
                 // Talk -> Discussion
                 case 'Talk': {
-                  state.mode  = ModeRegister.DISCUSSION;
+                  state.mode  = ModeRegister.discussion;
                   state.timer = state.profile.discussionLength*60;
                   break;
                 }
                 // Discussion -> Overtime
                 case 'Discussion': {
-                  state.mode  = ModeRegister.OVERTIME;
+                  state.mode  = ModeRegister.overtime;
                   break;
                 }
               }
@@ -114,7 +114,7 @@ class _FlounderHomeState extends State<FlounderHome> {
         // Disable the wakelock when the timer is stopped
         _toggleWakelock(false);
 
-        state.mode = ModeRegister.IDLE;
+        state.mode = ModeRegister.idle;
         state.resetTimer();
 
         runner.cancel();

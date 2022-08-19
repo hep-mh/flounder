@@ -72,16 +72,16 @@ class Mode {
 
 
 class ModeRegister {
-  static final Mode IDLE       = Mode('Idle'      , Colors.green ,  0);
-  static final Mode TALK       = Mode('Talk'      , Colors.green , -1);
-  static final Mode DISCUSSION = Mode('Discussion', Colors.orange, -1);
-  static final Mode OVERTIME   = Mode('Overtime'  , Colors.red   ,  1);
+  static final Mode idle       = Mode('Idle'      , Colors.green ,  0);
+  static final Mode talk       = Mode('Talk'      , Colors.green , -1);
+  static final Mode discussion = Mode('Discussion', Colors.orange, -1);
+  static final Mode overtime   = Mode('Overtime'  , Colors.red   ,  1);
 } // ModeRegister
 
 
 class FlounderState {
   int      timer = 0;
-  Mode     mode  = ModeRegister.IDLE;
+  Mode     mode  = ModeRegister.idle;
 
   // The currently selected profile
   Profile  profile;
