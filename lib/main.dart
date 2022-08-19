@@ -13,12 +13,8 @@ void main() async {
   // Ensure initialization of all Flutter bindings
   WidgetsFlutterBinding.ensureInitialized();
 
-  if ( kDebugMode ) {
-    presets['2+1'] = Profile(2, 1, 2, true);
-  }
-
   // Fill the list of dropdown menu items
-  presets.forEach((key, value) => dropdownItems.add(
+  defaultPresets.forEach((key, value) => dropdownItems.add(
     DropdownMenuItem<String>(
       value: key,
       child: Text(value.dropdownEntry(), style: const TextStyle(color: Colors.white)),

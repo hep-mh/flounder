@@ -30,7 +30,20 @@ class Profile {
     String isUserStr     = isUserDefined.toString();
 
 
-    return talkStr + ' ' + discussionStr + ' ' + reminderStr + ' ' + remindMeStr + ' ' + isUserStr;
+    return talkStr + '-' + discussionStr + '-' + reminderStr + '-' + remindMeStr + '-' + isUserStr;
+  }
+
+  static Profile fromString(String? profileStr) {
+    List<String>? entries = profileStr?.split("-");
+
+    int talkLength       = int.parse(entries![0]);
+    int discussionLength = int.parse(entries[1]);
+    int reminderAt       = int.parse(entries[2]);
+    bool remindMe        = (entries[3] == '0') ? false : true;
+    bool isUserDefined   = (entries[4] == '0') ? false : true;
+
+
+    return Profile(talkLength, discussionLength, reminderAt, remindMe, isUserDefined);
   }
 
   Profile copy() {
@@ -39,7 +52,7 @@ class Profile {
 } // Profile
 
 
-Map presets = {
+Map defaultPresets = {
   '20+5': Profile(20,  5),
   '16+4': Profile(16,  4),
   '12+3': Profile(12,  3),
@@ -76,7 +89,7 @@ class FlounderState {
   bool     save = true;
 
   // Static members
-  static final String DEFAULT_PRESET_KEY = presets.keys.toList().first;
+  static final String INITIAL_PRESET_KEY = defaultPresets.keys.toList().first;
 
   FlounderState(this.profile) {
     resetTimer();

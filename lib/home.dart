@@ -38,11 +38,11 @@ class FlounderHome extends StatefulWidget {
 
 class _FlounderHomeState extends State<FlounderHome> {
   FlounderState state = FlounderState(
-    presets[FlounderState.DEFAULT_PRESET_KEY].copy()
+    defaultPresets[FlounderState.INITIAL_PRESET_KEY].copy()
   );
 
   // Widget properties
-  String dropdownValue = FlounderState.DEFAULT_PRESET_KEY;
+  String dropdownValue = FlounderState.INITIAL_PRESET_KEY;
 
   final Map textEditingControllers = {
     'Talk'      : TextEditingController(),
@@ -50,18 +50,15 @@ class _FlounderHomeState extends State<FlounderHome> {
     'Reminder@' : TextEditingController(),
   };
 
-
   // The Timer for async execution of timer changes
   // This initializer executes on empty function once
   Timer runner = Timer(Duration.zero, () {});
-
 
   void _playSound() async {
     AudioPlayer player = AudioPlayer();
 
     await player.play( AssetSource('ding.mp3') );
   }
-
 
   void _toggleWakelock(bool enable) {
     if (kIsWeb) {
@@ -71,7 +68,6 @@ class _FlounderHomeState extends State<FlounderHome> {
       if (!Platform.isLinux) { Wakelock.toggle(enable: enable); }
     }
   }
-
 
   void _onPlayButtonPressed() {
     setState(() {
@@ -125,23 +121,20 @@ class _FlounderHomeState extends State<FlounderHome> {
     });
   }
 
-
   void _onBellButtonPressed() {
     setState(() { state.profile.remindMe = !state.profile.remindMe; });
   }
-
 
   void _onDropdownValueChanged(String? value) {
     setState(() {
       dropdownValue = value!;
 
       if (value != 'Custom') {
-        state.profile = presets[dropdownValue].copy();
+        state.profile = defaultPresets[dropdownValue].copy();
         state.resetTimer();
       }
     });
   }
-
 
   void _onSaveButtonPressed() {
     setState(() {
@@ -167,13 +160,11 @@ class _FlounderHomeState extends State<FlounderHome> {
     });
   }
 
-
   void _onCheckboxChanged(bool? value) {
     setState(() {
       state.save = !state.save;
     });
   }
-
 
   @override
   void initState() {
@@ -189,7 +180,6 @@ class _FlounderHomeState extends State<FlounderHome> {
     }
   }
 
-
   @override
   void dispose() {
     // Clean up the TextEditingController's
@@ -199,7 +189,6 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {

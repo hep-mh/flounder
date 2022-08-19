@@ -56,13 +56,13 @@ flutter_native_splash:
 
   android: false
   ios: false
-  web: false
+  web: true
 
   # https://developer.android.com/reference/android/view/Gravity
   android_gravity: center
   # https://developer.apple.com/documentation/uikit/uiview/contentmode
   ios_content_mode: center
-  # center, contain, stretch, and cover.
+  # center, contain, stretch, and cover
   web_image_mode: center
 
   fullscreen: false
