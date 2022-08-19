@@ -20,6 +20,7 @@ dependencies:
   shared_preferences: ^2.0.15
   window_manager: ^0.2.5
   flutter_launcher_icons: ^0.10.0
+  #flutter_native_splash: ^2.2.7
   cupertino_icons: ^1.0.2
   msix: ^3.6.3
 
@@ -34,6 +35,7 @@ flutter_icons:
   remove_alpha_ios: true
   web:
       generate: true
+      # The maskable image will be manually replaced later
       image_path: "assets/desktop-icon.png"
       background_color: "#ffffff"
       theme_color: "#ffffff"
@@ -43,12 +45,35 @@ flutter_icons:
     icon_size: 48
 
 
+flutter_native_splash:
+  color: "#1f1f1f"
+  image: assets/desktop-icon.png
+
+  android_12:
+    color: "#1f1f1f"
+    image: assets/android-icon.png
+    icon_background_color: "#ffffff"
+
+  android: false
+  ios: false
+  web: false
+
+  # https://developer.android.com/reference/android/view/Gravity
+  android_gravity: center
+  # https://developer.apple.com/documentation/uikit/uiview/contentmode
+  ios_content_mode: center
+  # center, contain, stretch, and cover.
+  web_image_mode: center
+
+  fullscreen: false
+
+
 msix_config:
   display_name: Flounder
   publisher_display_name: Marco Hufnagel
   identity_name: com.hepmh.Flounder
   msix_version: 0.2.0.0
-  # logo_path:
+  logo_path: assets\desktop-icon.png
 
 
 dev_dependencies:

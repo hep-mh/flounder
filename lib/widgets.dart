@@ -187,7 +187,7 @@ class FlounderActionBar extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 icon: Icon(
-                  (state.settings.remindMe == true) ? Icons.notifications_active_outlined
+                  (state.profile.remindMe == true) ? Icons.notifications_active_outlined
                                                     : Icons.notifications_none
                 ),
                 onPressed: onPressedL,
@@ -195,7 +195,7 @@ class FlounderActionBar extends StatelessWidget {
               ),
               SizedBox(width: iconSize/4),
               Text(
-                state.settings.reminderAt.toString() + ' min',
+                state.profile.reminderAt.toString() + ' min',
                 style: TextStyle(fontSize: 0.75*iconSize)
               ),
             ],
@@ -204,7 +204,7 @@ class FlounderActionBar extends StatelessWidget {
           Row(
             children: <Widget>[
               Text(
-                (state.settings.talkLength + state.settings.discussionLength).toString() + ' min',
+                (state.profile.talkLength + state.profile.discussionLength).toString() + ' min',
                 style: TextStyle(fontSize: 0.75*iconSize)
               ),
               SizedBox(width: iconSize/4),
@@ -258,15 +258,18 @@ class FlounderActionButton extends StatelessWidget {
 class FlounderDrawer extends StatelessWidget {
   final FlounderState state;
 
-  // DropdownButtonProperties
+  // DropdownButton properties
   final String                 dropdownValue;
   final ValueChanged<String?>? onDropdownValueChanged;
 
-  // TextFieldProperties
-  final Map controllers;
-
-  // ButtonProperties
+  // ElevatedButton properties
   final VoidCallback onSaveButtonPressed;
+
+  // CheckboxListTile properties
+  final ValueChanged<bool?>? onCheckboxChanged;
+
+  // TextFormField properties
+  final Map controllers;
 
   const FlounderDrawer({
     Key? key,
@@ -274,15 +277,16 @@ class FlounderDrawer extends StatelessWidget {
     required this.dropdownValue,
     required this.onDropdownValueChanged,
     required this.onSaveButtonPressed,
+    required this.onCheckboxChanged,
     required this.controllers,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Map textFieldValues = {
-      'Talk'      : state.settings.talkLength,
-      'Discussion': state.settings.discussionLength,
-      'Reminder@' : state.settings.reminderAt,
+      'Talk'      : state.profile.talkLength,
+      'Discussion': state.profile.discussionLength,
+      'Reminder@' : state.profile.reminderAt,
     };
 
     List<Widget> customSection = [];
@@ -337,6 +341,21 @@ class FlounderDrawer extends StatelessWidget {
           ),
         ),
       ),
+    );
+    customSection.add(
+      Theme(
+        data: ThemeData(unselectedWidgetColor: Colors.white),
+        child: CheckboxListTile(
+          title: const Text(
+            'Save as Preset',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          activeColor: state.mode.color,
+          value: state.save,
+          //controlAffinity: ListTileControlAffinity.leading,
+          onChanged: onCheckboxChanged
+        )
+      )
     );
 
     return Drawer(

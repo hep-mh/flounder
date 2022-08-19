@@ -85,8 +85,8 @@ class _FlounderHomeState extends State<FlounderHome> {
         runner = Timer.periodic(const Duration(seconds: 1), (Timer t) {
           setState(() {
             // Check if a reminder needs to be given
-            if ( state.timer == state.settings.reminderAt*60 ) {
-              if ( state.settings.remindMe && state.mode.id == 'Talk' ) { _playSound(); }
+            if ( state.timer == state.profile.reminderAt*60 ) {
+              if ( state.profile.remindMe && state.mode.id == 'Talk' ) { _playSound(); }
             }
 
             // Check if switch to discussion/overtime is necessary
@@ -97,7 +97,7 @@ class _FlounderHomeState extends State<FlounderHome> {
                 // Talk -> Discussion
                 case 'Talk': {
                   state.mode  = ModeRegister.DISCUSSION;
-                  state.timer = state.settings.discussionLength*60;
+                  state.timer = state.profile.discussionLength*60;
                   break;
                 }
                 // Discussion -> Overtime
@@ -127,7 +127,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
 
   void _onBellButtonPressed() {
-    setState(() { state.settings.remindMe = !state.settings.remindMe; });
+    setState(() { state.profile.remindMe = !state.profile.remindMe; });
   }
 
 
@@ -136,7 +136,7 @@ class _FlounderHomeState extends State<FlounderHome> {
       dropdownValue = value!;
 
       if (value != 'Custom') {
-        state.settings = presets[dropdownValue].copy();
+        state.profile = presets[dropdownValue].copy();
         state.resetTimer();
       }
     });
@@ -150,13 +150,13 @@ class _FlounderHomeState extends State<FlounderHome> {
       String reminderText   = textEditingControllers['Reminder@'].text;
 
       if (talkText != "") {
-        state.settings.talkLength = int.parse(talkText);
+        state.profile.talkLength = int.parse(talkText);
       }
       if (discussionText != "") {
-        state.settings.discussionLength = int.parse(discussionText);
+        state.profile.discussionLength = int.parse(discussionText);
       }
       if (reminderText != "") {
-        state.settings.reminderAt = int.parse(reminderText);
+        state.profile.reminderAt = int.parse(reminderText);
       }
 
       // Reset the timer
@@ -164,6 +164,13 @@ class _FlounderHomeState extends State<FlounderHome> {
 
       // Set the value of the dropdown menu to 'custom'
       dropdownValue = 'Custom';
+    });
+  }
+
+
+  void _onCheckboxChanged(bool? value) {
+    setState(() {
+      state.save = !state.save;
     });
   }
 
@@ -225,6 +232,7 @@ class _FlounderHomeState extends State<FlounderHome> {
           _onSaveButtonPressed();
           Navigator.of(context).pop();
         },
+        onCheckboxChanged: _onCheckboxChanged,
         controllers: textEditingControllers,
       );}),
     );

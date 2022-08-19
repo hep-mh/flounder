@@ -1,37 +1,49 @@
 import 'package:flutter/material.dart';
 
 
-class Settings {
+class Profile {
   int  talkLength;
   int  discussionLength;
   int  reminderAt;
   bool remindMe;
+  bool isUserDefined;
 
-  Settings(this.talkLength, this.discussionLength, [this.reminderAt = -1, this.remindMe = false]) {
+  Profile(this.talkLength, this.discussionLength, [this.reminderAt = -1, this.remindMe = false, this.isUserDefined = false]) {
     if ( reminderAt <= 0 ) {
       reminderAt = discussionLength;
     }
   }
 
-  @override
-  String toString() {
+  String dropdownEntry() {
     String talkStr       = talkLength.toString();
     String discussionStr = discussionLength.toString();
 
     return talkStr + '+' + discussionStr;
   }
 
-  Settings copy() {
-    return Settings(talkLength, discussionLength, reminderAt, remindMe);
+  @override
+  String toString() {
+    String talkStr       = talkLength.toString();
+    String discussionStr = discussionLength.toString();
+    String reminderStr   = reminderAt.toString();
+    String remindMeStr   = remindMe.toString();
+    String isUserStr     = isUserDefined.toString();
+
+
+    return talkStr + ' ' + discussionStr + ' ' + reminderStr + ' ' + remindMeStr + ' ' + isUserStr;
   }
-} // Settings
+
+  Profile copy() {
+    return Profile(talkLength, discussionLength, reminderAt, remindMe, isUserDefined);
+  }
+} // Profile
 
 
 Map presets = {
-  '20+5': Settings(20,  5),
-  '16+4': Settings(16,  4),
-  '12+3': Settings(12,  3),
-   '8+2': Settings( 8,  2),
+  '20+5': Profile(20,  5),
+  '16+4': Profile(16,  4),
+  '12+3': Profile(12,  3),
+   '8+2': Profile( 8,  2),
 };
 // -->
 List< DropdownMenuItem<String> > dropdownItems = [];
@@ -57,16 +69,20 @@ class ModeRegister {
 class FlounderState {
   int      timer = 0;
   Mode     mode  = ModeRegister.IDLE;
-  Settings settings;
+
+  // The currently selected profile
+  Profile  profile;
+  // The state of the CheckBoxTile
+  bool     save = true;
 
   // Static members
   static final String DEFAULT_PRESET_KEY = presets.keys.toList().first;
 
-  FlounderState(this.settings) {
+  FlounderState(this.profile) {
     resetTimer();
   }
 
   void resetTimer() {
-    timer = settings.talkLength*60;
+    timer = profile.talkLength*60;
   }
 } // FlounderState

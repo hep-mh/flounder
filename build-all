@@ -3,10 +3,14 @@
 # ICONS
 echo -e "\e[38;5;209m• Generating launcher icons •\e[0m"
 flutter pub run flutter_launcher_icons:main
-# Use a different file for the maskable web icon
+# Use a different file for the maskable web icons
 # flutter_launcher_icons does not currently support that
 convert assets/web-icon.png -resize 192x192 web/icons/Icon-maskable-192.png
 convert assets/web-icon.png -resize 512x512 web/icons/Icon-maskable-512.png
+
+# SPLASH SCREENS
+#echo -e "\n\e[38;5;105m• Generating splash screens •\e[0m"
+#flutter pub run flutter_native_splash:create
 
 # WEB
 echo -ne "\n\e[38;5;134m• Building web app •\e[0m\r"
@@ -18,7 +22,8 @@ flutter build linux
 # Create a .tar.gz file in the packages/ directory
 tar czf packages/Flounder.tar.gz --directory=build/linux/x64/release/bundle/ .
 # Build a .flatpak file and save it in the packages/ directory
-flatpak-builder --repo=build/flatpak_repo build/flatpak --force-clean linux/com.hepmh.Flounder.json
+echo "Packaging application as flatpak..."
+flatpak-builder --repo=build/flatpak_repo build/flatpak --force-clean linux/com.hepmh.Flounder.json > build/flatpak-builder.log
 flatpak build-bundle build/flatpak_repo/ packages/Flounder.flatpak com.hepmh.Flounder
 
 # ANDROID
