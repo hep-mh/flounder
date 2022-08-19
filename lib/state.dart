@@ -27,20 +27,20 @@ class Profile {
     String discussionStr = discussionLength.toString();
     String reminderStr   = reminderAt.toString();
     String remindMeStr   = remindMe.toString();
-    String isUserStr     = isUserDefined.toString();
+    String isUserDefStr  = isUserDefined.toString();
 
 
-    return talkStr + '-' + discussionStr + '-' + reminderStr + '-' + remindMeStr + '-' + isUserStr;
+    return talkStr + '-' + discussionStr + '-' + reminderStr + '-' + remindMeStr + '-' + isUserDefStr;
   }
 
   static Profile fromString(String? profileStr) {
     List<String>? entries = profileStr?.split("-");
 
-    int talkLength       = int.parse(entries![0]);
-    int discussionLength = int.parse(entries[1]);
-    int reminderAt       = int.parse(entries[2]);
-    bool remindMe        = (entries[3] == '0') ? false : true;
-    bool isUserDefined   = (entries[4] == '0') ? false : true;
+    int  talkLength       = int.parse(entries![0]);
+    int  discussionLength = int.parse(entries[1]);
+    int  reminderAt       = int.parse(entries[2]);
+    bool remindMe         = (entries[3] == '0') ? false : true;
+    bool isUserDefined    = (entries[4] == '0') ? false : true;
 
 
     return Profile(talkLength, discussionLength, reminderAt, remindMe, isUserDefined);
@@ -58,7 +58,7 @@ Map defaultPresets = {
   '12+3': Profile(12,  3),
    '8+2': Profile( 8,  2),
 };
-// -->
+// --> TODO
 List< DropdownMenuItem<String> > dropdownItems = [];
 
 
@@ -87,9 +87,12 @@ class FlounderState {
   Profile  profile;
   // The state of the CheckBoxTile
   bool     save = true;
+  // The available presets
+  Map presets = {};
 
-  // Static members
-  static final String INITIAL_PRESET_KEY = defaultPresets.keys.toList().first;
+  // The initial preset to display
+  // TODO
+  static final String initialPresetKey = defaultPresets.keys.toList().first;
 
   FlounderState(this.profile) {
     resetTimer();

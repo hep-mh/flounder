@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:wakelock/wakelock.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'state.dart';
 import 'widgets.dart';
@@ -38,11 +39,11 @@ class FlounderHome extends StatefulWidget {
 
 class _FlounderHomeState extends State<FlounderHome> {
   FlounderState state = FlounderState(
-    defaultPresets[FlounderState.INITIAL_PRESET_KEY].copy()
+    defaultPresets[FlounderState.initialPresetKey].copy()
   );
 
   // Widget properties
-  String dropdownValue = FlounderState.INITIAL_PRESET_KEY;
+  String dropdownValue = FlounderState.initialPresetKey;
 
   final Map textEditingControllers = {
     'Talk'      : TextEditingController(),

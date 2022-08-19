@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'state.dart';
 
 
-const double MAGIC_WIDTH = 740;
+const double magicWidth = 740;
 
 
 class _FlounderHeader extends StatelessWidget {
@@ -20,7 +20,7 @@ class _FlounderHeader extends StatelessWidget {
     final double contextHeight = MediaQuery.of(context).size.height;
 
     const double padding   = 20;
-    const double maxWidth  = MAGIC_WIDTH - 2*padding;
+    const double maxWidth  = magicWidth - 2*padding;
     const double maxHeight = 150;
 
     double width = maxWidth;
@@ -29,7 +29,7 @@ class _FlounderHeader extends StatelessWidget {
     //       contextWidth - 2*padding
     // if the box covers the full width of the
     // application
-    if ( contextWidth < MAGIC_WIDTH ) {
+    if ( contextWidth < magicWidth ) {
       width = contextWidth - 2*padding;
     }
     // -->
@@ -146,8 +146,8 @@ double _getActionBarScale(double contextWidth, double contextHeight, [double fac
   double minSize = maxSize/factor/2;
 
   double size = maxSize;
-  if ( contextWidth < MAGIC_WIDTH ) {
-    final double scale = contextWidth/MAGIC_WIDTH;
+  if ( contextWidth < magicWidth ) {
+    final double scale = contextWidth/magicWidth;
 
     size = minSize + (maxSize - minSize)*scale;
   }
