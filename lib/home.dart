@@ -38,13 +38,12 @@ class FlounderHome extends StatefulWidget {
 
 
 class _FlounderHomeState extends State<FlounderHome> {
-  FlounderState state = FlounderState(
-    defaultPresets[FlounderState.initialPresetKey].copy()
-  );
+  FlounderState state = FlounderState();
 
-  // Widget properties
+  // DropdownMenu
   String dropdownValue = FlounderState.initialPresetKey;
 
+  // TextFields
   final Map textEditingControllers = {
     'Talk'      : TextEditingController(),
     'Discussion': TextEditingController(),
@@ -70,6 +69,25 @@ class _FlounderHomeState extends State<FlounderHome> {
     }
   }
 
+  void _rebuildDropdownMenu() {
+    dropdownItems.clear();
+
+    // Fill the list of dropdown menu items
+    defaultPresets.forEach((key, value) => dropdownItems.add(
+      DropdownMenuItem<String>(
+        value: key,
+        child: Text(value.dropdownEntry(), style: const TextStyle(color: Colors.white)),
+      )
+    ));
+    dropdownItems.add(
+      const DropdownMenuItem<String>(
+        value: 'Custom',
+        child: Text('Custom', style: TextStyle(color: Colors.white))
+      ),
+    );
+  }
+
+  // Actions
   void _onPlayButtonPressed() {
     setState(() {
       // START TIMER
@@ -170,15 +188,16 @@ class _FlounderHomeState extends State<FlounderHome> {
   @override
   void initState() {
     super.initState();
-    if (!kIsWeb) {
-      if (Platform.isAndroid) {
-        SystemChrome.setSystemUIOverlayStyle(
-          const SystemUiOverlayStyle(
-            systemNavigationBarColor: Color(0xff1f1f1f)
-          )
-        );
-      }
-    }
+
+    _rebuildDropdownMenu();
+
+    if (!kIsWeb) { if (Platform.isAndroid) {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          systemNavigationBarColor: Color(0xff1f1f1f)
+        )
+      );
+    }}
   }
 
   @override

@@ -80,21 +80,28 @@ class ModeRegister {
 
 
 class FlounderState {
-  int      timer = 0;
-  Mode     mode  = ModeRegister.idle;
+  int  timer = 0;
+  Mode mode  = ModeRegister.idle;
 
   // The currently selected profile
-  Profile  profile;
+  late Profile profile;
   // The state of the CheckBoxTile
-  bool     save = true;
+  bool         save = true;
   // The available presets
-  Map presets = {};
+  late Map     presets;
 
-  // The initial preset to display
-  // TODO
-  static final String initialPresetKey = defaultPresets.keys.toList().first;
+  // The initial preset key
+  static late String initialPresetKey;
 
-  FlounderState(this.profile) {
+  FlounderState() {
+    // Fill the presets
+    presets = defaultPresets;
+
+    // Initialize the profile
+    initialPresetKey = presets.keys.toList().first;
+    // -->
+    profile = presets[initialPresetKey].copy();
+
     resetTimer();
   }
 
