@@ -187,7 +187,7 @@ class FlounderActionBar extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 icon: Icon(
-                  (state.profile.remindMe == true) ? Icons.notifications_active_outlined
+                  (state.remindMe == true) ? Icons.notifications_active_outlined
                                                     : Icons.notifications_none
                 ),
                 onPressed: onPressedL,

@@ -5,20 +5,19 @@ class Profile {
   int  talkLength;
   int  discussionLength;
   int  reminderAt;
-  bool remindMe;
-  bool isUserDefined;
 
-  Profile(this.talkLength, this.discussionLength, [this.reminderAt = -1, this.remindMe = false, this.isUserDefined = false]) {
+  Profile(this.talkLength, this.discussionLength, [this.reminderAt = -1]) {
     if ( reminderAt <= 0 ) {
       reminderAt = discussionLength;
     }
   }
 
-  String dropdownEntry() {
+  String key() {
     String talkStr       = talkLength.toString();
     String discussionStr = discussionLength.toString();
+    String reminderStr   = reminderAt.toString();
 
-    return talkStr + '+' + discussionStr;
+    return talkStr + '+' + discussionStr + ' (' + reminderStr + ')';
   }
 
   @override
@@ -26,11 +25,9 @@ class Profile {
     String talkStr       = talkLength.toString();
     String discussionStr = discussionLength.toString();
     String reminderStr   = reminderAt.toString();
-    String remindMeStr   = remindMe.toString();
-    String isUserDefStr  = isUserDefined.toString();
 
 
-    return talkStr + '-' + discussionStr + '-' + reminderStr + '-' + remindMeStr + '-' + isUserDefStr;
+    return talkStr + '-' + discussionStr + '-' + reminderStr;
   }
 
   static Profile fromString(String? profileStr) {
@@ -39,26 +36,24 @@ class Profile {
     int  talkLength       = int.parse(entries![0]);
     int  discussionLength = int.parse(entries[1]);
     int  reminderAt       = int.parse(entries[2]);
-    bool remindMe         = (entries[3] == '0') ? false : true;
-    bool isUserDefined    = (entries[4] == '0') ? false : true;
 
 
-    return Profile(talkLength, discussionLength, reminderAt, remindMe, isUserDefined);
+    return Profile(talkLength, discussionLength, reminderAt);
   }
 
   Profile copy() {
-    return Profile(talkLength, discussionLength, reminderAt, remindMe, isUserDefined);
+    return Profile(talkLength, discussionLength, reminderAt);
   }
 } // Profile
 
 
 Map defaultPresets = {
-  '20+5': Profile(20,  5),
-  '16+4': Profile(16,  4),
-  '12+3': Profile(12,  3),
-   '8+2': Profile( 8,  2),
+  '20+5 (5)': Profile(20,  5),
+  '16+4 (4)': Profile(16,  4),
+  '12+3 (3)': Profile(12,  3),
+   '8+2 (2)': Profile( 8,  2),
 };
-// --> TODO
+// --> TODO Should not be here
 List< DropdownMenuItem<String> > dropdownItems = [];
 
 
@@ -83,26 +78,31 @@ class FlounderState {
   int  timer = 0;
   Mode mode  = ModeRegister.idle;
 
-  // The currently selected profile
-  late Profile profile;
-  // The state of the CheckBoxTile
-  bool         save = true;
   // The available presets
-  late Map     presets;
+  late Map     presets; // FlounderState -> setPresets
+  // The current profile selected
+  // from the available presets
+  late Profile profile; // FlounderState -> setPresets
 
-  // The initial preset key
-  static late String initialPresetKey;
+  // The flag to determine wether to
+  // save custom profiles
+  bool         save     = true;
+  // A flag to determine wether to play
+  // a reminder during the talk
+  bool         remindMe = false;
 
   FlounderState() {
-    // Fill the presets
-    presets = defaultPresets;
-
-    // Initialize the profile
-    initialPresetKey = presets.keys.toList().first;
-    // -->
-    profile = presets[initialPresetKey].copy();
-
+    // First set the list of all presets to its default
+    // value; Later update the set if preferences are found
+    swapPresets(defaultPresets);
     resetTimer();
+  }
+
+  void swapPresets(Map newPresets) {
+    presets = newPresets;
+
+    // -->
+    profile = presets[presets.keys.toList().first].copy();
   }
 
   void resetTimer() {

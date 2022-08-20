@@ -38,10 +38,10 @@ class FlounderHome extends StatefulWidget {
 
 
 class _FlounderHomeState extends State<FlounderHome> {
-  FlounderState state = FlounderState();
+  final FlounderState state = FlounderState();
 
   // DropdownMenu
-  String dropdownValue = FlounderState.initialPresetKey;
+  String dropdownValue = "";
 
   // TextFields
   final Map textEditingControllers = {
@@ -50,9 +50,53 @@ class _FlounderHomeState extends State<FlounderHome> {
     'Reminder@' : TextEditingController(),
   };
 
-  // The Timer for async execution of timer changes
-  // This initializer executes on empty function once
+  // Timer
   Timer runner = Timer(Duration.zero, () {});
+
+  // SharedPreferences
+  // initState -> _initPreferences
+  late SharedPreferences prefs;
+
+  // HELPER FUNCTIONS
+  void _initPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+
+    final List<String>? presetsFromPrefs = prefs.getStringList('presets');
+    // If preferences are preset, override defaults
+    if (presetsFromPrefs != null) {
+      Map presets = {};
+
+      for (var preset in presetsFromPrefs) {
+        Profile profile = Profile.fromString(preset);
+
+        presets[profile.key()] = profile;
+      }
+
+      state.swapPresets(presets);
+    }
+
+    // -->
+    _rebuildDropdownMenu();
+  }
+
+  void _rebuildDropdownMenu() {
+    dropdownValue = state.profile.key();
+
+    dropdownItems.clear();
+    // Fill the list of dropdown menu items
+    state.presets.forEach((key, value) => dropdownItems.add(
+      DropdownMenuItem<String>(
+        value: key,
+        child: Text(value.key(), style: const TextStyle(color: Colors.white)),
+      )
+    ));
+    dropdownItems.add(
+      const DropdownMenuItem<String>(
+        value: 'Custom',
+        child: Text('Custom', style: TextStyle(color: Colors.white))
+      ),
+    );
+  }
 
   void _playSound() async {
     AudioPlayer player = AudioPlayer();
@@ -69,25 +113,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     }
   }
 
-  void _rebuildDropdownMenu() {
-    dropdownItems.clear();
-
-    // Fill the list of dropdown menu items
-    defaultPresets.forEach((key, value) => dropdownItems.add(
-      DropdownMenuItem<String>(
-        value: key,
-        child: Text(value.dropdownEntry(), style: const TextStyle(color: Colors.white)),
-      )
-    ));
-    dropdownItems.add(
-      const DropdownMenuItem<String>(
-        value: 'Custom',
-        child: Text('Custom', style: TextStyle(color: Colors.white))
-      ),
-    );
-  }
-
-  // Actions
+  // ACTION FUNCTIONS
   void _onPlayButtonPressed() {
     setState(() {
       // START TIMER
@@ -101,7 +127,7 @@ class _FlounderHomeState extends State<FlounderHome> {
           setState(() {
             // Check if a reminder needs to be given
             if ( state.timer == state.profile.reminderAt*60 ) {
-              if ( state.profile.remindMe && state.mode.id == 'Talk' ) { _playSound(); }
+              if ( state.remindMe && state.mode.id == 'Talk' ) { _playSound(); }
             }
 
             // Check if switch to discussion/overtime is necessary
@@ -141,7 +167,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   }
 
   void _onBellButtonPressed() {
-    setState(() { state.profile.remindMe = !state.profile.remindMe; });
+    setState(() { state.remindMe = !state.remindMe; });
   }
 
   void _onDropdownValueChanged(String? value) {
@@ -157,25 +183,40 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   void _onSaveButtonPressed() {
     setState(() {
-      String talkText       = textEditingControllers['Talk'].text;
+      String talkText       = textEditingControllers['Talk'      ].text;
       String discussionText = textEditingControllers['Discussion'].text;
-      String reminderText   = textEditingControllers['Reminder@'].text;
+      String reminderText   = textEditingControllers['Reminder@' ].text;
 
-      if (talkText != "") {
-        state.profile.talkLength = int.parse(talkText);
-      }
-      if (discussionText != "") {
-        state.profile.discussionLength = int.parse(discussionText);
-      }
-      if (reminderText != "") {
-        state.profile.reminderAt = int.parse(reminderText);
+      // Create a new Profile
+      int talkLength       = (talkText       != "") ? int.parse(talkText)       : state.profile.talkLength;
+      int discussionLength = (discussionText != "") ? int.parse(discussionText) : state.profile.discussionLength;
+      int reminderAt       = (reminderText   != "") ? int.parse(reminderText)   : state.profile.reminderAt;
+      
+      // -->
+      Profile profile = Profile(talkLength, discussionLength, reminderAt);
+
+      // Set the profile (and potentially save it)
+      // Key does exist already
+      // Saving does not matter
+      if (state.presets.containsKey(profile.key())) {
+        state.profile = state.presets[profile.key()];
+        dropdownValue = profile.key();
+      // Key does not exist yet
+      // Saving does matter
+      } else {
+        if (state.save) {
+          state.presets[profile.key()] = profile;
+
+          state.profile = state.presets[profile.key()];
+          _rebuildDropdownMenu();
+        } else {
+          state.profile = profile;
+          dropdownValue = 'Custom';
+        }
       }
 
       // Reset the timer
       state.resetTimer();
-
-      // Set the value of the dropdown menu to 'custom'
-      dropdownValue = 'Custom';
     });
   }
 
@@ -185,11 +226,12 @@ class _FlounderHomeState extends State<FlounderHome> {
     });
   }
 
+  // BUILD FUNCTIONS
   @override
   void initState() {
     super.initState();
 
-    _rebuildDropdownMenu();
+    _initPreferences();
 
     if (!kIsWeb) { if (Platform.isAndroid) {
       SystemChrome.setSystemUIOverlayStyle(
