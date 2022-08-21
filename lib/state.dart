@@ -86,10 +86,10 @@ class ApplicationState {
   late TimeProfile profile;
 
   // LOCAL SETTINGS
-  // A flag to determine wether
+  // A flag to determine whether
   // to save custom profiles
   bool save     = false;
-  // A flag to determine wether to
+  // A flag to determine whether to
   // play an additional reminder
   // DURING the talk
   bool remindMe = false;

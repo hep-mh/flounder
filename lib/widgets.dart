@@ -382,7 +382,7 @@ class FlounderDrawer extends StatelessWidget {
               ),
             ),
           ),
-          // 5. The CHECKBOX_LIST_TILE to determine wether to save ////////////
+          // 5. The CHECKBOX_LIST_TILE to determine whether to save ///////////
           /////////////////////////////////////////////////////////////////////
           Theme(
             data: ThemeData(unselectedWidgetColor: Colors.white),
