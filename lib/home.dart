@@ -188,7 +188,7 @@ class _FlounderHomeState extends State<FlounderHome> {
       int reminderAt       = (reminderText   != "") ? int.parse(reminderText)   : state.profile.reminderAt;
       
       // -->
-      TimeProfile profile = TimeProfile(talkLength, discussionLength, reminderAt);
+      TimerProfile profile = TimerProfile(talkLength, discussionLength, reminderAt);
 
       // Key does already exist
       // --> Saving does not matter
@@ -233,7 +233,7 @@ class _FlounderHomeState extends State<FlounderHome> {
       Map presets = {};
 
       for (var presetStr in presetsFromPrefs) {
-        TimeProfile profile = TimeProfile.fromString(presetStr);
+        TimerProfile profile = TimerProfile.fromString(presetStr);
         // -->
         presets[profile.key()] = profile;
       }

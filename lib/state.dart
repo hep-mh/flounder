@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 
-class TimeProfile {
+class TimerProfile {
   int  talkLength;
   int  discussionLength;
   int  reminderAt;
 
-  TimeProfile(this.talkLength, this.discussionLength, [this.reminderAt = -1]) {
+  TimerProfile(this.talkLength, this.discussionLength, [this.reminderAt = -1]) {
     if ( reminderAt <= 0 ) {
       reminderAt = discussionLength;
     }
   }
 
-  static TimeProfile fromString(String? profileStr) {
+  static TimerProfile fromString(String? profileStr) {
     List<String> entries = profileStr!.split("-");
 
     int  talkLength       = int.parse(entries[0]);
@@ -20,7 +20,7 @@ class TimeProfile {
     int  reminderAt       = int.parse(entries[2]);
 
 
-    return TimeProfile(talkLength, discussionLength, reminderAt);
+    return TimerProfile(talkLength, discussionLength, reminderAt);
   }
 
   @override
@@ -41,17 +41,17 @@ class TimeProfile {
     return talkStr + '+' + discussionStr + ' (' + reminderStr + ')';
   }
 
-  TimeProfile copy() {
-    return TimeProfile(talkLength, discussionLength, reminderAt);
+  TimerProfile copy() {
+    return TimerProfile(talkLength, discussionLength, reminderAt);
   }
 }
 
 
 Map defaultPresets = {
-  '20+5 (5)': TimeProfile(20, 5),
-  '16+4 (4)': TimeProfile(16, 4),
-  '12+3 (3)': TimeProfile(12, 3),
-   '8+2 (2)': TimeProfile( 8, 2),
+  '20+5 (5)': TimerProfile(20, 5),
+  '16+4 (4)': TimerProfile(16, 4),
+  '12+3 (3)': TimerProfile(12, 3),
+   '8+2 (2)': TimerProfile( 8, 2),
 };
 
 
@@ -83,7 +83,7 @@ class ApplicationState {
   // A map of all available presets
   Map presets = defaultPresets;
   // The currently selected profile
-  late TimeProfile profile;
+  late TimerProfile profile;
 
   // LOCAL SETTINGS
   // A flag to determine whether
