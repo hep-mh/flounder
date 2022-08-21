@@ -26,7 +26,7 @@ class Flounder extends StatelessWidget {
       ),
     );
   }
-} // Flounder
+}
 
 
 class FlounderHome extends StatefulWidget {
@@ -34,70 +34,42 @@ class FlounderHome extends StatefulWidget {
 
   @override
   State<FlounderHome> createState() => _FlounderHomeState();
-} // FlounderHome
+}
 
 
 class _FlounderHomeState extends State<FlounderHome> {
-  final FlounderState state = FlounderState();
+  final ApplicationState state = ApplicationState();
 
+  // The current list of items in the
   // DropdownMenu
-  String dropdownValue = "";
+  List< DropdownMenuItem<String> > dropdownItems = [];
 
-  // TextFields
+  // The current value of the DropdownMenu
+  late String dropdownValue;
+
+  // A flag to check of the DropdownMenu
+  // needs to be build on the next refresh
+  // Initially true, since a build needs
+  // to happe on the initial launch
+  bool rebuildDropdownMenu = true;
+
+  // The controllers used to obtain the content
+  // of the different TextField objects
   final Map textEditingControllers = {
     'Talk'      : TextEditingController(),
     'Discussion': TextEditingController(),
     'Reminder@' : TextEditingController(),
   };
 
-  // Timer
-  Timer runner = Timer(Duration.zero, () {});
+  // The Timer object driving the main clock
+  late Timer runner;
 
-  // SharedPreferences
-  // initState -> _initPreferences
+  // The SharedPreferences object to
+  // read user-defined presets
   late SharedPreferences prefs;
 
-  // HELPER FUNCTIONS
-  void _initPreferences() async {
-    prefs = await SharedPreferences.getInstance();
-
-    final List<String>? presetsFromPrefs = prefs.getStringList('presets');
-    // If preferences are preset, override defaults
-    if (presetsFromPrefs != null) {
-      Map presets = {};
-
-      for (var preset in presetsFromPrefs) {
-        Profile profile = Profile.fromString(preset);
-
-        presets[profile.key()] = profile;
-      }
-
-      state.swapPresets(presets);
-    }
-
-    // -->
-    _rebuildDropdownMenu();
-  }
-
-  void _rebuildDropdownMenu() {
-    dropdownValue = state.profile.key();
-
-    dropdownItems.clear();
-    // Fill the list of dropdown menu items
-    state.presets.forEach((key, value) => dropdownItems.add(
-      DropdownMenuItem<String>(
-        value: key,
-        child: Text(value.key(), style: const TextStyle(color: Colors.white)),
-      )
-    ));
-    dropdownItems.add(
-      const DropdownMenuItem<String>(
-        value: 'Custom',
-        child: Text('Custom', style: TextStyle(color: Colors.white))
-      ),
-    );
-  }
-
+  // HELPER FUNCTIONS /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
   void _playSound() async {
     AudioPlayer player = AudioPlayer();
 
@@ -113,10 +85,11 @@ class _FlounderHomeState extends State<FlounderHome> {
     }
   }
 
-  // ACTION FUNCTIONS
+  // ACTION FUNCTIONS /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
   void _onPlayButtonPressed() {
     setState(() {
-      // START TIMER
+      // START THE TIMER WHEN IDLE
       if ( state.mode.id == 'Idle' ) {
         // Enable the wakelock when the timer is started
         _toggleWakelock(true);
@@ -153,7 +126,7 @@ class _FlounderHomeState extends State<FlounderHome> {
             }
           });
         });
-      // STOP TIMER
+      // STOP THE TIMER WHEN RUNNING
       } else {
         // Disable the wakelock when the timer is stopped
         _toggleWakelock(false);
@@ -175,40 +148,63 @@ class _FlounderHomeState extends State<FlounderHome> {
       dropdownValue = value!;
 
       if (value != 'Custom') {
-        state.profile = defaultPresets[dropdownValue].copy();
+        state.profile = state.presets[dropdownValue].copy();
         state.resetTimer();
       }
     });
   }
 
-  void _onSaveButtonPressed() {
+  void _onDeleteButtonPressed() {
+    setState(() {
+      // Only delete if the current value is not 'Custom'
+      if (dropdownValue == 'Custom') return;
+
+      state.presets.removeWhere((key, _) => key == dropdownValue);
+      // -->
+      rebuildDropdownMenu = true;
+
+      if (state.presets.isEmpty) { // Keep the current profile
+        dropdownValue = 'Custom';
+      } else {
+        state.profile = state.presets[state.presets.keys.first].copy();
+
+        dropdownValue = state.profile.key();
+      }
+
+      state.resetTimer();
+    });
+  }
+
+  void _onApplyButtonPressed() {
     setState(() {
       String talkText       = textEditingControllers['Talk'      ].text;
       String discussionText = textEditingControllers['Discussion'].text;
       String reminderText   = textEditingControllers['Reminder@' ].text;
 
-      // Create a new Profile
+      // Create a new profile from the data
+      // in the different text fields
       int talkLength       = (talkText       != "") ? int.parse(talkText)       : state.profile.talkLength;
       int discussionLength = (discussionText != "") ? int.parse(discussionText) : state.profile.discussionLength;
       int reminderAt       = (reminderText   != "") ? int.parse(reminderText)   : state.profile.reminderAt;
       
       // -->
-      Profile profile = Profile(talkLength, discussionLength, reminderAt);
+      TimeProfile profile = TimeProfile(talkLength, discussionLength, reminderAt);
 
-      // Set the profile (and potentially save it)
-      // Key does exist already
-      // Saving does not matter
+      // Key does already exist
+      // --> Saving does not matter
       if (state.presets.containsKey(profile.key())) {
-        state.profile = state.presets[profile.key()];
+        state.profile = state.presets[profile.key()].copy();
         dropdownValue = profile.key();
       // Key does not exist yet
-      // Saving does matter
+      // --> Saving does matter
       } else {
         if (state.save) {
           state.presets[profile.key()] = profile;
-
-          state.profile = state.presets[profile.key()];
-          _rebuildDropdownMenu();
+          // -->
+          rebuildDropdownMenu = true;
+        
+          state.profile = state.presets[profile.key()].copy();
+          dropdownValue = profile.key();
         } else {
           state.profile = profile;
           dropdownValue = 'Custom';
@@ -226,13 +222,36 @@ class _FlounderHomeState extends State<FlounderHome> {
     });
   }
 
-  // BUILD FUNCTIONS
+  // INIT & DISPOSE FUNCTIONS /////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+   void _loadPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+
+    final List<String>? presetsFromPrefs = prefs.getStringList('presets');
+    // If preferences are preset, override the defaults
+    if (presetsFromPrefs != null) {
+      Map presets = {};
+
+      for (var presetStr in presetsFromPrefs) {
+        TimeProfile profile = TimeProfile.fromString(presetStr);
+        // -->
+        presets[profile.key()] = profile;
+      }
+
+      state.swapPresets(presets);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
 
-    _initPreferences();
+    _loadPreferences();
+    // -->
+    dropdownValue = state.profile.key();
 
+    // Ensure that the navigation bar has
+    // a matching color on Android devices
     if (!kIsWeb) { if (Platform.isAndroid) {
       SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(
@@ -252,13 +271,47 @@ class _FlounderHomeState extends State<FlounderHome> {
     super.dispose();
   }
 
+  // BUILD FUNCTIONS //////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  void _buildDropdownMenuIfNeeded() {
+    // Only run if necessary
+    if (!rebuildDropdownMenu) {
+      return;
+    } else {
+      rebuildDropdownMenu = false;
+    }
+
+    dropdownItems.clear();
+    // Fill the list of DropdownMenuItem's
+    state.presets.forEach((key, _) {
+      dropdownItems.add(
+        DropdownMenuItem<String>(
+          value: key,
+          child: Text(key, style: const TextStyle(color: Colors.white)),
+        )
+      );
+    });
+    dropdownItems.add(
+      const DropdownMenuItem<String>(
+        value: 'Custom',
+        child: Text('Custom', style: TextStyle(color: Colors.white))
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    _buildDropdownMenuIfNeeded();
+
     return Scaffold(
       backgroundColor: const Color(0xff1f1f1f),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      endDrawerEnableOpenDragGesture: false,
+      endDrawerEnableOpenDragGesture: true,
+      // 1. FLOUNDER_BODY /////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////
       body: FlounderBody(state: state),
+      // 2. FLOUNDER_ACTION_BAR ///////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////
       bottomNavigationBar: Builder(builder: (context) { return FlounderActionBar(
         state: state,
         onPressedL: _onBellButtonPressed,
@@ -268,24 +321,27 @@ class _FlounderHomeState extends State<FlounderHome> {
           }
         }
       );}),
+      // 3. FLOUNDER_ACTION_BUTTON ////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////
       floatingActionButton: FlounderActionButton(
         state: state,
         onPressed: _onPlayButtonPressed,
       ),
+      // 4. FLOUNDER_DRAWER //////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////
       endDrawer: Builder(builder: (context) { return FlounderDrawer(
         state: state,
         dropdownValue: dropdownValue,
-        onDropdownValueChanged: (String? value) {
-          _onDropdownValueChanged(value);
-          if (value != 'Custom') { Navigator.of(context).pop(); }
-        },
-        onSaveButtonPressed: () {
-          _onSaveButtonPressed();
+        dropdownItems: dropdownItems,
+        onDropdownValueChanged: _onDropdownValueChanged,
+        onDeleteButtonPressed: _onDeleteButtonPressed,
+        onApplyButtonPressed: () {
+          _onApplyButtonPressed();
           Navigator.of(context).pop();
         },
         onCheckboxChanged: _onCheckboxChanged,
-        controllers: textEditingControllers,
+        textControllers: textEditingControllers,
       );}),
     );
-  } // _FlounderHomeState.build
-} // _FlounderHomeState
+  }
+}

@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 
 
-class Profile {
+class TimeProfile {
   int  talkLength;
   int  discussionLength;
   int  reminderAt;
 
-  Profile(this.talkLength, this.discussionLength, [this.reminderAt = -1]) {
+  TimeProfile(this.talkLength, this.discussionLength, [this.reminderAt = -1]) {
     if ( reminderAt <= 0 ) {
       reminderAt = discussionLength;
     }
   }
 
-  String key() {
-    String talkStr       = talkLength.toString();
-    String discussionStr = discussionLength.toString();
-    String reminderStr   = reminderAt.toString();
+  static TimeProfile fromString(String? profileStr) {
+    List<String> entries = profileStr!.split("-");
 
-    return talkStr + '+' + discussionStr + ' (' + reminderStr + ')';
+    int  talkLength       = int.parse(entries[0]);
+    int  discussionLength = int.parse(entries[1]);
+    int  reminderAt       = int.parse(entries[2]);
+
+
+    return TimeProfile(talkLength, discussionLength, reminderAt);
   }
 
   @override
@@ -30,31 +33,26 @@ class Profile {
     return talkStr + '-' + discussionStr + '-' + reminderStr;
   }
 
-  static Profile fromString(String? profileStr) {
-    List<String>? entries = profileStr?.split("-");
+  String key() {
+    String talkStr       = talkLength.toString();
+    String discussionStr = discussionLength.toString();
+    String reminderStr   = reminderAt.toString();
 
-    int  talkLength       = int.parse(entries![0]);
-    int  discussionLength = int.parse(entries[1]);
-    int  reminderAt       = int.parse(entries[2]);
-
-
-    return Profile(talkLength, discussionLength, reminderAt);
+    return talkStr + '+' + discussionStr + ' (' + reminderStr + ')';
   }
 
-  Profile copy() {
-    return Profile(talkLength, discussionLength, reminderAt);
+  TimeProfile copy() {
+    return TimeProfile(talkLength, discussionLength, reminderAt);
   }
-} // Profile
+}
 
 
 Map defaultPresets = {
-  '20+5 (5)': Profile(20,  5),
-  '16+4 (4)': Profile(16,  4),
-  '12+3 (3)': Profile(12,  3),
-   '8+2 (2)': Profile( 8,  2),
+  '20+5 (5)': TimeProfile(20, 5),
+  '16+4 (4)': TimeProfile(16, 4),
+  '12+3 (3)': TimeProfile(12, 3),
+   '8+2 (2)': TimeProfile( 8, 2),
 };
-// --> TODO Should not be here
-List< DropdownMenuItem<String> > dropdownItems = [];
 
 
 class Mode {
@@ -63,7 +61,7 @@ class Mode {
   final int    increment;
 
   Mode(this.id, this.color, this.increment);
-} // Mode
+}
 
 
 class ModeRegister {
@@ -71,41 +69,59 @@ class ModeRegister {
   static final Mode talk       = Mode('Talk'      , Colors.green , -1);
   static final Mode discussion = Mode('Discussion', Colors.orange, -1);
   static final Mode overtime   = Mode('Overtime'  , Colors.red   ,  1);
-} // ModeRegister
+}
 
 
-class FlounderState {
-  int  timer = 0;
-  Mode mode  = ModeRegister.idle;
+class ApplicationState {
+  // The current mode, i.e. either
+  // IDLE, TALK, DISCUSSION or OVERTIME
+  Mode mode = ModeRegister.idle;
+  // The main timer that keeps
+  // track of the remaining time
+  late int timer;
 
-  // The available presets
-  late Map     presets; // FlounderState -> setPresets
-  // The current profile selected
-  // from the available presets
-  late Profile profile; // FlounderState -> setPresets
+  // A map of all available presets
+  Map presets = defaultPresets;
+  // The currently selected profile
+  late TimeProfile profile;
 
-  // The flag to determine wether to
-  // save custom profiles
-  bool         save     = true;
-  // A flag to determine wether to play
-  // a reminder during the talk
-  bool         remindMe = false;
+  // LOCAL SETTINGS
+  // A flag to determine wether
+  // to save custom profiles
+  bool save     = false;
+  // A flag to determine wether to
+  // play an additional reminder
+  // DURING the talk
+  bool remindMe = false;
 
-  FlounderState() {
-    // First set the list of all presets to its default
-    // value; Later update the set if preferences are found
-    swapPresets(defaultPresets);
-    resetTimer();
+  ApplicationState() {
+    // Initially set the profile to the
+    // first element in 'presets' and...
+    profile = presets[presets.keys.first].copy();
+    // ...initialize the timer accordingly
+    timer = profile.talkLength*60;
   }
 
   void swapPresets(Map newPresets) {
     presets = newPresets;
+    // Select a new profile, as
+    // the old one might be invalid
+    profile = presets[presets.keys.first].copy();
+  }
 
-    // -->
-    profile = presets[presets.keys.toList().first].copy();
+  List<String> exportPresets() {
+    List<String> exportList = [];
+
+    // Fill the list with every
+    // available preset
+    presets.forEach((key, value) {
+      exportList.add(value.toString());
+    });
+
+    return exportList;
   }
 
   void resetTimer() {
     timer = profile.talkLength*60;
   }
-} // FlounderState
+}

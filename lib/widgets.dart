@@ -10,7 +10,7 @@ const double magicWidth = 740;
 
 
 class _FlounderHeader extends StatelessWidget {
-  final FlounderState state;
+  final ApplicationState state;
 
   const _FlounderHeader({Key? key, required this.state}) : super(key: key);
 
@@ -64,7 +64,7 @@ class _FlounderHeader extends StatelessWidget {
           height: height, width: width,
           child: FittedBox(fit: BoxFit.contain, child: Text(state.mode.id)),
           decoration: BoxDecoration(
-            // Increase vivibility by coloring the
+            // Increase visibility by coloring the
             // full box in the respective color
             color: state.mode.color,
             borderRadius: BorderRadius.circular(borderRadius),
@@ -72,16 +72,16 @@ class _FlounderHeader extends StatelessWidget {
         ),
       ),
     );
-  } // _FlounderHeader.build
-} // _FlounderHeader
+  }
+}
 
 
 class _FlounderTimer extends StatelessWidget {
-  final FlounderState state;
+  final ApplicationState state;
 
   const _FlounderTimer({Key? key, required this.state}) : super(key: key);
 
-  String _buildTimerText() {
+  String _timerText() {
     int min = state.timer ~/ 60;
     int sec = state.timer - min*60;
 
@@ -104,7 +104,7 @@ class _FlounderTimer extends StatelessWidget {
           child: FittedBox(
             fit: BoxFit.contain,
             child: Text(
-              _buildTimerText(),
+              _timerText(),
               style: const TextStyle(
                 // This is the maximal font size, which will
                 // be scaled down by the FittedBox if needed
@@ -118,12 +118,12 @@ class _FlounderTimer extends StatelessWidget {
         ),
       ),
     );
-  } // _FlounderTimer.build
-} // _FlounderTimer
+  }
+}
 
 
 class FlounderBody extends StatelessWidget {
-  final FlounderState state;
+  final ApplicationState state;
 
   const FlounderBody({Key? key, required this.state}) : super(key: key);
 
@@ -137,8 +137,8 @@ class FlounderBody extends StatelessWidget {
         ],
       ),
     );
-  } // FlounderBody.build
-} // FlounderBody
+  }
+}
 
 
 double _getActionBarScale(double contextWidth, double contextHeight, [double factor = 1]) {
@@ -157,7 +157,7 @@ double _getActionBarScale(double contextWidth, double contextHeight, [double fac
 
 
 class FlounderActionBar extends StatelessWidget {
-  final FlounderState state;
+  final ApplicationState state;
 
   final VoidCallback onPressedL;
   final VoidCallback onPressedR;
@@ -177,7 +177,6 @@ class FlounderActionBar extends StatelessWidget {
 
     return BottomAppBar(
       color: state.mode.color,
-      //shape: const CircularNotchedRectangle(),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -219,12 +218,12 @@ class FlounderActionBar extends StatelessWidget {
         ],
       ),
     );
-  } // FlounderActionBar.build
-} // FlounderActionBar
+  }
+}
 
 
 class FlounderActionButton extends StatelessWidget {
-  final FlounderState state;
+  final ApplicationState state;
 
   final VoidCallback onPressed;
 
@@ -246,39 +245,47 @@ class FlounderActionButton extends StatelessWidget {
         child: Icon(
           (state.mode.id == 'Idle') ? Icons.play_arrow_rounded : Icons.sync_rounded,
           color: Colors.black,
+          size: 0.6*buttonSize,
         ),
         onPressed: onPressed,
         backgroundColor: state.mode.color,
       ),
     );
-  } // FlounderActionButton.build
-} // FlounderActionButton
+  }
+}
 
 
 class FlounderDrawer extends StatelessWidget {
-  final FlounderState state;
+  final ApplicationState state;
 
   // DropdownButton properties
-  final String                 dropdownValue;
+  final List<DropdownMenuItem<String>> dropdownItems;
+  final String                         dropdownValue;
+
   final ValueChanged<String?>? onDropdownValueChanged;
 
+  // IconButton properties
+  final VoidCallback onDeleteButtonPressed;
+
+  // TextFormField properties
+  final Map textControllers;
+
   // ElevatedButton properties
-  final VoidCallback onSaveButtonPressed;
+  final VoidCallback onApplyButtonPressed;
 
   // CheckboxListTile properties
   final ValueChanged<bool?>? onCheckboxChanged;
 
-  // TextFormField properties
-  final Map controllers;
-
   const FlounderDrawer({
     Key? key,
     required this.state,
+    required this.dropdownItems,
     required this.dropdownValue,
     required this.onDropdownValueChanged,
-    required this.onSaveButtonPressed,
+    required this.onDeleteButtonPressed,
+    required this.onApplyButtonPressed,
     required this.onCheckboxChanged,
-    required this.controllers,
+    required this.textControllers,
   }) : super(key: key);
 
   @override
@@ -289,13 +296,13 @@ class FlounderDrawer extends StatelessWidget {
       'Reminder@' : state.profile.reminderAt,
     };
 
-    List<Widget> customSection = [];
-    // Build the input fields with appropriate spacing
+    List<Widget> textFieldWidgets = [];
+    // Prepare the different text fields that
+    // are used for getting user input
     textFieldValues.forEach((key, value) {
-      customSection.add(
+      textFieldWidgets.add(
         TextFormField(
-          //initialValue: value.toString(),
-          controller: controllers[key]..text = textFieldValues[key].toString(),
+          controller: textControllers[key]..text = textFieldValues[key].toString(),
           style: const TextStyle(fontSize: 25, color: Colors.white),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -309,82 +316,85 @@ class FlounderDrawer extends StatelessWidget {
             suffixStyle: const TextStyle(fontSize: 25, color: Colors.white),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
-                color: state.mode.color,
-                width: 1,
-              ),
+              borderSide: BorderSide(color: state.mode.color, width: 1),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: Colors.white,
-                width: 1,
-              ),
+              borderSide: const BorderSide(color: Colors.white, width: 1),
             ),
           ),
         ),
       );
-      customSection.add(const SizedBox(height: 15));
+      textFieldWidgets.add(
+        const SizedBox(height: 15)
+      );
     });
-    // Add the button to save the configuration
-    customSection.add(
-      ElevatedButton(
-        child: const Text('Save', style: TextStyle(fontSize: 35, color: Colors.white)),
-        onPressed: onSaveButtonPressed,
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(state.mode.color),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-              side: BorderSide(color: state.mode.color)
-            ),
-          ),
-        ),
-      ),
-    );
-    customSection.add(
-      Theme(
-        data: ThemeData(unselectedWidgetColor: Colors.white),
-        child: CheckboxListTile(
-          title: const Text(
-            'Save as Preset',
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          activeColor: state.mode.color,
-          value: state.save,
-          //controlAffinity: ListTileControlAffinity.leading,
-          onChanged: onCheckboxChanged
-        )
-      )
-    );
 
     return Drawer(
       backgroundColor: const Color(0xff1f1f1f),
       child: ListView(
         padding: const EdgeInsets.all(20),
         children: <Widget>[
-          Text(
-            'Presets:',
-            style: TextStyle(fontSize: 35, color: state.mode.color),
-          ),
+          Text('Presets:', style: TextStyle(fontSize: 35, color: state.mode.color)),
           const SizedBox(height: 15),
-          DropdownButton<String>(
-            underline: Container(height: 0, color: state.mode.color),
-            isExpanded: true,
-            value: dropdownValue,
-            items: dropdownItems,
-            dropdownColor: state.mode.color,
-            onChanged: onDropdownValueChanged,
-            style: const TextStyle(color: Colors.black, fontSize: 25),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // 1. The DROPDOWN_BUTTON to cycle the presets //////////////////
+              /////////////////////////////////////////////////////////////////
+              Expanded(
+                child: DropdownButton<String>(
+                  underline: Container(height: 0, color: state.mode.color),
+                  isExpanded: true,
+                  value: dropdownValue,
+                  items: dropdownItems,
+                  dropdownColor: state.mode.color,
+                  onChanged: onDropdownValueChanged,
+                  style: const TextStyle(color: Colors.black, fontSize: 25),
+                ),
+              ),
+              // 2. The ICON_BUTTON to delete the active preset ///////////////
+              /////////////////////////////////////////////////////////////////
+              IconButton(
+                icon: const Icon(Icons.delete),
+                color: Colors.white,
+                splashRadius: 17,
+                onPressed: onDeleteButtonPressed,
+              )
+            ]
           ),
           const SizedBox(height: 20),
-          Text(
-            'Custom:',
-            style: TextStyle(fontSize: 35, color: state.mode.color),
+          Text('Custom:', style: TextStyle(fontSize: 35, color: state.mode.color)),
+          const SizedBox(height: 15),
+          // 3. The TEXT_FORM_FIELD's to capture user input ///////////////////
+          /////////////////////////////////////////////////////////////////////
+          ...textFieldWidgets,
+          // 4. The ELEVATED_BUTTON to apply the current configuration ////////
+          /////////////////////////////////////////////////////////////////////
+          ElevatedButton(
+            child: const Text('Apply', style: TextStyle(fontSize: 35, color: Colors.white)),
+            onPressed: onApplyButtonPressed,
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(15)),
+              backgroundColor: MaterialStateProperty.all<Color>(state.mode.color),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(color: state.mode.color)),
+              ),
+            ),
           ),
-          const SizedBox(height: 15), ...customSection
+          // 5. The CHECKBOX_LIST_TILE to determine wether to save ////////////
+          /////////////////////////////////////////////////////////////////////
+          Theme(
+            data: ThemeData(unselectedWidgetColor: Colors.white),
+            child: CheckboxListTile(
+              title: const Text('Save as Preset', style: TextStyle(color: Colors.white, fontSize: 20)),
+              activeColor: state.mode.color,
+              value: state.save,
+              onChanged: onCheckboxChanged
+            )
+          )
         ],
       ),
     );
-  } // FlounderDrawer.build
-} // FlounderDrawer
+  }
+}
