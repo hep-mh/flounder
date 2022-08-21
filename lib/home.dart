@@ -53,9 +53,9 @@ class _FlounderHomeState extends State<FlounderHome> {
   // to happe on the initial launch
   bool rebuildDropdownMenu = true;
 
-  // The controllers used to obtain the content
+  // The controllers used to update the content
   // of the different TextField objects
-  final Map textEditingControllers = {
+  final Map textFieldControllers = {
     'Talk'      : TextEditingController(),
     'Discussion': TextEditingController(),
     'Reminder@' : TextEditingController(),
@@ -68,7 +68,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   // read user-defined presets
   late SharedPreferences prefs;
 
-  // HELPER FUNCTIONS /////////////////////////////////////////////////////////
+  // UTILITY FUNCTIONS ////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
   void _playSound() async {
     AudioPlayer player = AudioPlayer();
@@ -83,6 +83,14 @@ class _FlounderHomeState extends State<FlounderHome> {
       // Wacklock currently does not work on Linux
       if (!Platform.isLinux) { Wakelock.toggle(enable: enable); }
     }
+  }
+
+  // HELPER FUNCTIONS /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  void _updateTextFormFields() {
+    textFieldControllers['Talk'      ].text = state.profile.talkLength.toString();
+    textFieldControllers['Discussion'].text = state.profile.discussionLength.toString();
+    textFieldControllers['Reminder@' ].text = state.profile.reminderAt.toString();
   }
 
   // ACTION FUNCTIONS /////////////////////////////////////////////////////////
@@ -148,17 +156,21 @@ class _FlounderHomeState extends State<FlounderHome> {
       dropdownValue = value!;
 
       if (value != 'Custom') {
-        state.profile = state.presets[dropdownValue].copy();
+        state.profile = state.presets[dropdownValue].clone();
+        // --> Reset timer on profile change
         state.resetTimer();
+
       }
+
+      _updateTextFormFields();
     });
   }
 
   void _onDeleteButtonPressed() {
-    setState(() {
-      // Only delete if the current value is not 'Custom'
-      if (dropdownValue == 'Custom') return;
+    // Only delete if the current profile is not custom
+    if (dropdownValue == 'Custom') return;
 
+    setState(() {
       state.presets.removeWhere((key, _) => key == dropdownValue);
       // -->
       rebuildDropdownMenu = true;
@@ -166,59 +178,52 @@ class _FlounderHomeState extends State<FlounderHome> {
       if (state.presets.isEmpty) { // Keep the current profile
         dropdownValue = 'Custom';
       } else {
-        state.profile = state.presets[state.presets.keys.first].copy();
+        state.profile = state.presets[state.presets.keys.first].clone();
+        // --> Reset timer on profile change
+        state.resetTimer();
 
         dropdownValue = state.profile.key();
       }
-
-      state.resetTimer();
-    });
-  }
-
-  void _onApplyButtonPressed() {
-    setState(() {
-      String talkText       = textEditingControllers['Talk'      ].text;
-      String discussionText = textEditingControllers['Discussion'].text;
-      String reminderText   = textEditingControllers['Reminder@' ].text;
-
-      // Create a new profile from the data
-      // in the different text fields
-      int talkLength       = (talkText       != "") ? int.parse(talkText)       : state.profile.talkLength;
-      int discussionLength = (discussionText != "") ? int.parse(discussionText) : state.profile.discussionLength;
-      int reminderAt       = (reminderText   != "") ? int.parse(reminderText)   : state.profile.reminderAt;
       
-      // -->
-      TimerProfile profile = TimerProfile(talkLength, discussionLength, reminderAt);
-
-      // Key does already exist
-      // --> Saving does not matter
-      if (state.presets.containsKey(profile.key())) {
-        state.profile = state.presets[profile.key()].copy();
-        dropdownValue = profile.key();
-      // Key does not exist yet
-      // --> Saving does matter
-      } else {
-        if (state.save) {
-          state.presets[profile.key()] = profile;
-          // -->
-          rebuildDropdownMenu = true;
-        
-          state.profile = state.presets[profile.key()].copy();
-          dropdownValue = profile.key();
-        } else {
-          state.profile = profile;
-          dropdownValue = 'Custom';
-        }
-      }
-
-      // Reset the timer
-      state.resetTimer();
     });
   }
 
-  void _onCheckboxChanged(bool? value) {
+  void _onAnyTextFieldChanged(String? id, String? text) {
+    if (text == '') return;
+
     setState(() {
-      state.save = !state.save;
+      switch(id) {
+        case 'Talk':
+          state.profile.talkLength       = int.parse(text!);
+          break;
+        case 'Discussion':
+          state.profile.discussionLength = int.parse(text!);
+          break;
+        case 'Reminder@':
+          state.profile.reminderAt       = int.parse(text!);
+          break;
+      }
+      // --> Reset timer on profile change
+      state.resetTimer();
+
+      if (state.presets.containsKey(state.profile.key())) {
+        dropdownValue = state.profile.key();
+      } else {
+        dropdownValue = 'Custom';
+      }
+    });
+  }
+
+  void _onSaveButtonPressed() {
+    // Only save if the current profile is custom
+    if (dropdownValue != 'Custom') return;
+
+    setState(() {
+      state.presets[state.profile.key()] = state.profile.clone();
+      // -->
+      rebuildDropdownMenu = true;
+
+      dropdownValue = state.profile.key();
     });
   }
 
@@ -247,8 +252,6 @@ class _FlounderHomeState extends State<FlounderHome> {
     super.initState();
 
     _loadPreferences();
-    // -->
-    dropdownValue = state.profile.key();
 
     // Ensure that the navigation bar has
     // a matching color on Android devices
@@ -259,12 +262,14 @@ class _FlounderHomeState extends State<FlounderHome> {
         )
       );
     }}
+
+    dropdownValue = state.profile.key();
   }
 
   @override
   void dispose() {
     // Clean up the TextEditingController's
-    textEditingControllers.forEach((key, value) {
+    textFieldControllers.forEach((key, value) {
       value.dispose();
     });
 
@@ -306,7 +311,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     return Scaffold(
       backgroundColor: const Color(0xff1f1f1f),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      endDrawerEnableOpenDragGesture: true,
+      endDrawerEnableOpenDragGesture: false,
       // 1. FLOUNDER_BODY /////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////
       body: FlounderBody(state: state),
@@ -317,6 +322,7 @@ class _FlounderHomeState extends State<FlounderHome> {
         onPressedL: _onBellButtonPressed,
         onPressedR: () {
           if ( state.mode.id == 'Idle' ) {
+            _updateTextFormFields();
             Scaffold.of(context).openEndDrawer();
           }
         }
@@ -329,19 +335,16 @@ class _FlounderHomeState extends State<FlounderHome> {
       ),
       // 4. FLOUNDER_DRAWER //////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////
-      endDrawer: Builder(builder: (context) { return FlounderDrawer(
+      endDrawer: FlounderDrawer(
         state: state,
         dropdownValue: dropdownValue,
         dropdownItems: dropdownItems,
         onDropdownValueChanged: _onDropdownValueChanged,
         onDeleteButtonPressed: _onDeleteButtonPressed,
-        onApplyButtonPressed: () {
-          _onApplyButtonPressed();
-          Navigator.of(context).pop();
-        },
-        onCheckboxChanged: _onCheckboxChanged,
-        textControllers: textEditingControllers,
-      );}),
+        textFieldControllers: textFieldControllers,
+        onAnyTextFieldChanged: _onAnyTextFieldChanged,
+        onSaveButtonPressed: _onSaveButtonPressed,
+      ),
     );
   }
 }

@@ -41,7 +41,7 @@ class TimerProfile {
     return talkStr + '+' + discussionStr + ' (' + reminderStr + ')';
   }
 
-  TimerProfile copy() {
+  TimerProfile clone() {
     return TimerProfile(talkLength, discussionLength, reminderAt);
   }
 }
@@ -90,8 +90,6 @@ class ApplicationState {
 
   // LOCAL SETTINGS ///////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  // A flag to determine whether to save custom profiles
-  bool save     = false;
   // A flag to determine whether to play an additional
   // reminder DURING the talk
   bool remindMe = false;
@@ -101,7 +99,7 @@ class ApplicationState {
   ApplicationState() {
     // Initially set the profile to the
     // first element in 'presets' and...
-    profile = presets[presets.keys.first].copy();
+    profile = presets[presets.keys.first].clone();
     // ...initialize the timer accordingly
     timer = profile.talkLength*60;
   }
@@ -109,7 +107,7 @@ class ApplicationState {
   void swapPresets(Map newPresets) {
     presets = newPresets;
     // Select a new profile, as the old one might be invalid
-    profile = presets[presets.keys.first].copy();
+    profile = presets[presets.keys.first].clone();
   }
 
   List<String> exportPresets() {
