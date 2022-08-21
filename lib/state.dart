@@ -73,27 +73,31 @@ class ModeRegister {
 
 
 class ApplicationState {
-  // The current mode, i.e. either
-  // IDLE, TALK, DISCUSSION or OVERTIME
+  // MAIN COMPONENTS //////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  // The current mode, i.e. either IDLE, TALK, DISCUSSION
+  // or OVERTIME
   Mode mode = ModeRegister.idle;
-  // The main timer that keeps
-  // track of the remaining time
+
+  // The main timer that keeps track of the remaining time
   late int timer;
 
   // A map of all available presets
   Map presets = defaultPresets;
+
   // The currently selected profile
   late TimerProfile profile;
 
-  // LOCAL SETTINGS
-  // A flag to determine whether
-  // to save custom profiles
+  // LOCAL SETTINGS ///////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  // A flag to determine whether to save custom profiles
   bool save     = false;
-  // A flag to determine whether to
-  // play an additional reminder
-  // DURING the talk
+  // A flag to determine whether to play an additional
+  // reminder DURING the talk
   bool remindMe = false;
 
+  // MEMBER FUNCTIONS /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
   ApplicationState() {
     // Initially set the profile to the
     // first element in 'presets' and...
@@ -104,16 +108,14 @@ class ApplicationState {
 
   void swapPresets(Map newPresets) {
     presets = newPresets;
-    // Select a new profile, as
-    // the old one might be invalid
+    // Select a new profile, as the old one might be invalid
     profile = presets[presets.keys.first].copy();
   }
 
   List<String> exportPresets() {
     List<String> exportList = [];
 
-    // Fill the list with every
-    // available preset
+    // Fill the list with every available preset
     presets.forEach((key, value) {
       exportList.add(value.toString());
     });
