@@ -34,11 +34,11 @@ flutter_icons:
   image_path_ios: "assets/ios-icon.png"
   remove_alpha_ios: true
   web:
-      generate: true
-      # The maskable image will be manually replaced later
-      image_path: "assets/desktop-icon.png"
-      background_color: "#ffffff"
-      theme_color: "#ffffff"
+    generate: true
+    # The maskable image will be manually replaced later
+    image_path: "assets/desktop-icon.png"
+    background_color: "#1f1f1f"
+    theme_color: "#1f1f1f"
   windows:
     generate: true
     image_path: "assets/desktop-icon.png"
