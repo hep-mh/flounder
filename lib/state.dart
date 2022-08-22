@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 
 
@@ -13,25 +11,29 @@ class Mode {
 
 
 class ModeRegister {
+  //ignore: non_constant_identifier_names
   static final Mode IDLE       = Mode('Idle'      , Colors.green ,  0);
+  //ignore: non_constant_identifier_names
   static final Mode TALK       = Mode('Talk'      , Colors.green , -1);
+  //ignore: non_constant_identifier_names
   static final Mode DISCUSSION = Mode('Discussion', Colors.orange, -1);
+  //ignore: non_constant_identifier_names
   static final Mode OVERTIME   = Mode('Overtime'  , Colors.red   ,  1);
 }
 
 
-class TimerProfile {
+class Profile {
   int  talkLength;
   int  discussionLength;
   int  reminderAt;
 
-  TimerProfile(this.talkLength, this.discussionLength, [this.reminderAt = -1]) {
+  Profile(this.talkLength, this.discussionLength, [this.reminderAt = -1]) {
     if ( reminderAt <= 0 ) {
       reminderAt = discussionLength;
     }
   }
 
-  static TimerProfile fromString(String? profileStr) {
+  static Profile fromString(String? profileStr) {
     List<String> entries = profileStr!.split("-");
 
     int  talkLength       = int.parse(entries[0]);
@@ -39,7 +41,7 @@ class TimerProfile {
     int  reminderAt       = int.parse(entries[2]);
 
 
-    return TimerProfile(talkLength, discussionLength, reminderAt);
+    return Profile(talkLength, discussionLength, reminderAt);
   }
 
   @override
@@ -60,8 +62,8 @@ class TimerProfile {
     return talkStr + '+' + discussionStr + ' (' + reminderStr + ')';
   }
 
-  TimerProfile clone() {
-    return TimerProfile(talkLength, discussionLength, reminderAt);
+  Profile clone() {
+    return Profile(talkLength, discussionLength, reminderAt);
   }
 }
 
@@ -73,7 +75,7 @@ class ProfileCollection {
 
   ProfileCollection();
 
-  ProfileCollection.from(List<TimerProfile> profiles) {
+  ProfileCollection.from(List<Profile> profiles) {
     for (var profile in profiles) {
       _data[profile.key()] = profile.clone();
     }
@@ -81,11 +83,11 @@ class ProfileCollection {
     _hasChanged = true;
   }
 
-  TimerProfile at(String id) {
+  Profile at(String id) {
     return _data[id].clone();
   }
 
-  TimerProfile first() {
+  Profile first() {
     return _data[_data.keys.first].clone();
   }
 
@@ -101,11 +103,11 @@ class ProfileCollection {
     return _hasChanged;
   }
 
-  void fixChanges() {
+  void commit() {
     _hasChanged = false;
   }
 
-  void add(TimerProfile profile) {
+  void add(Profile profile) {
     if (!includes(profile.key())) {
       _data[profile.key()] = profile.clone();
 
@@ -145,8 +147,8 @@ class ProfileCollection {
 
 
 ProfileCollection _defaultPresets = ProfileCollection.from([
-  TimerProfile(20, 5), TimerProfile(16, 4),
-  TimerProfile(12, 3), TimerProfile( 8, 2),
+  Profile(20, 5), Profile(16, 4),
+  Profile(12, 3), Profile( 8, 2),
 ]);
 
 
@@ -164,7 +166,7 @@ class ApplicationState {
   ProfileCollection presets = _defaultPresets;
 
   // The currently selected profile
-  late TimerProfile profile;
+  late Profile profile;
 
   // LOCAL SETTINGS ///////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////

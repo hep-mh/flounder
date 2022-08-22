@@ -6,7 +6,8 @@ import 'package:flutter/services.dart';
 import 'state.dart';
 
 
-const double magicWidth = 740;
+// ignore: constant_identifier_names
+const double MAGIC_WIDTH = 740;
 
 
 class _FlounderHeader extends StatelessWidget {
@@ -20,7 +21,7 @@ class _FlounderHeader extends StatelessWidget {
     final double contextHeight = MediaQuery.of(context).size.height;
 
     const double padding   = 20;
-    const double maxWidth  = magicWidth - 2*padding;
+    const double maxWidth  = MAGIC_WIDTH - 2*padding;
     const double maxHeight = 150;
 
     double width = maxWidth;
@@ -29,7 +30,7 @@ class _FlounderHeader extends StatelessWidget {
     //       contextWidth - 2*padding
     // if the box covers the full width of the
     // application
-    if ( contextWidth < magicWidth ) {
+    if ( contextWidth < MAGIC_WIDTH ) {
       width = contextWidth - 2*padding;
     }
     // -->
@@ -81,7 +82,7 @@ class _FlounderTimer extends StatelessWidget {
 
   const _FlounderTimer({Key? key, required this.state}) : super(key: key);
 
-  String _timerText() {
+  String _timerToText() {
     int min = state.timer ~/ 60;
     int sec = state.timer - min*60;
 
@@ -104,7 +105,7 @@ class _FlounderTimer extends StatelessWidget {
           child: FittedBox(
             fit: BoxFit.contain,
             child: Text(
-              _timerText(),
+              _timerToText(),
               style: const TextStyle(
                 // This is the maximal font size, which will
                 // be scaled down by the FittedBox if needed
@@ -146,8 +147,8 @@ double _getActionBarScale(double contextWidth, double contextHeight, [double fac
   double minSize = maxSize/factor/2;
 
   double size = maxSize;
-  if ( contextWidth < magicWidth ) {
-    final double scale = contextWidth/magicWidth;
+  if ( contextWidth < MAGIC_WIDTH ) {
+    final double scale = contextWidth/MAGIC_WIDTH;
 
     size = minSize + (maxSize - minSize)*scale;
   }
@@ -271,6 +272,7 @@ class FlounderDrawer extends StatelessWidget {
   final Map textFieldControllers;
   //
   final Function(String?, String?) onAnyTextFieldChanged;
+  final Function(bool?)            onAnyTextFieldFocusChanged;
 
   // ElevatedButton properties
   final VoidCallback onSaveButtonPressed;
@@ -284,6 +286,7 @@ class FlounderDrawer extends StatelessWidget {
     required this.onDeleteButtonPressed,
     required this.textFieldControllers,
     required this.onAnyTextFieldChanged,
+    required this.onAnyTextFieldFocusChanged,
     required this.onSaveButtonPressed,
   }) : super(key: key);
 
@@ -292,34 +295,37 @@ class FlounderDrawer extends StatelessWidget {
     List<String> textFieldIds = ['Talk', 'Discussion', 'Reminder@'];
 
     List<Widget> textFieldWidgets = [];
-    // Prepare the different text fields that
-    // are used for getting user input
+    // Prepare the different text fields that are used
+    // to get custom input from the user
     for (var id in textFieldIds) {
       textFieldWidgets.add(
-        TextFormField(
-          controller: textFieldControllers[id],
-          style: const TextStyle(fontSize: 25, color: Colors.white),
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.digitsOnly
-          ],
-          onChanged: (String? text) { onAnyTextFieldChanged(id, text);},
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
-            labelText: id,
-            labelStyle: const TextStyle(fontSize: 20, color: Colors.white),
-            suffixText: 'min',
-            suffixStyle: const TextStyle(fontSize: 25, color: Colors.white),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: state.mode.color, width: 1),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: Colors.white, width: 1),
+        Focus(
+          onFocusChange: onAnyTextFieldFocusChanged,
+          child: TextFormField(
+            controller: textFieldControllers[id],
+            style: const TextStyle(fontSize: 25, color: Colors.white),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
+            onChanged: (String? text) { onAnyTextFieldChanged(id, text);},
+            decoration: InputDecoration(
+              border: const UnderlineInputBorder(),
+              labelText: id,
+              labelStyle: const TextStyle(fontSize: 20, color: Colors.white),
+              suffixText: 'min',
+              suffixStyle: const TextStyle(fontSize: 25, color: Colors.white),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: state.mode.color, width: 1),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: Colors.white, width: 1),
+              ),
             ),
           ),
-        ),
+        )
       );
       textFieldWidgets.add(
         const SizedBox(height: 15)

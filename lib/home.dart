@@ -40,8 +40,7 @@ class FlounderHome extends StatefulWidget {
 class _FlounderHomeState extends State<FlounderHome> {
   final ApplicationState state = ApplicationState();
 
-  // The current list of items in the
-  // DropdownMenu
+  // The current list of items in the DropdownMenu
   List< DropdownMenuItem<String> > dropdownItems = [];
 
   // The current value of the DropdownMenu
@@ -56,11 +55,15 @@ class _FlounderHomeState extends State<FlounderHome> {
   };
 
   // The Timer object driving the main clock
-  late Timer runner;
+  Timer? _runner;
 
-  // The SharedPreferences object to
-  // read user-defined presets
-  late SharedPreferences prefs;
+  // The timer object handling the debouncing
+  // when changing one of the text fields
+  Timer? _debounce;
+
+  // The SharedPreferences object to read the
+  // user-defined presets
+  SharedPreferences? _prefs;
 
   // UTILITY FUNCTIONS ////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
@@ -81,10 +84,20 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   // HELPER FUNCTIONS /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  void _updateTextFields() {
-    textFieldControllers['Talk'      ].text = state.profile.talkLength.toString();
-    textFieldControllers['Discussion'].text = state.profile.discussionLength.toString();
-    textFieldControllers['Reminder@' ].text = state.profile.reminderAt.toString();
+  void _updateTextFields([bool onlyIfEmpty = false]) {
+    String talkText       = textFieldControllers['Talk'      ].text;
+    String discussionText = textFieldControllers['Discussion'].text;
+    String reminderText   = textFieldControllers['Reminder@' ].text;
+
+    if (!onlyIfEmpty || talkText == '') {
+      textFieldControllers['Talk'].text = state.profile.talkLength.toString();
+    }
+    if (!onlyIfEmpty || discussionText == '') {
+      textFieldControllers['Discussion'].text = state.profile.discussionLength.toString();
+    }
+    if (!onlyIfEmpty || reminderText == '') {
+      textFieldControllers['Reminder@'].text = state.profile.reminderAt.toString();
+    }
   }
 
   // ACTION FUNCTIONS /////////////////////////////////////////////////////////
@@ -98,7 +111,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
         state.mode = ModeRegister.TALK;
 
-        runner = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+        _runner = Timer.periodic(const Duration(seconds: 1), (Timer t) {
           setState(() {
             // Check if a reminder needs to be given
             if ( state.timer == state.profile.reminderAt*60 ) {
@@ -136,7 +149,7 @@ class _FlounderHomeState extends State<FlounderHome> {
         state.mode = ModeRegister.IDLE;
         state.reconfigure();
 
-        runner.cancel();
+        _runner!.cancel();
       }
     });
   }
@@ -147,13 +160,12 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   void _onDropdownValueChanged(String? value) {
     setState(() {
-      dropdownValue = value!;
+      /**/ dropdownValue = value!;
 
-      if (value != 'Custom') {
+      if (dropdownValue != 'Custom') {
         state.profile = state.presets.at(dropdownValue);
         // --> Reconfigure state on profile change
         state.reconfigure();
-
       }
 
       _updateTextFields();
@@ -161,17 +173,20 @@ class _FlounderHomeState extends State<FlounderHome> {
   }
 
   void _onDeleteButtonPressed() {
+    if (dropdownValue == 'Custom') return;
+
     setState(() {
       state.presets.remove(dropdownValue);
 
-      if (state.presets.keys().isEmpty) { // Keep the current profile
-        dropdownValue = 'Custom';
+      if (state.presets.keys().isEmpty) {
+        // Keep the current profile
+        /**/ dropdownValue = 'Custom';
       } else {
         state.profile = state.presets.first();
         // --> Reconfigure state on profile change
         state.reconfigure();
 
-        dropdownValue = state.profile.key();
+        /**/ dropdownValue = state.profile.key();
       }
       
       _updateTextFields();
@@ -179,51 +194,60 @@ class _FlounderHomeState extends State<FlounderHome> {
   }
 
   void _onAnyTextFieldChanged(String? id, String? text) {
-    if (text == '') return;
+    // Only update the profile if a certain time has passed
+    // This looks better in the UI when e.g. deleting a
+    // two digit number from one text field
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    // -->
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      if (text == '') return;
 
-    setState(() {
-      switch(id) {
-        case 'Talk':
-          state.profile.talkLength       = int.parse(text!);
-          break;
-        case 'Discussion':
-          state.profile.discussionLength = int.parse(text!);
-          break;
-        case 'Reminder@':
-          state.profile.reminderAt       = int.parse(text!);
-          break;
-      }
-      // --> Reconfigure state on profile change
-      state.reconfigure();
+      setState(() {
+        switch(id) {
+          case 'Talk':
+            state.profile.talkLength       = int.parse(text!);
+            break;
+          case 'Discussion':
+            state.profile.discussionLength = int.parse(text!);
+            break;
+          case 'Reminder@':
+            state.profile.reminderAt       = int.parse(text!);
+            break;
+        }
+        // --> Reconfigure state on profile change
+        state.reconfigure();
 
-      if (state.presets.includes(state.profile.key())) {
-        dropdownValue = state.profile.key();
-      } else {
-        dropdownValue = 'Custom';
-      }
+        if (state.presets.includes(state.profile.key())) {
+          /**/ dropdownValue = state.profile.key();
+        } else {
+          /**/ dropdownValue = 'Custom';
+        }
+      });
     });
   }
 
   void _onSaveButtonPressed() {
+    if (dropdownValue != 'Custom') return;
+
     setState(() {
       state.presets.add(state.profile);
 
-      dropdownValue = state.profile.key();
+      /**/ dropdownValue = state.profile.key();
     });
   }
 
   // INIT & DISPOSE FUNCTIONS /////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-   void _loadPreferences() async {
-    prefs = await SharedPreferences.getInstance();
+  void _loadPreferences() async {
+    _prefs = await SharedPreferences.getInstance();
 
-    final List<String>? presetsFromPrefs = prefs.getStringList('presets');
-    // If preferences are preset, override the defaults
+    final List<String>? presetsFromPrefs = _prefs!.getStringList('presets');
+    // If shared preferences are preset, override the defaults
     if (presetsFromPrefs != null) {
       ProfileCollection presets = ProfileCollection();
 
       for (var presetStr in presetsFromPrefs) {
-        TimerProfile profile = TimerProfile.fromString(presetStr);
+        Profile profile = Profile.fromString(presetStr);
         // -->
         presets.add(profile);
       }
@@ -238,8 +262,8 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     _loadPreferences();
 
-    // Ensure that the navigation bar has
-    // a matching color on Android devices
+    // Ensure that the navigation bar has a matching color on
+    // Android devices
     if (!kIsWeb) { if (Platform.isAndroid) {
       SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(
@@ -248,11 +272,15 @@ class _FlounderHomeState extends State<FlounderHome> {
       );
     }}
 
-    dropdownValue = state.profile.key();
+    /**/ dropdownValue = state.profile.key();
   }
 
   @override
   void dispose() {
+    // Clean up the Timer's
+    _runner!.cancel();
+    _debounce!.cancel();
+
     // Clean up the TextEditingController's
     textFieldControllers.forEach((key, value) {
       value.dispose();
@@ -267,7 +295,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     // Only run if necessary
     if (!state.presets.hasChanged()) return;
     
-    state.presets.fixChanges();
+    state.presets.commit();
 
     dropdownItems.clear();
     // Fill the list of DropdownMenuItem's
@@ -326,6 +354,13 @@ class _FlounderHomeState extends State<FlounderHome> {
         onDeleteButtonPressed: _onDeleteButtonPressed,
         textFieldControllers: textFieldControllers,
         onAnyTextFieldChanged: _onAnyTextFieldChanged,
+        onAnyTextFieldFocusChanged: (bool? hasFocus) {
+          setState(() {
+            if (!hasFocus!) {
+            _updateTextFields(true); // onlyIfEmpty
+            }
+          });
+        },
         onSaveButtonPressed: _onSaveButtonPressed,
       ),
     );
