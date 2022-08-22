@@ -261,7 +261,7 @@ class FlounderDrawer extends StatelessWidget {
   // DropdownButton properties
   final List<DropdownMenuItem<String>> dropdownItems;
   final String                         dropdownValue;
-
+  //
   final Function(String?) onDropdownValueChanged;
 
   // IconButton properties
@@ -269,7 +269,7 @@ class FlounderDrawer extends StatelessWidget {
 
   // TextFormField properties
   final Map textFieldControllers;
-
+  //
   final Function(String?, String?) onAnyTextFieldChanged;
 
   // ElevatedButton properties

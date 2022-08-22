@@ -47,12 +47,6 @@ class _FlounderHomeState extends State<FlounderHome> {
   // The current value of the DropdownMenu
   late String dropdownValue;
 
-  // A flag to check of the DropdownMenu
-  // needs to be build on the next refresh
-  // Initially true, since a build needs
-  // to happe on the initial launch
-  bool rebuildDropdownMenu = true;
-
   // The controllers used to update the content
   // of the different TextField objects
   final Map textFieldControllers = {
@@ -87,7 +81,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   // HELPER FUNCTIONS /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  void _updateTextFormFields() {
+  void _updateTextFields() {
     textFieldControllers['Talk'      ].text = state.profile.talkLength.toString();
     textFieldControllers['Discussion'].text = state.profile.discussionLength.toString();
     textFieldControllers['Reminder@' ].text = state.profile.reminderAt.toString();
@@ -102,7 +96,7 @@ class _FlounderHomeState extends State<FlounderHome> {
         // Enable the wakelock when the timer is started
         _toggleWakelock(true);
 
-        state.mode = ModeRegister.talk;
+        state.mode = ModeRegister.TALK;
 
         runner = Timer.periodic(const Duration(seconds: 1), (Timer t) {
           setState(() {
@@ -118,13 +112,13 @@ class _FlounderHomeState extends State<FlounderHome> {
               switch(state.mode.id) {
                 // Talk -> Discussion
                 case 'Talk': {
-                  state.mode  = ModeRegister.discussion;
+                  state.mode  = ModeRegister.DISCUSSION;
                   state.timer = state.profile.discussionLength*60;
                   break;
                 }
                 // Discussion -> Overtime
                 case 'Discussion': {
-                  state.mode  = ModeRegister.overtime;
+                  state.mode  = ModeRegister.OVERTIME;
                   break;
                 }
               }
@@ -139,8 +133,8 @@ class _FlounderHomeState extends State<FlounderHome> {
         // Disable the wakelock when the timer is stopped
         _toggleWakelock(false);
 
-        state.mode = ModeRegister.idle;
-        state.resetTimer();
+        state.mode = ModeRegister.IDLE;
+        state.reconfigure();
 
         runner.cancel();
       }
@@ -156,35 +150,31 @@ class _FlounderHomeState extends State<FlounderHome> {
       dropdownValue = value!;
 
       if (value != 'Custom') {
-        state.profile = state.presets[dropdownValue].clone();
-        // --> Reset timer on profile change
-        state.resetTimer();
+        state.profile = state.presets.at(dropdownValue);
+        // --> Reconfigure state on profile change
+        state.reconfigure();
 
       }
 
-      _updateTextFormFields();
+      _updateTextFields();
     });
   }
 
   void _onDeleteButtonPressed() {
-    // Only delete if the current profile is not custom
-    if (dropdownValue == 'Custom') return;
-
     setState(() {
-      state.presets.removeWhere((key, _) => key == dropdownValue);
-      // -->
-      rebuildDropdownMenu = true;
+      state.presets.remove(dropdownValue);
 
-      if (state.presets.isEmpty) { // Keep the current profile
+      if (state.presets.keys().isEmpty) { // Keep the current profile
         dropdownValue = 'Custom';
       } else {
-        state.profile = state.presets[state.presets.keys.first].clone();
-        // --> Reset timer on profile change
-        state.resetTimer();
+        state.profile = state.presets.first();
+        // --> Reconfigure state on profile change
+        state.reconfigure();
 
         dropdownValue = state.profile.key();
       }
       
+      _updateTextFields();
     });
   }
 
@@ -203,10 +193,10 @@ class _FlounderHomeState extends State<FlounderHome> {
           state.profile.reminderAt       = int.parse(text!);
           break;
       }
-      // --> Reset timer on profile change
-      state.resetTimer();
+      // --> Reconfigure state on profile change
+      state.reconfigure();
 
-      if (state.presets.containsKey(state.profile.key())) {
+      if (state.presets.includes(state.profile.key())) {
         dropdownValue = state.profile.key();
       } else {
         dropdownValue = 'Custom';
@@ -215,13 +205,8 @@ class _FlounderHomeState extends State<FlounderHome> {
   }
 
   void _onSaveButtonPressed() {
-    // Only save if the current profile is custom
-    if (dropdownValue != 'Custom') return;
-
     setState(() {
-      state.presets[state.profile.key()] = state.profile.clone();
-      // -->
-      rebuildDropdownMenu = true;
+      state.presets.add(state.profile);
 
       dropdownValue = state.profile.key();
     });
@@ -235,15 +220,15 @@ class _FlounderHomeState extends State<FlounderHome> {
     final List<String>? presetsFromPrefs = prefs.getStringList('presets');
     // If preferences are preset, override the defaults
     if (presetsFromPrefs != null) {
-      Map presets = {};
+      ProfileCollection presets = ProfileCollection();
 
       for (var presetStr in presetsFromPrefs) {
         TimerProfile profile = TimerProfile.fromString(presetStr);
         // -->
-        presets[profile.key()] = profile;
+        presets.add(profile);
       }
 
-      state.swapPresets(presets);
+      state.presets.swap(presets);
     }
   }
 
@@ -280,22 +265,20 @@ class _FlounderHomeState extends State<FlounderHome> {
   /////////////////////////////////////////////////////////////////////////////
   void _buildDropdownMenuIfNeeded() {
     // Only run if necessary
-    if (!rebuildDropdownMenu) {
-      return;
-    } else {
-      rebuildDropdownMenu = false;
-    }
+    if (!state.presets.hasChanged()) return;
+    
+    state.presets.fixChanges();
 
     dropdownItems.clear();
     // Fill the list of DropdownMenuItem's
-    state.presets.forEach((key, _) {
+    for (var key in state.presets.keys()) {
       dropdownItems.add(
         DropdownMenuItem<String>(
           value: key,
           child: Text(key, style: const TextStyle(color: Colors.white)),
         )
       );
-    });
+    }
     dropdownItems.add(
       const DropdownMenuItem<String>(
         value: 'Custom',
@@ -322,7 +305,7 @@ class _FlounderHomeState extends State<FlounderHome> {
         onPressedL: _onBellButtonPressed,
         onPressedR: () {
           if ( state.mode.id == 'Idle' ) {
-            _updateTextFormFields();
+            _updateTextFields();
             Scaffold.of(context).openEndDrawer();
           }
         }
