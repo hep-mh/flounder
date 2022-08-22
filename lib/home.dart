@@ -147,7 +147,7 @@ class _FlounderHomeState extends State<FlounderHome> {
         _toggleWakelock(false);
 
         state.mode = ModeRegister.IDLE;
-        state.reconfigure();
+        state.reset();
 
         _runner!.cancel();
       }
@@ -164,8 +164,8 @@ class _FlounderHomeState extends State<FlounderHome> {
 
       if (dropdownValue != 'Custom') {
         state.profile = state.presets.at(dropdownValue);
-        // --> Reconfigure state on profile change
-        state.reconfigure();
+        // --> Reset state on profile change
+        state.reset();
       }
 
       _updateTextFields();
@@ -183,8 +183,8 @@ class _FlounderHomeState extends State<FlounderHome> {
         /**/ dropdownValue = 'Custom';
       } else {
         state.profile = state.presets.first();
-        // --> Reconfigure state on profile change
-        state.reconfigure();
+        // --> Reset state on profile change
+        state.reset();
 
         /**/ dropdownValue = state.profile.key();
       }
@@ -214,8 +214,8 @@ class _FlounderHomeState extends State<FlounderHome> {
             state.profile.reminderAt       = int.parse(text!);
             break;
         }
-        // --> Reconfigure state on profile change
-        state.reconfigure();
+        // --> Reset state on profile change
+        state.reset();
 
         if (state.presets.includes(state.profile.key())) {
           /**/ dropdownValue = state.profile.key();
@@ -322,7 +322,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     return Scaffold(
       backgroundColor: const Color(0xff1f1f1f),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      endDrawerEnableOpenDragGesture: false,
+      endDrawerEnableOpenDragGesture: true,
       // 1. FLOUNDER_BODY /////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////
       body: FlounderBody(state: state),

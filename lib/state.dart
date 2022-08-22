@@ -69,11 +69,14 @@ class Profile {
 
 
 class ProfileCollection {
+// Always clone any profile
+
   final Map _data = {};
 
   bool _hasChanged = false;
 
   ProfileCollection();
+  // Empty constructor
 
   ProfileCollection.from(List<Profile> profiles) {
     for (var profile in profiles) {
@@ -180,11 +183,11 @@ class ApplicationState {
     // Initially set the profile to the
     // first element in 'presets' and...
     profile = presets.first();
-    // ...reconfigure the state
-    reconfigure();
+    // ...reset the state
+    reset();
   }
 
-  void reconfigure() {
+  void reset() {
     timer = profile.talkLength*60;
   }
 }
