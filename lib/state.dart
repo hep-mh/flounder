@@ -181,9 +181,9 @@ class ApplicationState {
   /////////////////////////////////////////////////////////////////////////////
   ApplicationState() {
     // Initially set the profile to the
-    // first element in 'presets' and...
+    // first element in 'presets'...
     profile = presets.first();
-    // ...reset the state
+    // ...and reset the state
     reset();
   }
 

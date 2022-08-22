@@ -56,7 +56,7 @@ flutter_native_splash:
 
   android: false
   ios: false
-  web: true
+  web: false
 
   # https://developer.android.com/reference/android/view/Gravity
   android_gravity: center
