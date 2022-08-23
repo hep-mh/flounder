@@ -334,61 +334,63 @@ class FlounderDrawer extends StatelessWidget {
 
     return Drawer(
       backgroundColor: const Color(0xff1f1f1f),
-      child: ListView(
-        padding: const EdgeInsets.all(20),
-        children: <Widget>[
-          Text('Presets:', style: TextStyle(fontSize: 35, color: state.mode.color)),
-          const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // 1. The DROPDOWN_BUTTON to cycle the presets //////////////////
-              /////////////////////////////////////////////////////////////////
-              Expanded(
-                child: DropdownButton<String>(
-                  underline: Container(height: 0, color: state.mode.color),
-                  isExpanded: true,
-                  value: dropdownValue,
-                  items: dropdownItems,
-                  dropdownColor: state.mode.color,
-                  onChanged: onDropdownValueChanged,
-                  style: const TextStyle(color: Colors.black, fontSize: 25),
+      child: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(20),
+          children: <Widget>[
+            Text('Presets:', style: TextStyle(fontSize: 35, color: state.mode.color)),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // 1. The DROPDOWN_BUTTON to cycle the presets //////////////////
+                /////////////////////////////////////////////////////////////////
+                Expanded(
+                  child: DropdownButton<String>(
+                    underline: Container(height: 0, color: state.mode.color),
+                    isExpanded: true,
+                    value: dropdownValue,
+                    items: dropdownItems,
+                    dropdownColor: state.mode.color,
+                    onChanged: onDropdownValueChanged,
+                    style: const TextStyle(color: Colors.black, fontSize: 25),
+                  ),
                 ),
-              ),
-              // 2. The ICON_BUTTON to delete the active preset ///////////////
-              /////////////////////////////////////////////////////////////////
-              IconButton(
-                icon: const Icon(Icons.delete),
-                color: Colors.white,
-                splashRadius: 17,
-                onPressed: onDeleteButtonPressed,
+                // 2. The ICON_BUTTON to delete the active preset ///////////////
+                /////////////////////////////////////////////////////////////////
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  color: Colors.white,
+                  splashRadius: 17,
+                  onPressed: onDeleteButtonPressed,
+                )
+              ]
+            ),
+            const SizedBox(height: 20),
+            Text('Custom:', style: TextStyle(fontSize: 35, color: state.mode.color)),
+            const SizedBox(height: 15),
+            // 3. The TEXT_FORM_FIELD's to capture user input ///////////////////
+            /////////////////////////////////////////////////////////////////////
+            ...textFieldWidgets,
+            // 4. The ELEVATED_BUTTON to save the current preset ////////////////
+            /////////////////////////////////////////////////////////////////////
+            Container(
+              padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.save),
+                label: const Text('Save as preset', style: TextStyle(fontSize: 22, color: Colors.white)),
+                onPressed: onSaveButtonPressed,
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(15)),
+                  backgroundColor: MaterialStateProperty.all<Color>(state.mode.color),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(color: state.mode.color)),
+                  ),
+                ),
               )
-            ]
-          ),
-          const SizedBox(height: 20),
-          Text('Custom:', style: TextStyle(fontSize: 35, color: state.mode.color)),
-          const SizedBox(height: 15),
-          // 3. The TEXT_FORM_FIELD's to capture user input ///////////////////
-          /////////////////////////////////////////////////////////////////////
-          ...textFieldWidgets,
-          // 4. The ELEVATED_BUTTON to save the current preset ////////////////
-          /////////////////////////////////////////////////////////////////////
-          Container(
-            padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.save),
-              label: const Text('Save as preset', style: TextStyle(fontSize: 22, color: Colors.white)),
-              onPressed: onSaveButtonPressed,
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(15)),
-                backgroundColor: MaterialStateProperty.all<Color>(state.mode.color),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(color: state.mode.color)),
-                ),
-              ),
             )
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

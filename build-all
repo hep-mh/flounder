@@ -22,7 +22,7 @@ flutter build linux
 # Create a .tar.gz file in the packages/ directory
 tar czf packages/Flounder.tar.gz --directory=build/linux/x64/release/bundle/ .
 # Build a .flatpak file and save it in the packages/ directory
-echo "Packaging application as flatpak..."
+echo "Packaging application as .flatpak..."
 flatpak-builder --repo=build/flatpak_repo build/flatpak --force-clean linux/com.hepmh.Flounder.json > build/flatpak-builder.log
 flatpak build-bundle build/flatpak_repo/ packages/Flounder.flatpak com.hepmh.Flounder
 

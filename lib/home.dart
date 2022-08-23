@@ -199,33 +199,33 @@ class _FlounderHomeState extends State<FlounderHome> {
     // Only update the profile if a certain time has passed
     // This looks better in the UI when e.g. deleting a
     // two digit number from one text field
-    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    /*if (_debounce?.isActive ?? false) _debounce?.cancel();*/
     // -->
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      if (text == '') return;
+    /*_debounce = Timer(const Duration(milliseconds: 500), () {*/
+    if (text == '') return;
 
-      setState(() {
-        switch(id) {
-          case 'Talk':
-            state.profile.talkLength       = int.parse(text!);
-            break;
-          case 'Discussion':
-            state.profile.discussionLength = int.parse(text!);
-            break;
-          case 'Reminder@':
-            state.profile.reminderAt       = int.parse(text!);
-            break;
-        }
-        // --> Reset state on profile change
-        state.reset();
+    setState(() {
+      switch(id) {
+        case 'Talk':
+          state.profile.talkLength       = int.parse(text!);
+          break;
+        case 'Discussion':
+          state.profile.discussionLength = int.parse(text!);
+          break;
+        case 'Reminder@':
+          state.profile.reminderAt       = int.parse(text!);
+          break;
+      }
+      // --> Reset state on profile change
+      state.reset();
 
-        if (state.presets.includes(state.profile.key())) {
-          /**/ dropdownValue = state.profile.key();
-        } else {
-          /**/ dropdownValue = 'Custom';
-        }
-      });
+      if (state.presets.includes(state.profile.key())) {
+        /**/ dropdownValue = state.profile.key();
+      } else {
+        /**/ dropdownValue = 'Custom';
+      }
     });
+    /*});*/
   }
 
   void _onSaveButtonPressed() {
