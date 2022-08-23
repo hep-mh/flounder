@@ -139,7 +139,7 @@ class ProfileCollection {
   List<String> export() {
     List<String> exportList = [];
 
-    // Fill the list with every available preset
+    // Fill the list with every available profiles
     _data.forEach((_, profile) {
       exportList.add(profile.toString());
     });
@@ -158,11 +158,10 @@ ProfileCollection _defaultPresets = ProfileCollection.from([
 class ApplicationState {
   // MAIN COMPONENTS //////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  ///// The main timer that keeps track of the remaining time
-  late int timer;
+  // The main timer that keeps track of the remaining time
+  int timer = 0;
 
-  // The current mode, i.e. either IDLE, TALK, DISCUSSION
-  // or OVERTIME
+  // The current mode, i.e. either IDLE, TALK, DISCUSSION or OVERTIME
   Mode mode = ModeRegister.IDLE;
 
   // A map of all available presets
@@ -173,15 +172,13 @@ class ApplicationState {
 
   // LOCAL SETTINGS ///////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  // A flag to determine whether to play an additional
-  // reminder DURING the talk
+  // A flag to determine whether to play an additional reminder DURING the talk
   bool remindMe = false;
 
   // MEMBER FUNCTIONS /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
   ApplicationState() {
-    // Initially set the profile to the
-    // first element in 'presets'...
+    // Initially set the profile to the first element in 'presets'...
     profile = presets.first();
     // ...and reset the state
     reset();

@@ -44,7 +44,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   List< DropdownMenuItem<String> > dropdownItems = [];
 
   // The current value of the DropdownMenu
-  late String dropdownValue;
+  String dropdownValue = 'Custom';
 
   // The controllers used to update the content
   // of the different TextField objects
@@ -191,6 +191,8 @@ class _FlounderHomeState extends State<FlounderHome> {
       
       _updateTextFields();
     });
+
+    _prefs!.setStringList('presets', state.presets.export());
   }
 
   void _onAnyTextFieldChanged(String? id, String? text) {
@@ -234,6 +236,8 @@ class _FlounderHomeState extends State<FlounderHome> {
 
       /**/ dropdownValue = state.profile.key();
     });
+
+    _prefs!.setStringList('presets', state.presets.export());
   }
 
   // INIT & DISPOSE FUNCTIONS /////////////////////////////////////////////////
@@ -242,18 +246,34 @@ class _FlounderHomeState extends State<FlounderHome> {
     _prefs = await SharedPreferences.getInstance();
 
     final List<String>? presetsFromPrefs = _prefs!.getStringList('presets');
-    // If shared preferences are preset, override the defaults
-    if (presetsFromPrefs != null) {
-      ProfileCollection presets = ProfileCollection();
 
-      for (var presetStr in presetsFromPrefs) {
-        Profile profile = Profile.fromString(presetStr);
-        // -->
-        presets.add(profile);
-      }
+    Timer.periodic(const Duration(milliseconds: 5), (Timer t) {
+      // Wait for the state to init before calling setState
+      if (!mounted) return;
 
-      state.presets.swap(presets);
-    }
+      setState(() {
+        // If shared preferences are preset, override the defaults
+        if (presetsFromPrefs != null) {
+          ProfileCollection presets = ProfileCollection();
+
+          for (var presetStr in presetsFromPrefs) {
+            Profile profile = Profile.fromString(presetStr);
+            // -->
+            presets.add(profile);
+          }
+
+          state.presets.swap(presets);
+
+          state.profile = state.presets.first();
+          // --> Reset state on profile change
+          state.reset();
+        }
+
+        /**/ dropdownValue = state.profile.key();
+
+        t.cancel();
+      });
+    });
   }
 
   @override
@@ -271,8 +291,6 @@ class _FlounderHomeState extends State<FlounderHome> {
         )
       );
     }}
-
-    /**/ dropdownValue = state.profile.key();
   }
 
   @override
