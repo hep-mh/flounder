@@ -71,8 +71,11 @@ class Profile {
 class ProfileCollection {
 // Always clone any profile
 
+  // The central data structure
   final Map _data = {};
 
+  // A flag to check wether the data structure has been
+  // changed since the last call to the commit function
   bool _hasChanged = false;
 
   ProfileCollection();
@@ -91,6 +94,8 @@ class ProfileCollection {
   }
 
   Profile first() {
+    if (isEmpty()) return Profile(0, 0);
+    
     return _data[_data.keys.first].clone();
   }
 
@@ -100,6 +105,10 @@ class ProfileCollection {
 
   List<dynamic> keys() {
     return _data.keys.toList();
+  }
+
+  bool isEmpty() {
+    return _data.keys.isEmpty;
   }
 
   bool hasChanged() {
@@ -149,7 +158,7 @@ class ProfileCollection {
 }
 
 
-ProfileCollection _defaultPresets = ProfileCollection.from([
+ProfileCollection defaultPresets = ProfileCollection.from([
   Profile(20, 5), Profile(16, 4),
   Profile(12, 3), Profile( 8, 2),
 ]);
@@ -165,10 +174,10 @@ class ApplicationState {
   Mode mode = ModeRegister.IDLE;
 
   // A map of all available presets
-  ProfileCollection presets = _defaultPresets;
+  ProfileCollection presets = ProfileCollection();
 
   // The currently selected profile
-  late Profile profile;
+  Profile profile = Profile(0, 0);
 
   // LOCAL SETTINGS ///////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
@@ -177,12 +186,8 @@ class ApplicationState {
 
   // MEMBER FUNCTIONS /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  ApplicationState() {
-    // Initially set the profile to the first element in 'presets'...
-    profile = presets.first();
-    // ...and reset the state
-    reset();
-  }
+  ApplicationState();
+  // Empty constructor
 
   void reset() {
     timer = profile.talkLength*60;

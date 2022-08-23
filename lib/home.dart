@@ -178,7 +178,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     setState(() {
       state.presets.remove(dropdownValue);
 
-      if (state.presets.keys().isEmpty) {
+      if (state.presets.isEmpty()) {
         // Keep the current profile
         /**/ dropdownValue = 'Custom';
       } else {
@@ -248,28 +248,32 @@ class _FlounderHomeState extends State<FlounderHome> {
     final List<String>? presetsFromPrefs = _prefs!.getStringList('presets');
 
     Timer.periodic(const Duration(milliseconds: 5), (Timer t) {
-      // Wait for the state to init before calling setState
+      // Wait for the state to initialize before calling setState
       if (!mounted) return;
 
       setState(() {
         // If shared preferences are preset, override the defaults
         if (presetsFromPrefs != null) {
-          ProfileCollection presets = ProfileCollection();
+          ProfileCollection sharedPresets = ProfileCollection();
 
           for (var presetStr in presetsFromPrefs) {
             Profile profile = Profile.fromString(presetStr);
             // -->
-            presets.add(profile);
+            sharedPresets.add(profile);
           }
 
-          state.presets.swap(presets);
-
-          state.profile = state.presets.first();
-          // --> Reset state on profile change
-          state.reset();
+          state.presets.swap(sharedPresets);
+        } else {
+          state.presets.swap(defaultPresets);
         }
 
-        /**/ dropdownValue = state.profile.key();
+        state.profile = state.presets.first();
+        // --> Reset state on profile change
+        state.reset();
+
+        if (presetsFromPrefs?.isNotEmpty ?? true) {
+          /**/ dropdownValue = state.profile.key();
+        } // else remain 'Custom'
 
         t.cancel();
       });
