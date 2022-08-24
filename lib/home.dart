@@ -352,7 +352,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     return Scaffold(
       backgroundColor: const Color(0xff1f1f1f),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      endDrawerEnableOpenDragGesture: state.mode.id == 'Idle',
+      endDrawerEnableOpenDragGesture: (state.mode.id == 'Idle'),
       // 1. FLOUNDER_BODY /////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////
       body: FlounderBody(state: state),
