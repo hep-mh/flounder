@@ -275,8 +275,10 @@ class _FlounderHomeState extends State<FlounderHome> {
           /**/ dropdownValue = state.profile.key();
         } // else remain 'Custom'
 
-        t.cancel();
+        _updateTextFields();
       });
+
+      t.cancel();
     });
   }
 
@@ -339,6 +341,12 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   @override
   Widget build(BuildContext context) {
+    // If the height is too small, do not draw anything at all
+    final double contextHeight = MediaQuery.of(context).size.height;
+    if (contextHeight < 200) {
+      return const Scaffold(backgroundColor: Color(0xff1f1f1f));
+    }
+
     _buildDropdownMenuIfNeeded();
 
     return Scaffold(
@@ -355,7 +363,6 @@ class _FlounderHomeState extends State<FlounderHome> {
         onPressedL: _onBellButtonPressed,
         onPressedR: () {
           if ( state.mode.id == 'Idle' ) {
-            _updateTextFields();
             Scaffold.of(context).openEndDrawer();
           }
         }
