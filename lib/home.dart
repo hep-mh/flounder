@@ -59,7 +59,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   // The timer object handling the debouncing
   // when changing one of the text fields
-  Timer? _debounce;
+  /*Timer? _debounce;*/
 
   // The SharedPreferences object to read the
   // user-defined presets
@@ -303,7 +303,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   void dispose() {
     // Clean up the Timer's
     _runner!.cancel();
-    _debounce!.cancel();
+    /*_debounce!.cancel();*/
 
     // Clean up the TextEditingController's
     textFieldControllers.forEach((key, value) {
