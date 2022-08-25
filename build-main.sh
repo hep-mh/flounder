@@ -20,17 +20,17 @@ flutter build web
 echo -ne "\n\e[38;5;220m• Building Linux app •\e[0m\r"
 flutter build linux
 # Create a .tar.gz file in the packages/ directory
-tar czf packages/Flounder.tar.gz --directory=build/linux/x64/release/bundle/ .
+tar czf packages/Flounder-latest.tar.gz --directory=build/linux/x64/release/bundle/ .
 # Build a .flatpak file and save it in the packages/ directory
 echo "Packaging application as .flatpak..."
 flatpak-builder --repo=build/flatpak_repo build/flatpak --force-clean linux/com.hepmh.Flounder.json > build/flatpak-builder.log
-flatpak build-bundle build/flatpak_repo/ packages/Flounder.flatpak com.hepmh.Flounder
+flatpak build-bundle build/flatpak_repo/ packages/Flounder-latest.flatpak com.hepmh.Flounder
 
 # ANDROID
 echo -ne "\n\e[38;5;72m• Building Android app •\e[0m\r"
 flutter build apk
 # Copy the .apk file to the packages/ directory
-cp build/app/outputs/flutter-apk/app-release.apk packages/Flounder.apk
+cp build/app/outputs/flutter-apk/app-release.apk packages/Flounder-latest.apk
 
 # WINDOWS
 echo -ne "\n\e[38;5;75m• Building Windows app •\e[0m\r"
