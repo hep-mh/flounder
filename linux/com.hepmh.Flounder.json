@@ -21,7 +21,7 @@
         ],
         "build-commands": [
           "mkdir -p flounder",
-          "tar -xf Flounder.tar.gz -C flounder",
+          "tar -xf Flounder-latest.tar.gz -C flounder",
           "cp -r flounder /app/",
           "chmod +x /app/flounder/flounder",
           "mkdir -p /app/bin",
@@ -50,7 +50,7 @@
           },
           {
             "type": "file",
-            "path": "../packages/Flounder.tar.gz"
+            "path": "../packages/Flounder-latest.tar.gz"
           }
         ]
       }
