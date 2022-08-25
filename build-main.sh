@@ -20,6 +20,7 @@ flutter build web
 echo -ne "\n\e[38;5;220m• Building Linux app •\e[0m\r"
 flutter build linux
 # Create a .tar.gz file in the packages/ directory
+echo "Packaging application as .tar.gz..."
 tar czf packages/Flounder-latest.tar.gz --directory=build/linux/x64/release/bundle/ .
 # Build a .flatpak file and save it in the packages/ directory
 echo "Packaging application as .flatpak..."
