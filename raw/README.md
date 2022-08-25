@@ -3,7 +3,7 @@
 A **cross-platform** counter that can be used for the time-management in scientific talks
 
 ![Language: Flutter](https://img.shields.io/badge/Language-Flutter/Dart-blue.svg?style=flat-square)
-![Version: 1.0.0](https://img.shields.io/badge/Current_Version-1.0.0-green.svg?style=flat-square)
+![Version: __VERSION__](https://img.shields.io/badge/Current_Version-__VERSION__-green.svg?style=flat-square)
 
 ![Logo](https://hep-mh.com/files/Flounder.png)
 
