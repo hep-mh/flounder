@@ -2,6 +2,10 @@
 
 # ICONS
 echo -e "\e[38;5;209m• Generating launcher icons •\e[0m"
+convert assets/desktop-icon.png -resize 408x408 assets/web-icon.png
+convert assets/web-icon.png -bordercolor none -border 52 assets/web-icon.png
+convert assets/desktop-icon.png -resize 314x314 assets/android-icon.png
+convert assets/android-icon.png -bordercolor none -border 99 assets/android-icon.png
 flutter pub run flutter_launcher_icons:main
 # Use a different file for the maskable web icons
 # flutter_launcher_icons does not currently support that
