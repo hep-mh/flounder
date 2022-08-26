@@ -21,7 +21,7 @@
         ],
         "build-commands": [
           "mkdir -p flounder",
-          "tar -xf flounder-latest-ubuntu_x86_64.tar.gz -C flounder",
+          "tar -xf flounder-latest-ubuntu-x86_64.tar.gz -C flounder",
           "cp -r flounder /app/",
           "chmod +x /app/flounder/flounder",
           "mkdir -p /app/bin",
@@ -50,7 +50,7 @@
           },
           {
             "type": "file",
-            "path": "../packages/flounder-latest-ubuntu_x86_64.tar.gz"
+            "path": "../packages/flounder-latest-ubuntu-x86_64.tar.gz"
           }
         ]
       }
