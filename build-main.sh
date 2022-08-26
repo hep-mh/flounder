@@ -2,10 +2,6 @@
 
 # ICONS
 echo -e "\e[38;5;209m• Generating launcher icons •\e[0m"
-convert assets/desktop-icon.png -resize 408x408 assets/web-icon.png
-convert assets/web-icon.png -bordercolor none -border 52 assets/web-icon.png
-convert assets/desktop-icon.png -resize 314x314 assets/android-icon.png
-convert assets/android-icon.png -bordercolor none -border 99 assets/android-icon.png
 flutter pub run flutter_launcher_icons:main
 # Use a different file for the maskable web icons
 # flutter_launcher_icons does not currently support that
@@ -36,8 +32,3 @@ echo -ne "\n\e[38;5;72m• Building Android app •\e[0m\r"
 flutter build apk
 # Copy the .apk file to the packages/ directory
 cp build/app/outputs/flutter-apk/app-release.apk packages/Flounder-latest.apk
-
-# WINDOWS
-echo -ne "\n\e[38;5;75m• Building Windows app •\e[0m\r"
-#flutter build windows
-#flutter pub run msix:create
