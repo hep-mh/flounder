@@ -7,7 +7,7 @@ A **cross-platform** counter that can be used for the time-management in scienti
 
 ![Logo](https://hep-mh.com/files/Flounder.png)
 
-The icon is based on [``this image``](https://imgbin.com/png/D3dzb0eY/turquoise-fish-png)
+The icon is based on [``this image``](https://imgbin.com/png/D3dzb0eY/turquoise-fish-png).
 
 # Installation & Usage
 

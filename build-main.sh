@@ -23,7 +23,7 @@ echo "Packaging application as .flatpak..."
 flatpak-builder --repo=build/flatpak_repo build/flatpak --force-clean linux/com.hepmh.Flounder.json > build/flatpak-builder.log
 flatpak build-bundle build/flatpak_repo/ packages/flounder-latest-linux-x86_64.flatpak com.hepmh.Flounder
 # Build an .AppImage file and save it in the packages/ directory
-#: '
+: '
 echo "Packaging application as .AppImage..."
 mkdir -p build/appimage
 cp -r build/linux/x64/release/bundle build/appimage/AppDir
