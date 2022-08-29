@@ -23,6 +23,8 @@ AppDir:
     - sourceline: deb http://security.ubuntu.com/ubuntu bionic-security universe
     - sourceline: deb http://security.ubuntu.com/ubuntu bionic-security multiverse
     include:
+    # These packages and all of their dependencies will be installed,
+    # except for the ones explicitly excluded below
     - libgtk-3-0
     exclude:
     - humanity-icon-theme
