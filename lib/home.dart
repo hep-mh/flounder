@@ -23,6 +23,7 @@ class Flounder extends StatelessWidget {
       home: const FlounderHome(),
       theme: ThemeData(
         primaryColor: const Color(0xff1f1f1f),
+        fontFamily: "Roboto"
       ),
     );
   }

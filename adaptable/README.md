@@ -7,6 +7,8 @@ A **cross-platform** counter that can be used for the time-management in scienti
 
 ![Logo](https://hep-mh.com/files/Flounder.png)
 
+The icon is based on [``this image``](https://imgbin.com/png/D3dzb0eY/turquoise-fish-png).
+
 # Installation & Usage
 
 The web version of Flounder can be freely accessed at [``timer.hep-mh.com``](https://timer.hep-mh.com/). Feel free to use it on your platform of choice, as it works on mobile and desktop. In fact, Flounder even is a full-fledged PWA and can thus be installed as such.

@@ -25,8 +25,8 @@ AppDir:
     include:
     # These packages and all of their dependencies will be installed,
     # except for the ones explicitly excluded below
+    - libgtk-3-0
     - libpcre3:amd64
-    # - libgtk-3-0
     exclude:
     - humanity-icon-theme
     - hicolor-icon-theme
