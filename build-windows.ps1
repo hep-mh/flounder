@@ -1,4 +1,6 @@
-# WINDOWS
+flutter clean
+
+Remove-Item "packages\*" -Force
 
 # Building Windows app
 flutter build windows
