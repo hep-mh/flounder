@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Flounder"
-#define MyAppVersion "1.0.1"
+#define MyAppVersion "1.0.2"
 #define MyAppPublisher "Marco Hufnagel"
 #define MyAppURL "https://timer.hep-mh.com"
 #define MyAppExeName "flounder.exe"
@@ -19,7 +19,7 @@ AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 OutputDir="../build/inno_setup"
-OutputBaseFilename={#MyAppName}
+OutputBaseFilename={#MyAppName}-Setup
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=..\LICENSE
