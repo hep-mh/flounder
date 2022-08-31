@@ -6,7 +6,7 @@ Remove-Item "packages\*" -Force
 flutter build windows
 
 # Creating .zip archive
-Compress-Archive -Path "build\windows\Runner" -DestinationPath "packages/flounder-latest-windows-x86_64.zip"
+Compress-Archive -Path "build\windows\Runner\Release\*" -DestinationPath "packages/flounder-latest-windows-x86_64.zip"
 
 # Creating .exe installer
 iscc .\windows\inno_setup.iss
