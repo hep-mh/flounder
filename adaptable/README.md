@@ -5,7 +5,7 @@ A **cross-platform** counter that can be used for the time-management in scienti
 ![Language: Flutter](https://img.shields.io/badge/Language-Flutter/Dart-blue.svg?style=flat-square)
 ![Version: __VERSION__](https://img.shields.io/badge/Current_Version-__VERSION__-green.svg?style=flat-square)
 
-![Logo](https://hep-mh.com/files/Flounder.png)
+![Logo]([https://hep-mh.com/files/Flounder.png](https://github.com/hep-mh/flounder/blob/main/assets/desktop-icon.png))
 
 The icon is based on [``this image``](https://imgbin.com/png/D3dzb0eY/turquoise-fish-png).
 
