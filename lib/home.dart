@@ -58,20 +58,24 @@ class _FlounderHomeState extends State<FlounderHome> {
   // The Timer object driving the main clock
   Timer? _runner;
 
-  // The timer object handling the debouncing
-  // when changing one of the text fields
-  /*Timer? _debounce;*/
-
   // The SharedPreferences object to read the
   // user-defined presets
   SharedPreferences? _prefs;
 
+  // The AudioPlayer to play the reminder sound
+  final AudioPlayer _player = AudioPlayer();
+  // A flag to check if audio is currently playing
+  bool _audioIsPlaying = false;
+
   // UTILITY FUNCTIONS ////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
   void _playSound() async {
-    AudioPlayer player = AudioPlayer();
+    // Only play if not already playing
+    if (_audioIsPlaying) return;
 
-    await player.play( AssetSource('ding.mp3') );
+    _audioIsPlaying = true;
+
+    await _player.resume();
   }
 
   void _toggleWakelock(bool enable) {
@@ -197,12 +201,6 @@ class _FlounderHomeState extends State<FlounderHome> {
   }
 
   void _onAnyTextFieldChanged(String? id, String? text) {
-    // Only update the profile if a certain time has passed
-    // This looks better in the UI when e.g. deleting a
-    // two digit number from one text field
-    /*if (_debounce?.isActive ?? false) _debounce?.cancel();*/
-    // -->
-    /*_debounce = Timer(const Duration(milliseconds: 500), () {*/
     if (text == '') return;
 
     setState(() {
@@ -226,7 +224,6 @@ class _FlounderHomeState extends State<FlounderHome> {
         /**/ dropdownValue = 'Custom';
       }
     });
-    /*});*/
   }
 
   void _onSaveButtonPressed() {
@@ -243,6 +240,14 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   // INIT & DISPOSE FUNCTIONS /////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
+  void _loadSoundAsset() async {
+    await _player.setSourceAsset('ding.mp3');
+
+    _player.onPlayerComplete.listen((event) {
+      _audioIsPlaying = false;
+    });
+  }
+  
   void _loadPreferences() async {
     _prefs = await SharedPreferences.getInstance();
 
@@ -287,6 +292,8 @@ class _FlounderHomeState extends State<FlounderHome> {
   void initState() {
     super.initState();
 
+    _loadSoundAsset();
+
     _loadPreferences();
 
     // Ensure that the navigation bar has a matching color on
@@ -302,11 +309,13 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   @override
   void dispose() {
-    // Clean up the Timer's
+    // Dispose of the Timer
     _runner!.cancel();
-    /*_debounce!.cancel();*/
 
-    // Clean up the TextEditingController's
+    // Dispose of the AudioPlayer
+    _player.dispose();
+
+    // Dispose of the TextEditingController's
     textFieldControllers.forEach((key, value) {
       value.dispose();
     });
