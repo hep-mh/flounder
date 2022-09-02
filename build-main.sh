@@ -20,6 +20,7 @@ echo "Packaging application as .tar.gz..."
 tar czf packages/flounder-latest-ubuntu-x86_64.tar.gz --directory=build/linux/x64/release/bundle/ .
 # Build a .flatpak file and save it in the packages/ directory
 echo "Packaging application as .flatpak..."
+jsonnet linux/flatpak/com.hepmh.Flounder.jsonnet > linux/flatpak/com.hepmh.Flounder.json
 flatpak-builder --repo=build/flatpak_repo build/flatpak --force-clean linux/flatpak/com.hepmh.Flounder.json > build/flatpak-builder.log
 flatpak build-bundle build/flatpak_repo/ packages/flounder-latest-linux-x86_64.flatpak com.hepmh.Flounder
 # Build an .AppImage file and save it in the packages/ directory
