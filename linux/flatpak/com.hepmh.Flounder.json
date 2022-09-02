@@ -46,11 +46,11 @@
           },
           {
             "type": "file",
-            "path": "../assets/desktop-icon.png"
+            "path": "../../assets/desktop-icon.png"
           },
           {
             "type": "file",
-            "path": "../packages/flounder-latest-ubuntu-x86_64.tar.gz"
+            "path": "../../packages/flounder-latest-ubuntu-x86_64.tar.gz"
           }
         ]
       }

@@ -20,7 +20,7 @@ echo "Packaging application as .tar.gz..."
 tar czf packages/flounder-latest-ubuntu-x86_64.tar.gz --directory=build/linux/x64/release/bundle/ .
 # Build a .flatpak file and save it in the packages/ directory
 echo "Packaging application as .flatpak..."
-flatpak-builder --repo=build/flatpak_repo build/flatpak --force-clean linux/com.hepmh.Flounder.json > build/flatpak-builder.log
+flatpak-builder --repo=build/flatpak_repo build/flatpak --force-clean linux/flatpak/com.hepmh.Flounder.json > build/flatpak-builder.log
 flatpak build-bundle build/flatpak_repo/ packages/flounder-latest-linux-x86_64.flatpak com.hepmh.Flounder
 # Build an .AppImage file and save it in the packages/ directory
 echo "Packaging application as .AppImage..."
@@ -28,7 +28,7 @@ mkdir -p build/appimage
 cp -r build/linux/x64/release/bundle build/appimage/AppDir
 mkdir -p build/appimage/AppDir/usr/share/icons/hicolor/64x64/apps/
 convert assets/desktop-icon.png -resize 64x64 build/appimage/AppDir/usr/share/icons/hicolor/64x64/apps/com.hepmh.Flounder.png
-appimage-builder --recipe linux/AppImageBuilder.yml --appdir build/appimage/AppDir --build-dir build/appimage --skip-tests > build/appimage-builder.log 2>&1
+appimage-builder --recipe linux/appimage/AppImageBuilder.yml --appdir build/appimage/AppDir --build-dir build/appimage --skip-tests > build/appimage-builder.log 2>&1
 mv Flounder-latest-x86_64.AppImage packages/flounder-latest-linux-x86_64.AppImage
 
 # ANDROID
