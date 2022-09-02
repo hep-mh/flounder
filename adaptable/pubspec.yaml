@@ -11,6 +11,25 @@ environment:
   sdk: ">=2.16.1 <3.0.0"
 
 
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/ding.mp3
+  
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/roboto/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/roboto/Roboto-Bold.ttf
+          weight: 700
+
+
 dependencies:
   flutter:
     sdk: flutter
@@ -26,7 +45,14 @@ dependencies:
 
   flutter_launcher_icons: ^0.10.0
   cupertino_icons: ^1.0.2
-  msix: ^3.6.3
+  #msix: ^3.6.3
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^1.0.0
 
 
 flutter_icons:
@@ -49,58 +75,32 @@ flutter_icons:
     icon_size: 48
 
 
-flutter_native_splash:
-  color: "#1f1f1f"
-  image: assets/desktop-icon.png
+# flutter_native_splash:
+#   color: "#1f1f1f"
+#   image: assets/desktop-icon.png
 
-  android_12:
-    color: "#1f1f1f"
-    image: assets/android-icon.png
-    icon_background_color: "#ffffff"
+#   android_12:
+#     color: "#1f1f1f"
+#     image: assets/android-icon.png
+#     icon_background_color: "#ffffff"
 
-  android: false
-  ios: false
-  web: false
+#   android: false
+#   ios: false
+#   web: false
 
-  # https://developer.android.com/reference/android/view/Gravity
-  android_gravity: center
-  # https://developer.apple.com/documentation/uikit/uiview/contentmode
-  ios_content_mode: center
-  # center, contain, stretch, and cover
-  web_image_mode: center
+#   # https://developer.android.com/reference/android/view/Gravity
+#   android_gravity: center
+#   # https://developer.apple.com/documentation/uikit/uiview/contentmode
+#   ios_content_mode: center
+#   # center, contain, stretch, and cover
+#   web_image_mode: center
 
-  fullscreen: false
-
-
-msix_config:
-  display_name: Flounder
-  publisher_display_name: Marco Hufnagel
-  identity_name: com.hepmh.Flounder
-  msix_version: __VERSION__.0
-  logo_path: assets\desktop-icon.png
+#   fullscreen: false
 
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-  flutter_lints: ^1.0.0
-
-
-flutter:
-  uses-material-design: true
-
-  assets:
-    - assets/ding.mp3
-  
-  fonts:
-    - family: Roboto
-      fonts:
-        - asset: assets/fonts/roboto/Roboto-Light.ttf
-          weight: 300
-        - asset: assets/fonts/roboto/Roboto-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/roboto/Roboto-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/roboto/Roboto-Bold.ttf
-          weight: 700
+# msix_config:
+#   display_name: Flounder
+#   publisher_display_name: Marco Hufnagel
+#   identity_name: com.hepmh.Flounder
+#   msix_version: __VERSION__.0
+#   logo_path: assets\desktop-icon.png
