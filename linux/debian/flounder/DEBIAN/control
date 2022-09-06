@@ -1,0 +1,9 @@
+Package: flounder
+Version: 1.0.3
+Maintainer: Marco Hufnagel
+Section: science
+Priority: optional
+Architecture: any
+Essential: no
+Description: A cross-platform counter that can be used for the time-management in scientific talks
+Depends: libc6-i386, libstdc++6, libgtk-3-0, libgcrypt20, liblz4-1, liblzma5
