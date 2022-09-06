@@ -10,10 +10,10 @@ import 'state.dart';
 const double MAGIC_WIDTH = 740;
 
 
-class _FlounderHeader extends StatelessWidget {
+class FlounderHeader extends StatelessWidget {
   final ApplicationState state;
 
-  const _FlounderHeader({Key? key, required this.state}) : super(key: key);
+  const FlounderHeader({Key? key, required this.state}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +77,10 @@ class _FlounderHeader extends StatelessWidget {
 }
 
 
-class _FlounderTimer extends StatelessWidget {
+class FlounderTimer extends StatelessWidget {
   final ApplicationState state;
 
-  const _FlounderTimer({Key? key, required this.state}) : super(key: key);
+  const FlounderTimer({Key? key, required this.state}) : super(key: key);
 
   String _timerToText() {
     int min = state.timer ~/ 60;
@@ -96,24 +96,22 @@ class _FlounderTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     const double padding = 20;
 
-    return Expanded(
-      child: Center(
-        child: Padding(
-          // For now, a constant -- context independent --
-          // padding seems to look fine in all conditions
-          padding: const EdgeInsets.all(padding),
-          child: FittedBox(
-            fit: BoxFit.contain,
-            child: Text(
-              _timerToText(),
-              style: const TextStyle(
-                // This is the maximal font size, which will
-                // be scaled down by the FittedBox if needed
-                fontSize: 400,
-                // We keep the text white and update the remaining
-                // colors of the UI to indicate the current state
-                color: Colors.white,
-              ),
+    return Center(
+      child: Padding(
+        // For now, a constant -- context independent --
+        // padding seems to look fine in all conditions
+        padding: const EdgeInsets.all(padding),
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: Text(
+            _timerToText(),
+            style: const TextStyle(
+              // This is the maximal font size, which will
+              // be scaled down by the FittedBox if needed
+              fontSize: 400,
+              // We keep the text white and update the remaining
+              // colors of the UI to indicate the current state
+              color: Colors.white,
             ),
           ),
         ),
@@ -133,8 +131,10 @@ class FlounderBody extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: [
-          _FlounderHeader(state: state),
-          _FlounderTimer (state: state)
+          FlounderHeader(state: state),
+          Expanded(
+            child: FlounderTimer (state: state)
+          )
         ],
       ),
     );

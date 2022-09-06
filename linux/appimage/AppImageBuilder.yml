@@ -26,19 +26,19 @@ AppDir:
     # These packages and all of their dependencies will be installed,
     # except for the ones explicitly excluded below
     # Output of: flutter_to_debian dependencies build/linux/x64/release/bundle/lib/
-    #- libc6-i386
-    #- libstdc++6
+    - libc6-i386
+    - libstdc++6
     - libgtk-3-0
-    #- libgcrypt20
-    #- liblz4-1
-    #- liblzma5
+    - libgcrypt20
+    - liblz4-1
+    - liblzma5
     #- libgstreamer-plugins-good1.0-0
     # plus additional gstreamer dependencies
-    #- gstreamer1.0-plugins-good
-    #- gstreamer1.0-gtk3
-    #- gstreamer1.0-x
-    #- gstreamer1.0-gl
-    #- gstreamer1.0-pulseaudio
+    - gstreamer1.0-plugins-good
+    - gstreamer1.0-gtk3
+    - gstreamer1.0-x
+    - gstreamer1.0-gl
+    - gstreamer1.0-pulseaudio
     exclude:
     - humanity-icon-theme
     - hicolor-icon-theme

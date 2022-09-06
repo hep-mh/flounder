@@ -16,6 +16,7 @@ files="
     README.md
     pubspec.yaml
     linux/flatpak/com.hepmh.Flounder.metainfo.xml
+    linux/debian/flounder/DEBIAN/control
     windows/inno/inno_setup.iss
 "
 
