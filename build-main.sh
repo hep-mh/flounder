@@ -22,7 +22,7 @@ echo -ne "\n\e[38;5;220m• Building Linux app •\e[0m\r"
 flutter build linux
 # Create a .tar.gz file and save it in the packages/ directory
 echo "Packaging application as .tar.gz..."
-tar czf packages/flounder-latest-ubuntu-x86_64.tar.gz --directory=build/linux/x64/release/bundle/ .
+tar czf packages/flounder-latest-debian-x86_64.tar.gz --directory=build/linux/x64/release/bundle/ .
 # Build a .flatpak file and save it in the packages/ directory
 echo "Packaging application as .flatpak..."
 ./scripts/flatpak.sh

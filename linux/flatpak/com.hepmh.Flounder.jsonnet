@@ -23,7 +23,7 @@ local base_dir = "../..";
       ],
       "build-commands": [
         "mkdir -p flounder",
-        "tar -xf flounder-latest-ubuntu-x86_64.tar.gz -C flounder",
+        "tar -xf flounder-latest-debian-x86_64.tar.gz -C flounder",
         "cp -r flounder /app/",
         "chmod +x /app/flounder/flounder",
         "mkdir -p /app/bin",
@@ -52,7 +52,7 @@ local base_dir = "../..";
         },
         {
           "type": "file",
-          "path": base_dir + "/packages/flounder-latest-ubuntu-x86_64.tar.gz"
+          "path": base_dir + "/packages/flounder-latest-debian-x86_64.tar.gz"
         }
       ]
     }
