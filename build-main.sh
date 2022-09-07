@@ -27,8 +27,11 @@ tar czf packages/flounder-latest-debian-x86_64.tar.gz --directory=build/linux/x6
 echo "Packaging application as .flatpak..."
 ./scripts/flatpak.sh
 # Build an .AppImage file and save it in the packages/ directory
-echo "Packaging application as .AppImage..."
-./scripts/AppImage.sh
+#echo "Packaging application as .AppImage..."
+#./scripts/AppImage.sh
+# Build an .deb file and save it in the packages/ directory
+#echo "Packaging application as .deb..."
+#./scripts/deb.sh
 
 # ANDROID
 echo -ne "\n\e[38;5;72m• Building Android app •\e[0m\r"
