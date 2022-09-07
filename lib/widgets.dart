@@ -301,6 +301,7 @@ class FlounderDrawer extends StatelessWidget {
       textFieldWidgets.add(
         Focus(
           onFocusChange: onAnyTextFieldFocusChanged,
+          skipTraversal: true,
           child: TextFormField(
             controller: textFieldControllers[id],
             style: const TextStyle(fontSize: 25, color: Colors.white),
