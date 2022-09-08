@@ -11,10 +11,10 @@ The above logo is based on [``this image``](https://imgbin.com/png/D3dzb0eY/turq
 
 ## How to use?
 
-<p float="left">
-  <img src="https://hep-mh.com/files/screenshots/usage1.png" alt="usage1" width="500"/>
-  <img src="https://hep-mh.com/files/screenshots/usage2.png" alt="usage2" width="500"/>
-</p>
+Home Page                                             |  Drawer
+:----------------------------------------------------:|:----------------------------------------------------:
+![](https://hep-mh.com/files/screenshots/usage1.png)  |  ![](https://hep-mh.com/files/screenshots/usage2.png)
+
 
 Note that presets are persistent and do not get reset upon closing the application.
 
