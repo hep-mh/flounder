@@ -161,6 +161,8 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   void _onBellButtonPressed() {
     setState(() { state.remindMe = !state.remindMe; });
+
+    _prefs!.setBool('remindMe', state.remindMe);
   }
 
   void _onDropdownValueChanged(String? value) {
@@ -251,14 +253,16 @@ class _FlounderHomeState extends State<FlounderHome> {
   void _loadPreferences() async {
     _prefs = await SharedPreferences.getInstance();
 
-    final List<String>? presetsFromPrefs = _prefs!.getStringList('presets');
+    // Load the data
+    final List<String>? presetsFromPrefs  = _prefs!.getStringList('presets');
+    final bool?         remindMeFromPrefs = _prefs!.getBool('remindMe');
 
     Timer.periodic(const Duration(milliseconds: 5), (Timer t) {
       // Wait for the state to initialize before calling setState
       if (!mounted) return;
 
       setState(() {
-        // If shared preferences are preset, override the defaults
+        // 1. PRESETS /////////////////////////////////////////////////////////
         if (presetsFromPrefs != null) {
           ProfileCollection sharedPresets = ProfileCollection();
 
@@ -282,6 +286,11 @@ class _FlounderHomeState extends State<FlounderHome> {
         } // else remain 'Custom'
 
         _updateTextFields();
+
+        // 2. REMIND_ME ///////////////////////////////////////////////////////
+        if (remindMeFromPrefs != null) {
+          state.remindMe = remindMeFromPrefs;
+        }
       });
 
       t.cancel();
