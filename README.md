@@ -31,7 +31,7 @@ The web version of Flounder can be freely accessed at [``timer.hep-mh.com``](htt
 
 <img src="https://hep-mh.com/files/mimetypes/application-apk.png" alt="apk" width="50"/>
 
-The ``.apk`` file for Android can be downloaded [here](https://hep-mh.com/files/packages/flounder-latest-android.apk). After downloading, make sure to allow installation form unknown sources in your settings. And for your own security, turn it back off once you are done.
+The ``.apk`` file for Android can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-android.apk). After downloading, make sure to allow installation from unknown sources in your settings. And for your own security, turn it back off once you are done.
 
 *Publication on F-Droid is on the Roadmap.*
 
@@ -39,7 +39,7 @@ The ``.apk`` file for Android can be downloaded [here](https://hep-mh.com/files/
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-gzip.png" alt="targz" width="50"/>
 
-A ``.tar.gz`` files with precombiled binaries for x86_64 Debian/Ubuntu can be downloaded [here](https://hep-mh.com/files/packages/flounder-latest-debian-x86_64.tar.gz). After downloading, unpack the file and run the command
+A ``.tar.gz`` files with pre-combiled binaries for x86_64 Debian/Ubuntu can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-debian-x86_64.tar.gz). After downloading, unpack the file and run the command
 ```
 ./flounder
 ```
@@ -47,7 +47,7 @@ in the newly created directory.
 
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.flatpak.png" alt="flatpak" width="50"/>
 
-A ``.flatpak`` file for any x86_64 Linux system can be downloaded [here](https://hep-mh.com/files/packages/flounder-latest-linux-x86_64.flatpak). After downloading, first install the Freedesktop platform via the command (also make sure that flatpak is currently configured on your system. For more information, check [https://flatpak.org/setup/](https://flatpak.org/setup/).)
+A ``.flatpak`` file for arbitrary x86_64 Linux system can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-linux-x86_64.flatpak). After downloading, first install the flatpak for the Freedesktop platform via the command (also make sure that flatpak is correctly configured on your system. For more information, check [https://flatpak.org/setup/](https://flatpak.org/setup/).)
 ```
 flatpak install org.freedesktop.Platform/x86_64/21.08
 ```
@@ -62,12 +62,12 @@ flatpak install --user flounder-latest-linux-x86_64.flatpak
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-zip.png" alt="zip" width="50"/>
 
-A ``.zip`` files with precombiled binaries for x86_64 Windows 7/9/10/11 can be downloaded [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file and double-click on ``flounder.exe`` in the previously created directory. 
+A ``.zip`` files with pre-combiled binaries for x86_64 Windows 7/9/10/11 can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file and double-click on ``flounder.exe`` in the previously created directory. 
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-desktop.png" alt="exe" width="50"/>
 
-A standard installer in ``.exe`` format can be downloaded [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64-setup.exe). After downloading, double-click the file and proceed with the installation process.
+A standard installer in ``.exe`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64-setup.exe). After downloading, double-click the file and proceed with the installation process.
 
-### • **macOS/iOS** •
+### • **macOS / iOS** •
 
-Currently, there do not exist any builds for macOS and  iOS, as I simply lack access to a macOS device, which is needed to build for these platforms. There might be a native version for macOS in the future, but since Apple does not allow sideloading on iOS (and I will not pay the money to upload it to the App Store), the future looks a lot less promising for iOS. **However, even on these platforms, you can simply use the web version.**
+Currently, there do not exist any builds for macOS and iOS, as I lack access to a macOS device, which is needed to build for these platforms. There might be a native version for macOS in the future, but since Apple does not allow sideloading on iOS (and I will not pay the money to upload it to the App Store), the future looks a lot less promising for iOS. **However, even on these platforms, you can always use the web version.**
