@@ -37,6 +37,8 @@ The ``.apk`` file for Android can be downloaded from [here](https://hep-mh.com/f
 
 ### • **Linux** •
 
+*Provision of ``.deb`` and ``.AppImage`` packages/applications is on the Roadmap.*
+
 <img src="https://hep-mh.com/files/mimetypes/application-x-gzip.png" alt="targz" width="50"/>
 
 A ``.tar.gz`` file with pre-combiled binaries for x86_64 Debian/Ubuntu can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-debian-x86_64.tar.gz). After downloading, unpack the file and run the command
@@ -73,6 +75,11 @@ A standard installer in ``.exe`` format can be downloaded from [here](https://he
 ### • **macOS / iOS** •
 
 Currently, there do not exist any builds for macOS and iOS, as I lack access to a macOS device, which is needed to build for these platforms. There might be a native version for macOS in the future, but since Apple does not allow sideloading on iOS (and I will not pay the money to upload it to the App Store), the future looks a lot less promising for iOS. **However, even on these platforms, you can always use the web version.**
+
+
+## How to build?
+
+Flounder is written in Dart using Flutter. Hence, in order to learn how to build basic executables for the different platforms, check out https://flutter.dev. To get an idea for some of the commands, you may want to take a look at the files ``build-main.sh`` and ``build-windows.ps1``, which I use to build for Linux/Android on Linux and for Windows on Windows, respectively. These scripts also contain the relevant code to build Windows installer files, flatpaks, etc.
 
 
 ## Some history
