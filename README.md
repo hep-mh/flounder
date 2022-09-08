@@ -45,9 +45,11 @@ A ``.tar.gz`` files with pre-combiled binaries for x86_64 Debian/Ubuntu can be d
 ```
 in the newly created directory.
 
+Note that this binary might also work on other platform. But further testing is required. In case of doubt, use the flatpak version below.
+
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.flatpak.png" alt="flatpak" width="50"/>
 
-A ``.flatpak`` file for arbitrary x86_64 Linux system can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-linux-x86_64.flatpak). After downloading, first install the flatpak for the Freedesktop platform via the command (also make sure that flatpak is correctly configured on your system. For more information, check [https://flatpak.org/setup/](https://flatpak.org/setup/).)
+A ``.flatpak`` file for arbitrary x86_64 Linux systems can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-linux-x86_64.flatpak). After downloading, first install the flatpak for the Freedesktop platform via the command (also make sure that flatpak is correctly configured on your system. For more information, check [https://flatpak.org/setup/](https://flatpak.org/setup/).)
 ```
 flatpak install org.freedesktop.Platform/x86_64/21.08
 ```
