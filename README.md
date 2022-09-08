@@ -47,7 +47,7 @@ A ``.tar.gz`` file with pre-combiled binaries for x86_64 Debian/Ubuntu can be do
 ```
 ./flounder
 ```
-in the newly created directory.
+in the newly created directory to start the application.
 
 Note that this binary might also work on other platform. But further testing is required. In case of doubt, use the flatpak version below.
 
@@ -68,7 +68,7 @@ flatpak install --user flounder-latest-linux-x86_64.flatpak
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-zip.png" alt="zip" width="50"/>
 
-A ``.zip`` file with pre-combiled binaries for x86_64 Windows 7/8/10/11 can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file and double-click on ``flounder.exe`` in the previously created directory. 
+A ``.zip`` file with pre-combiled binaries for x86_64 Windows 7/8/10/11 can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file and double-click on ``flounder.exe`` in the previously created directory to start the application. 
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-desktop.png" alt="exe" width="50"/>
 
