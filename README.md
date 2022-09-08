@@ -9,7 +9,17 @@ A **cross-platform** counter that can be used for the time-management in scienti
 
 The above logo is based on [``this image``](https://imgbin.com/png/D3dzb0eY/turquoise-fish-png).
 
-## Installation & Usage
+## How to use?
+
+<p float="left">
+  <img src="https://hep-mh.com/files/screenshots/usage1.png" alt="usage1" width="500"/>
+  <img src="https://hep-mh.com/files/screenshots/usage2.png" alt="usage2" width="500"/>
+</p>
+
+Note that presets are persistent and do not get reset upon closing the application.
+
+
+## How to install?
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-mswinurl.png" alt="web" width="50"/>
 
