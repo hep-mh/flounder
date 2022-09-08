@@ -49,7 +49,7 @@ A ``.tar.gz`` file with pre-combiled binaries for x86_64 Debian/Ubuntu can be do
 ```
 in the newly created directory to start the application.
 
-Note that this binary might also work on other platform. But further testing is required. In case of doubt, use the flatpak version below.
+Note that this binary might also work on other platforms. But further testing is required. In case of doubt, use the flatpak version below.
 
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.flatpak.png" alt="flatpak" width="50"/>
 
