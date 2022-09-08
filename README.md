@@ -73,3 +73,14 @@ A standard installer in ``.exe`` format can be downloaded from [here](https://he
 ### • **macOS / iOS** •
 
 Currently, there do not exist any builds for macOS and iOS, as I lack access to a macOS device, which is needed to build for these platforms. There might be a native version for macOS in the future, but since Apple does not allow sideloading on iOS (and I will not pay the money to upload it to the App Store), the future looks a lot less promising for iOS. **However, even on these platforms, you can always use the web version.**
+
+
+## Some history
+
+<img src="https://hep-mh.com/files/mimetypes/application-x-java.png" alt="java" width="50"/>
+
+The very first version of the timer was written in Java. If you are interested in how this version looked like, you can download it from [here](https://hep-mh.com/files/packages/counter-vintage-java.tar.gz). After downloading, extract the archive and run
+```
+java -jar counter.jar
+```
+in the created directory. This version should work on Linux/Windows/macOS, as long as a JavaVM is installed. However, this version will not get any new features in the furture and has been completely abandoned in favour of Flounder.
