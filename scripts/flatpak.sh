@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 jsonnet linux/flatpak/com.hepmh.Flounder.jsonnet > linux/flatpak/com.hepmh.Flounder.json
 flatpak-builder --repo=build/flatpak_repo build/flatpak --force-clean linux/flatpak/com.hepmh.Flounder.json > build/flatpak-builder.log

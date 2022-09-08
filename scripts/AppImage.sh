@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 mkdir -p build/appimage
 cp -r build/linux/x64/release/bundle build/appimage/AppDir

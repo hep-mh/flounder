@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 # ICONS
 echo -e "\e[38;5;209m• Generating launcher icons •\e[0m"
