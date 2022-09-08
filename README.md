@@ -64,7 +64,7 @@ flatpak install --user flounder-latest-linux-x86_64.flatpak
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-zip.png" alt="zip" width="50"/>
 
-A ``.zip`` files with pre-combiled binaries for x86_64 Windows 7/9/10/11 can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file and double-click on ``flounder.exe`` in the previously created directory. 
+A ``.zip`` files with pre-combiled binaries for x86_64 Windows 7/8/10/11 can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file and double-click on ``flounder.exe`` in the previously created directory. 
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-desktop.png" alt="exe" width="50"/>
 
