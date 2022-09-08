@@ -43,11 +43,11 @@ The ``.apk`` file for Android can be downloaded from [here](https://hep-mh.com/f
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-gzip.png" alt="targz" width="50"/>
 
-A ``.tar.gz`` file with pre-combiled binaries for x86_64 Debian/Ubuntu can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-debian-x86_64.tar.gz). After downloading, unpack the file and run the command
+A ``.tar.gz`` file with pre-combiled binaries for x86_64 Debian/Ubuntu can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-debian-x86_64.tar.gz). After downloading, unpack the file (preferably in a new directory) and run the command
 ```
 ./flounder
 ```
-in the newly created directory to start the application.
+to start the application.
 
 Note that this binary might also work on other platforms. But further testing is required. In case of doubt, use the flatpak version below.
 
@@ -68,7 +68,7 @@ flatpak install --user flounder-latest-linux-x86_64.flatpak
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-zip.png" alt="zip" width="50"/>
 
-A ``.zip`` file with pre-combiled binaries for x86_64 Windows 7/8/10/11 can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file and double-click on ``flounder.exe`` in the previously created directory to start the application. 
+A ``.zip`` file with pre-combiled binaries for x86_64 Windows 7/8/10/11 can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file (preferably in a new directory) and double-click on ``flounder.exe`` to start the application. 
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-desktop.png" alt="exe" width="50"/>
 
@@ -93,8 +93,8 @@ In general, it is possible to build applications for Android, iOS, Web, Linux, W
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-java.png" alt="java" width="50"/>
 
-The very first version of the timer was written in Java. If you are interested in how this version looked like, you can download it from [here](https://hep-mh.com/files/packages/counter-vintage-java.tar.gz). After downloading, extract the archive and run
+The very first version of the timer was written in Java. If you are interested in how this version looked like, you can download it from [here](https://hep-mh.com/files/packages/counter-vintage-java.tar.gz). After downloading, extract the archive (preferably in a new directory) and run
 ```
 java -jar counter.jar
 ```
-in the created directory. This version should work on Linux/Windows/macOS, as long as a JavaVM is installed. However, this version will not get any new features in the furture and has been completely abandoned in favour of Flounder.
+This version should work on Linux/Windows/macOS, as long as a JavaVM is installed. However, this version will not get any new features in the furture and has been completely abandoned in favour of Flounder.
