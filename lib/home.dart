@@ -69,7 +69,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   // UTILITY FUNCTIONS ////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  void _playSound() async {
+  Future<void> _playSound() async {
     // Only play if not already playing
     if (_audioIsPlaying) return;
 
@@ -242,7 +242,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   // INIT & DISPOSE FUNCTIONS /////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  void _loadSoundAsset() async {
+  Future<void> _loadSoundAssets() async {
     await _player.setSourceAsset('ding.mp3');
 
     _player.onPlayerComplete.listen((event) {
@@ -250,7 +250,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     });
   }
   
-  void _loadPreferences() async {
+  Future<void> _loadPreferences() async {
     _prefs = await SharedPreferences.getInstance();
 
     // Load the data
@@ -301,9 +301,10 @@ class _FlounderHomeState extends State<FlounderHome> {
   void initState() {
     super.initState();
 
-    _loadSoundAsset();
-
-    _loadPreferences();
+    Future.wait([
+      _loadSoundAssets(),
+      _loadPreferences()
+    ]);
 
     // Ensure that the navigation bar has a matching color on
     // Android devices
