@@ -70,7 +70,7 @@ A ``.AppImage`` file for arbitrary x86_64 Linux systems can be downloaded from [
 ```
 chmod 755 flounder-latest-linux-x86_64.AppImage
 ```
-and afterwards run (on Wayland it is necessary to add ``GDK_BACKEND=x11`` since AppImages are currently not supported in such an environment)
+and run (on Wayland it is necessary to add ``GDK_BACKEND=x11`` since AppImages are currently not supported in such an environment)
 ```
 ./flounder-latest-linux-x86_64.AppImage
 ```
