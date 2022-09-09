@@ -9,12 +9,12 @@ tar czf packages/flounder-latest-debian-x86_64.tar.gz --directory=build/linux/x6
 
 # Create a .flatpak file and save it in the packages/ directory
 echo "Packaging application as .flatpak..."
-./build_scripts/packaging/flatpak.sh > build/flatpak-builder.log 2>&1
+./build_scripts/packaging/flatpak.sh > build/flatpak.log 2>&1
 
 # Create a .AppImage file and save it in the packages/ directory
 echo "Packaging application as .AppImage..."
-./build_scripts/packaging/AppImage.sh > build/appimage-builder.log 2>&1
+./build_scripts/packaging/AppImage.sh > build/AppImage.log 2>&1
 
 # Build a .deb file and save it in the packages/ directory
-#echo "Packaging application as .deb..."
-#./build_scripts/packaging/deb.sh
+echo "Packaging application as .deb..."
+./build_scripts/packaging/deb.sh > build/deb.log 2>&1
