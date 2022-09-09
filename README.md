@@ -39,7 +39,7 @@ The ``.apk`` file for Android can be downloaded from [here](https://hep-mh.com/f
 
 ### • **Linux** •
 
-*Provision of ``.deb`` and ``.AppImage`` packages/applications is on the Roadmap.*
+*Provision of a ``.deb`` package is on the Roadmap.*
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-gzip.png" alt="targz" width="50"/>
 
