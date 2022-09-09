@@ -97,7 +97,7 @@ Flounder is written in Dart using Flutter. Hence, in order to learn how to setup
 ```
 flutter build linux --release
 ```
-Similar commands are also available for other platforms. To get an idea for some of the commands, you may also want to take a look at the files ``build-main.sh`` and ``build-windows.ps1``, which can be used to build for Linux/Android on Linux and for Windows on Windows, respectively. These scripts also contain the relevant code to build Windows installer files, flatpaks, etc.
+Similar commands are also available for other platforms. To get an idea for some of the commands, you may also want to take a look at the files in the ``build_scripts`` directory, which can be used to build for various platforms. These scripts also contain the relevant code to build Windows installer files, Flatpaks, AppImages, etc.
 
 In general, it is possible to build applications for Android, iOS, Web, Linux, Windows, and macOS 
 
