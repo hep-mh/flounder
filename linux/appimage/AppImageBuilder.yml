@@ -65,4 +65,5 @@ AppDir:
       command: ./AppRun
       use_host_x: true
 AppImage:
+  sign-key: E656F41E8E606FD3
   arch: x86_64
