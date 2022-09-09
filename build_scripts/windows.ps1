@@ -1,5 +1,3 @@
-Remove-Item "packages\*" -Force
-
 # Building Windows app
 flutter build windows
 
@@ -7,5 +5,4 @@ flutter build windows
 Compress-Archive -Path "build\windows\Runner\Release\*" -DestinationPath "packages/flounder-latest-windows-x86_64.zip"
 
 # Creating .exe installer
-iscc .\windows\inno\inno_setup.iss | Out-File -Path "build\iscc.log"
-Copy-Item "build\inno_setup\Flounder-Setup.exe" -Destination "packages/flounder-latest-windows-x86_64-setup.exe"
+.\build_scripts\packaging\setup.ps1 | Out-File -Path "build\iscc.log"
