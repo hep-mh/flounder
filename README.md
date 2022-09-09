@@ -74,7 +74,7 @@ and run (on Wayland it is necessary to add ``GDK_BACKEND=x11`` since AppImages a
 ```
 ./flounder-latest-linux-x86_64.AppImage
 ```
-to start the application. *Note that the AppImage version of Flounder currently has a ~3s startup time, since gstreamer needs to build some caches at every launch. Hopefully, this issue will get fixed in the future.*
+to start the application.
 
 ### • **Windows** •
 
