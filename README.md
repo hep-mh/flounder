@@ -64,6 +64,18 @@ flatpak install --user flounder-latest-linux-x86_64.flatpak
 
 *Publication on Flathub is on the Roadmap.*
 
+<img src="https://hep-mh.com/files/mimetypes/application-vnd.AppImage.png" alt="flatpak" width="50"/>
+
+A ``.AppImage`` file for arbitrary x86_64 Linux systems can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-linux-x86_64.AppImage). After downloading, mark the file executable via the command
+```
+chmod 755 flounder-latest-linux-x86_64.AppImage
+```
+and afterwards run (on Wayland it is necessary to add ``GDK_BACKEND=x11`` since AppImages are currently not supported in such an environment)
+```
+./flounder-latest-linux-x86_64.AppImage
+```
+to start the application. *Note that the AppImage version of Flounder currently has a ~3s startup time, since gstreamer needs to build some caches at every launch. Hopefully, this issue will get fixed in the future.*
+
 ### • **Windows** •
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-zip.png" alt="zip" width="50"/>
