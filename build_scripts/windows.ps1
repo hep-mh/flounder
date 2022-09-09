@@ -1,8 +1,8 @@
 # Building Windows app
 flutter build windows
 
-# Creating .zip archive
-Compress-Archive -Path "build\windows\Runner\Release\*" -DestinationPath "packages/flounder-latest-windows-x86_64.zip"
+# Create a .zip file and save it in the packages/ directory
+Compress-Archive -Path "build\windows\Runner\Release\*" -DestinationPath "packages/flounder-latest-windows-x86_64.zip" -Force
 
-# Creating .exe installer
-.\build_scripts\packaging\setup.ps1 | Out-File -Path "build\iscc.log"
+# Create a .exe installer and save it in the packages/ directory
+.\build_scripts\packaging\setup.ps1 *> "build\iscc.log"
