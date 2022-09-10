@@ -23,6 +23,8 @@ convert assets/desktop-icon.png -resize 64x64 $APPDIR/com.hepmh.Flounder.png
 cp $APPDIR/com.hepmh.Flounder.png $APPDIR/usr/share/icons/hicolor/64x64/apps/
 
 # Build the AppImage
+# ATTENTION: Make sure that gsl-launch-1.0 is installed, as this executable
+# is needed by appimage-builder to prebuild the plugin cache for faster startup
 appimage-builder --recipe linux/appimage/AppImageBuilder.yml --appdir $APPDIR --build-dir build/appimage --skip-tests
 
 # Move the AppImage to the packages/ directory
