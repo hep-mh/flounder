@@ -39,8 +39,6 @@ The ``.apk`` file for Android can be downloaded from [here](https://hep-mh.com/f
 
 ### • **Linux** •
 
-*Provision of a ``.deb`` package is on the Roadmap.*
-
 <img src="https://hep-mh.com/files/mimetypes/application-x-gzip.png" alt="targz" width="50"/>
 
 A ``.tar.gz`` file with pre-combiled binaries for x86_64 Debian/Ubuntu can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-debian-x86_64.tar.gz). After downloading, unpack the file (preferably in a new directory) and run the command
@@ -61,12 +59,17 @@ Afterwards, the previously downloaded package can be installed at user-level via
 ```
 flatpak install --user flounder-latest-linux-x86_64.flatpak
 ```
+Afterwards, the applications can be started from your launcher or by typing the command
+```
+flatpak run com.hepmh.Flounder
+```
+into your terminal.
 
 *Publication on Flathub is on the Roadmap.*
 
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.AppImage.png" alt="flatpak" width="50"/>
 
-A ``.AppImage`` file for arbitrary x86_64 Linux systems can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-linux-x86_64.AppImage). After downloading, mark the file executable via the command
+An ``.AppImage`` file for arbitrary x86_64 Linux systems can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-linux-x86_64.AppImage). After downloading, mark the file executable via the command
 ```
 chmod 755 flounder-latest-linux-x86_64.AppImage
 ```
@@ -76,6 +79,18 @@ and run (on Wayland it is necessary to add ``GDK_BACKEND=x11`` since AppImages a
 ```
 to start the application.
 
+<img src="https://hep-mh.com/files/mimetypes/application-vnd.debian.binary-package.png" alt="flatpak" width="50"/>
+
+A ``.deb`` file for x86_64 Debian/Ubuntu can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-debian-x86_64.deb). After downloading, install the package via the command
+```
+sudo dpkg -i ./flounder-latest-debian-x86_64.deb
+```
+Afterwards, the applications can be started from your launcher or by typing the command
+```
+flounder
+```
+into your terminal.
+
 ### • **Windows** •
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-zip.png" alt="zip" width="50"/>
@@ -84,7 +99,7 @@ A ``.zip`` file with pre-combiled binaries for x86_64 Windows 7/8/10/11 can be d
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-desktop.png" alt="exe" width="50"/>
 
-A standard installer in ``.exe`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64-setup.exe). After downloading, double-click the file and proceed with the installation process.
+A standard installer in ``.exe`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64-setup.exe). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
 
 ### • **macOS / iOS** •
 
