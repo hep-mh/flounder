@@ -114,7 +114,9 @@ flutter build linux --release
 ```
 Similar commands are also available for other platforms. To get an idea for some of the commands, you may also want to take a look at the files in the ``build_scripts`` directory, which can be used to build for various platforms. These scripts also contain the relevant code to build Windows installer files, Flatpaks, AppImages, etc.
 
-In general, it is possible to build applications for Android, iOS, Web, Linux, Windows, and macOS 
+In general, it is possible to build applications for Android, iOS, Web, Linux, Windows, and macOS .
+
+Note that beside the usual flutter dependencies, there also exist dependencies for building the various package formats with the provided build scripts, i.e. ``flatpak-builder`` and `jsonnet` for building the flatpak, ``appimage-builder`` and ``gst-launch-1.0`` for building the AppImage, ``dpkg-deb`` for building the debian package, and ``iscc`` for building the Windows installer file.
 
 ## Some history
 
