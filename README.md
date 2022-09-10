@@ -126,4 +126,4 @@ The very first version of the timer was written in Java. If you are interested i
 ```
 java -jar counter.jar
 ```
-This version should work on Linux/Windows/macOS, as long as a JavaVM is installed. However, this version will not get any new features in the furture and has been completely abandoned in favour of Flounder.
+This version should work on Linux/Windows/macOS, as long as a JavaVM is installed. However, this version will not get any new features in the future and has been completely abandoned in favour of Flounder.
