@@ -12,7 +12,7 @@ rm -rf build/appimage
 mkdir -p build/appimage
 cp -r build/linux/x64/release/bundle $APPDIR
 
-# Copy the .desktop file to the apropriate locations
+# Copy the .desktop file to the appropriate locations
 mkdir -p $APPDIR/usr/share/applications/
 cp linux/appimage/com.hepmh.Flounder.desktop $APPDIR
 cp linux/appimage/com.hepmh.Flounder.desktop $APPDIR/usr/share/applications/
