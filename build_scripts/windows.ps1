@@ -1,4 +1,3 @@
-# Building Windows app
 flutter build windows
 
 # Create a .zip file and save it in the packages/ directory
