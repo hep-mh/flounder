@@ -73,7 +73,7 @@ An ``.AppImage`` file for arbitrary x86_64 Linux systems can be downloaded from 
 ```
 chmod 755 flounder-latest-linux-x86_64.AppImage
 ```
-and run (on Wayland it is necessary to add ``GDK_BACKEND=x11`` since AppImages are currently not supported in such an environment)
+and run (on Wayland it is necessary to add ``GDK_BACKEND=x11`` before the command, since AppImages are currently not supported on Wayland)
 ```
 ./flounder-latest-linux-x86_64.AppImage
 ```
@@ -83,7 +83,7 @@ to start the application.
 
 A ``.deb`` file for x86_64 Debian/Ubuntu can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-debian-x86_64.deb). After downloading, install the package via the command
 ```
-sudo dpkg -i ./flounder-latest-debian-x86_64.deb
+sudo dpkg -i flounder-latest-debian-x86_64.deb
 ```
 Afterwards, the applications can be started from your launcher or by typing the command
 ```
