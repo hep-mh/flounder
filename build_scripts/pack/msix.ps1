@@ -1,7 +1,6 @@
 # Get the publisher and the password for the certificate
-# pfx_info needs to be of the form
-# --publisher <...> --certificate-password <...>
-$args = Get-Content .\windows\msix\pfx_info -Raw
+$publisher = Get-Content .\windows\msix\pfx_publisher -Raw
+$cerpasswd = Get-Content .\windows\msix\pfx_cerpasswd -Raw
 
 # Create the package
-flutter pub run msix:create $args
+flutter pub run msix:create --publisher $publisher --certificate-password $cerpasswd
