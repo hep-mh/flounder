@@ -6,7 +6,7 @@ Compress-Archive -Path "build\windows\Runner\Release\*" -DestinationPath "packag
 
 # Create a .exe installer and save it in the packages\ directory
 Write-Output "Creating .exe installer..."
-.\build_scripts\pack\exe.ps1 *> "build\exe.log"
+.\build_scripts\pack\setup-exe.ps1 *> "build\setup-exe.log"
 
 # Create an .msix installer and save it in the packages\ directory
 Write-Output "Creating .msix installer..."
