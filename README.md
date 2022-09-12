@@ -97,13 +97,15 @@ into your terminal.
 
 A ``.zip`` file with pre-combiled binaries for x86_64 Windows 7/8/10/11 can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file (preferably in a new directory) and double-click on ``flounder.exe`` to start the application. 
 
-<img src="https://hep-mh.com/files/mimetypes/application-x-setup.png" alt="exe" width="70"/>
+<img src="https://hep-mh.com/files/mimetypes/application-x-setup-exe.png" alt="exe" width="70"/>
 
 A standard installer in ``.exe`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64-setup.exe). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
 
 ### • **macOS / iOS** •
 
 Currently, there do not exist any builds for macOS and iOS, as I lack access to a macOS device, which is needed to build for these platforms. There might be a native version for macOS in the future, but since Apple does not allow sideloading on iOS (and I will not pay the money to upload it to the App Store), the future looks a lot less promising for iOS. **However, even on these platforms, you can always use the web version.**
+
+Alternatively, you can, of course, always build it yourself!
 
 
 ## How to build?
