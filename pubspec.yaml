@@ -81,10 +81,16 @@ msix_config:
   identity_name: com.hepmh.Flounder
   msix_version: 1.0.4.0
   logo_path: assets\desktop-icon.png
-  output_path: packages\
-  output_name: flounder-latest-windows-x86_64.msix
+  #
+  output_path: packages
+  output_name: flounder-latest-windows-x86_64
   architecture: x64
   build_windows: false
+  #
+  certificate_path: Windows.pfx
+  publisher: CN=Marco Hufnagel,OU=PhysTh,O=ULB,L=Brussels,ST=Brussels,C=BE
+  sign_msix: true
+  install_certificate: true
 
 
 # flutter_native_splash:
