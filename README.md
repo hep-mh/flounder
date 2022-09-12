@@ -99,11 +99,11 @@ A ``.zip`` file with pre-combiled binaries for x86_64 Windows 7/8/10/11 can be d
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-setup-exe.png" alt="exe" width="70"/>
 
-A standard installer in ``.exe`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64-setup.exe). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
+A standard installer for x86_64 Windows in ``.exe`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64-setup.exe). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-msix.png" alt="msix" width="70"/>
 
-A more moden installer in ``.msix`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.msix). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
+A more moden installer for x86_64 Windows in ``.msix`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.msix). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
 
 ### • **macOS / iOS** •
 
