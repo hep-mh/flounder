@@ -59,7 +59,7 @@ Afterwards, the previously downloaded package can be installed at user-level via
 ```
 flatpak install --user flounder-latest-linux-x86_64.flatpak
 ```
-(For installation at system-level, run with ``sudo`` and drop the ``--user`` flag). The applications can then be started from your launcher or by typing the command
+(For installation at system-level, run with ``sudo`` and drop the ``--user`` flag). The application can then be started from your launcher or by typing the command
 ```
 flatpak run com.hepmh.Flounder
 ```
@@ -85,7 +85,7 @@ A ``.deb`` file for x86_64 Debian/Ubuntu can be downloaded from [here](https://h
 ```
 sudo dpkg -i flounder-latest-debian-x86_64.deb
 ```
-Afterwards, the applications can be started from your launcher or by typing the command
+Afterwards, the application can be started from your launcher or by typing the command
 ```
 flounder
 ```
