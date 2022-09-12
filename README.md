@@ -23,7 +23,7 @@ Note that presets are persistent and do not get reset upon closing the applicati
 
 ### • **Web** •
 
-<img src="https://hep-mh.com/files/mimetypes/application-x-mswinurl.png" alt="web" width="50"/>
+<img src="https://hep-mh.com/files/mimetypes/application-x-mswinurl.png" alt="web" width="70"/>
 
 The web version of Flounder can be freely accessed at [``timer.hep-mh.com``](https://timer.hep-mh.com/). Feel free to use it on your platform of choice, as it works on mobile and desktop. In fact, Flounder even is a full-fledged PWA and can thus be installed as such.
 
@@ -31,7 +31,7 @@ The web version of Flounder can be freely accessed at [``timer.hep-mh.com``](htt
 
 ### • **Android** •
 
-<img src="https://hep-mh.com/files/mimetypes/application-apk.png" alt="apk" width="50"/>
+<img src="https://hep-mh.com/files/mimetypes/application-apk.png" alt="apk" width="70"/>
 
 The ``.apk`` file for Android can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-android.apk). After downloading, make sure to allow installation from unknown sources in your settings. And for your own security, turn it back off once you are done.
 
@@ -39,7 +39,7 @@ The ``.apk`` file for Android can be downloaded from [here](https://hep-mh.com/f
 
 ### • **Linux** •
 
-<img src="https://hep-mh.com/files/mimetypes/application-x-gzip.png" alt="targz" width="50"/>
+<img src="https://hep-mh.com/files/mimetypes/application-x-gzip.png" alt="targz" width="70"/>
 
 A ``.tar.gz`` file with pre-combiled binaries for x86_64 Debian/Ubuntu can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-debian-x86_64.tar.gz). After downloading, unpack the file (preferably in a new directory) and run the command
 ```
@@ -49,7 +49,7 @@ to start the application.
 
 Note that this binary might also work on other platforms. But further testing is required. In case of doubt, use the flatpak or AppImage version below.
 
-<img src="https://hep-mh.com/files/mimetypes/application-vnd.flatpak.png" alt="flatpak" width="50"/>
+<img src="https://hep-mh.com/files/mimetypes/application-vnd.flatpak.png" alt="flatpak" width="70"/>
 
 A ``.flatpak`` file for arbitrary x86_64 Linux systems can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-linux-x86_64.flatpak). After downloading, first install the flatpak for the Freedesktop platform via the command (also make sure that flatpak is correctly configured on your system. For more information, check [https://flatpak.org/setup/](https://flatpak.org/setup/).)
 ```
@@ -67,7 +67,7 @@ into your terminal.
 
 *Publication on Flathub is on the Roadmap.*
 
-<img src="https://hep-mh.com/files/mimetypes/application-vnd.AppImage.png" alt="flatpak" width="50"/>
+<img src="https://hep-mh.com/files/mimetypes/application-vnd.AppImage.png" alt="flatpak" width="70"/>
 
 An ``.AppImage`` file for arbitrary x86_64 Linux systems can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-linux-x86_64.AppImage). After downloading, mark the file executable via the command
 ```
@@ -79,7 +79,7 @@ and run (on Wayland it is necessary to add ``GDK_BACKEND=x11`` before the comman
 ```
 to start the application.
 
-<img src="https://hep-mh.com/files/mimetypes/application-vnd.debian.binary-package.png" alt="flatpak" width="50"/>
+<img src="https://hep-mh.com/files/mimetypes/application-vnd.debian.binary-package.png" alt="flatpak" width="70"/>
 
 A ``.deb`` file for x86_64 Debian/Ubuntu can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-debian-x86_64.deb). After downloading, install the package via the command
 ```
@@ -93,11 +93,11 @@ into your terminal.
 
 ### • **Windows** •
 
-<img src="https://hep-mh.com/files/mimetypes/application-x-zip.png" alt="zip" width="50"/>
+<img src="https://hep-mh.com/files/mimetypes/application-x-zip.png" alt="zip" width="70"/>
 
 A ``.zip`` file with pre-combiled binaries for x86_64 Windows 7/8/10/11 can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file (preferably in a new directory) and double-click on ``flounder.exe`` to start the application. 
 
-<img src="https://hep-mh.com/files/mimetypes/application-x-desktop.png" alt="exe" width="50"/>
+<img src="https://hep-mh.com/files/mimetypes/application-x-setup.png" alt="exe" width="70"/>
 
 A standard installer in ``.exe`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64-setup.exe). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
 
@@ -120,7 +120,7 @@ Note that beside the usual flutter dependencies, there also exist dependencies f
 
 ## Some history
 
-<img src="https://hep-mh.com/files/mimetypes/application-x-java.png" alt="java" width="50"/>
+<img src="https://hep-mh.com/files/mimetypes/application-x-java.png" alt="java" width="70"/>
 
 The very first version of the timer was written in Java. If you are interested in how this version looked like, you can download it from [here](https://hep-mh.com/files/packages/counter-vintage-java.tar.gz). After downloading, extract the archive (preferably in a new directory) and run
 ```
