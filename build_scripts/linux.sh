@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 function check_success {
-    if [ $? -eq 0 ]; then echo " [Success]"; else echo "  [Error]"; fi
+    if [ $? -eq 0 ]; then echo " [Success]"; else echo " [ Error ]"; fi
 }
 
 echo -ne "\n\e[38;5;220m• Building Linux app •\e[0m\r"
