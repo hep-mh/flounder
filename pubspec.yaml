@@ -35,7 +35,7 @@ dependencies:
     sdk: flutter
   
   flutter_to_debian: ^1.0.4
-  #msix: ^3.6.3
+  msix: ^3.6.3
 
   path_provider: ^2.0.11
 
@@ -75,6 +75,18 @@ flutter_icons:
     icon_size: 48
 
 
+msix_config:
+  display_name: Flounder
+  publisher_display_name: Marco Hufnagel
+  identity_name: com.hepmh.Flounder
+  msix_version: 1.0.4.0
+  logo_path: assets\desktop-icon.png
+  output_path: packages\
+  output_name: flounder-latest-windows-x86_64.msix
+  architecture: x64
+  build_windows: false
+
+
 # flutter_native_splash:
 #   color: "#1f1f1f"
 #   image: assets/desktop-icon.png
@@ -96,11 +108,3 @@ flutter_icons:
 #   web_image_mode: center
 
 #   fullscreen: false
-
-
-# msix_config:
-#   display_name: Flounder
-#   publisher_display_name: Marco Hufnagel
-#   identity_name: com.hepmh.Flounder
-#   msix_version: 1.0.4.0
-#   logo_path: assets\desktop-icon.png
