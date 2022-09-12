@@ -27,3 +27,5 @@ doc/api/
 packages/*
 
 assets/old/*
+
+build-main.sh
