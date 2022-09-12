@@ -14,15 +14,15 @@ check_success
 
 # Create a .flatpak file and save it in the packages/ directory
 echo -ne "Packaging application as .flatpak... "
-./build_scripts/packaging/flatpak.sh > build/flatpak.log 2>&1
+./build_scripts/pack/flatpak.sh > build/flatpak.log 2>&1
 check_success
 
 # Create a .AppImage file and save it in the packages/ directory
 echo -ne "Packaging application as .AppImage..."
-./build_scripts/packaging/AppImage.sh > build/AppImage.log 2>&1
+./build_scripts/pack/AppImage.sh > build/AppImage.log 2>&1
 check_success
 
 # Create a .deb file and save it in the packages/ directory
 echo -ne "Packaging application as .deb...     "
-./build_scripts/packaging/deb.sh > build/deb.log 2>&1
+./build_scripts/pack/deb.sh > build/deb.log 2>&1
 check_success
