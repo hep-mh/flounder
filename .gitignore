@@ -29,3 +29,4 @@ packages/*
 assets/old/*
 
 build-main.sh
+backup.txt
