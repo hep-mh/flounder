@@ -47,7 +47,7 @@ A ``.tar.gz`` file with pre-combiled binaries for x86_64 Debian/Ubuntu can be do
 ```
 to start the application.
 
-Note that this binary might also work on other platforms. But further testing is required. In case of doubt, use the flatpak version below.
+Note that this binary might also work on other platforms. But further testing is required. In case of doubt, use the flatpak or AppImage version below.
 
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.flatpak.png" alt="flatpak" width="50"/>
 
@@ -59,7 +59,7 @@ Afterwards, the previously downloaded package can be installed at user-level via
 ```
 flatpak install --user flounder-latest-linux-x86_64.flatpak
 ```
-Afterwards, the applications can be started from your launcher or by typing the command
+(For installation at system-level, run with ``sudo`` and drop the ``--user`` flag). The applications can then be started from your launcher or by typing the command
 ```
 flatpak run com.hepmh.Flounder
 ```
