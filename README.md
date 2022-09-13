@@ -33,7 +33,7 @@ The web version of Flounder can be freely accessed at [``timer.hep-mh.com``](htt
 
 <img src="https://hep-mh.com/files/mimetypes/application-apk.png" alt="apk" width="70"/>
 
-The ``.apk`` file for Android can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-android.apk). After downloading, make sure to allow installation from unknown sources in your settings. And for your own security, turn it back off once you are done.
+The ``.apk`` file for arm/arm64/x86_64 Android can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-android.apk). After downloading, make sure to allow installation from unknown sources in your settings. And for your own security, turn it back off once you are done.
 
 *Publication on F-Droid is on the Roadmap.*
 
@@ -95,7 +95,7 @@ into your terminal.
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-zip.png" alt="zip" width="70"/>
 
-A ``.zip`` file with pre-combiled binaries for x86_64 Windows 7/8/10/11 can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file (preferably in a new directory) and double-click on ``flounder.exe`` to start the application. 
+A ``.zip`` file with pre-combiled binaries for x86_64 Windows can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-windows-x86_64.zip). After downloading, unpack the file (preferably in a new directory) and double-click on ``flounder.exe`` to start the application. 
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-setup-exe.png" alt="exe" width="70"/>
 
