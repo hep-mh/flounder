@@ -115,6 +115,8 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   void _onSecondaryClockPressed() {
     setState(() { state.timerIsPrimary = !state.timerIsPrimary;});
+
+    _prefs!.setBool('timerIsPrimary', state.timerIsPrimary);
   }
   
   void _onPlayButtonPressed() {
@@ -268,6 +270,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     final bool? remindMeFromPrefs           = _prefs!.getBool('remindMe');
     final bool? showSecondaryClockFromPrefs = _prefs!.getBool('showSecondaryClock');
+    final bool? timerIsPrimaryFromPrefs     = _prefs!.getBool('timerIsPrimary');
 
     Timer.periodic(const Duration(milliseconds: 5), (Timer t) {
       // Wait for the state to initialize before calling setState
@@ -307,6 +310,11 @@ class _FlounderHomeState extends State<FlounderHome> {
         // 3. SHOW_SECONDARY_CLOCK ////////////////////////////////////////////
         if (showSecondaryClockFromPrefs != null) {
           state.showSecondaryClock = showSecondaryClockFromPrefs;
+        }
+
+        // 4. TIMER_IS_PRIMARY ////////////////////////////////////////////////
+        if (timerIsPrimaryFromPrefs != null) {
+          state.timerIsPrimary = timerIsPrimaryFromPrefs;
         }
       });
 
