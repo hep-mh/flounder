@@ -58,10 +58,10 @@ class FlounderHeader extends StatelessWidget {
 }
 
 
-abstract class FlounderAbstractClock extends StatelessWidget {
+abstract class FlounderClock extends StatelessWidget {
   final ApplicationState state;
 
-  const FlounderAbstractClock({Key? key, required this.state}) : super(key: key);
+  const FlounderClock({Key? key, required this.state}) : super(key: key);
 
   String _getTimerText();
 
@@ -85,7 +85,7 @@ abstract class FlounderAbstractClock extends StatelessWidget {
 }
 
 
-class FlounderTimer extends FlounderAbstractClock {
+class FlounderTimer extends FlounderClock {
   final ApplicationState state;
 
   const FlounderTimer({Key? key, required this.state}) : super(key: key, state: state);
@@ -103,7 +103,7 @@ class FlounderTimer extends FlounderAbstractClock {
 }
 
 
-class FlounderStopwatch extends FlounderAbstractClock {
+class FlounderStopwatch extends FlounderClock {
   final ApplicationState state;
 
   const FlounderStopwatch({Key? key, required this.state}) : super(key: key, state: state);
@@ -134,6 +134,7 @@ class FlounderBody extends StatelessWidget {
   final ApplicationState state;
 
   final VoidCallback onArrowButtonPressed;
+  final VoidCallback onSecondaryClockPressed;
 
   // For now, a constant -- context independent --
   // padding seems to look fine in all conditions
@@ -142,7 +143,8 @@ class FlounderBody extends StatelessWidget {
   const FlounderBody({
     Key? key,
     required this.state,
-    required this.onArrowButtonPressed
+    required this.onArrowButtonPressed,
+    required this.onSecondaryClockPressed
   }) : super(key: key);
 
   Size _getHeaderSize(BuildContext context) {
@@ -186,12 +188,12 @@ class FlounderBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double arrowIconSize = _getDynamicScale(
+    final double arrowSize = _getDynamicScale(
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 1.25
     );
 
-    FlounderAbstractClock primaryClock   = FlounderTimer(state: state);
-    FlounderAbstractClock secondaryClock = FlounderStopwatch(state: state);
+    FlounderClock primaryClock   = state.timerIsPrimary ? FlounderTimer    (state: state) : FlounderStopwatch(state: state);
+    FlounderClock secondaryClock = state.timerIsPrimary ? FlounderStopwatch(state: state) : FlounderTimer    (state: state);
 
     return SafeArea(
       child: Column(
@@ -216,20 +218,23 @@ class FlounderBody extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      // 4. The secondary instance of FLOUNDER_ABSTRACT_CLOCK ///////////
+                      // 3. The secondary instance of FLOUNDER_ABSTRACT_CLOCK ///////////
                       ///////////////////////////////////////////////////////////////////
-                      state.showSecondaryClock ?
-                        Container(height: arrowIconSize+10, child: secondaryClock) : SizedBox.shrink(),
-                      // 3. The ICON_BUTTON to show/hide the secondary timer ////////////
+                      GestureDetector(
+                        onTap: onSecondaryClockPressed,
+                        child: state.showSecondaryClock ?
+                                 Container(height: arrowSize+10, child: secondaryClock) : SizedBox.shrink()
+                      ),
+                      // 4. The ICON_BUTTON to show/hide the secondary timer ////////////
                       ///////////////////////////////////////////////////////////////////
                       IconButton(
                         icon: Icon(
                           state.showSecondaryClock ? Icons.arrow_right_rounded : Icons.arrow_left_rounded,
                           color: Colors.white
                         ),
-                        splashRadius: arrowIconSize/2,
+                        splashRadius: arrowSize/2,
                         onPressed: onArrowButtonPressed,
-                        iconSize: arrowIconSize
+                        iconSize: arrowSize
                       )
                     ]
                   )

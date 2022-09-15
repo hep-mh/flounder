@@ -112,6 +112,10 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     _prefs!.setBool('showSecondaryClock', state.showSecondaryClock);
   }
+
+  void _onSecondaryClockPressed() {
+    setState(() { state.timerIsPrimary = !state.timerIsPrimary;});
+  }
   
   void _onPlayButtonPressed() {
     setState(() {
@@ -390,7 +394,8 @@ class _FlounderHomeState extends State<FlounderHome> {
       /////////////////////////////////////////////////////////////////////////
       body: FlounderBody(
         state: state,
-        onArrowButtonPressed: _onArrowButtonPressed
+        onArrowButtonPressed: _onArrowButtonPressed,
+        onSecondaryClockPressed: _onSecondaryClockPressed
       ),
       // 2. FLOUNDER_ACTION_BAR ///////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////
