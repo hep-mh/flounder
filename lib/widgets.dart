@@ -10,6 +10,21 @@ import 'state.dart';
 const double MAGIC_WIDTH = 740;
 
 
+double _getDynamicScale(double contextWidth, double contextHeight, [double factor = 1]) {
+  double maxSize = factor*min(40, 0.1*contextHeight);
+  double minSize = maxSize/factor/2;
+
+  double size = maxSize;
+  if ( contextWidth < MAGIC_WIDTH ) {
+    final double scale = contextWidth/MAGIC_WIDTH;
+
+    size = minSize + (maxSize - minSize)*scale;
+  }
+
+  return size;
+}
+
+
 class FlounderHeader extends StatelessWidget {
   final ApplicationState state;
 
@@ -94,25 +109,18 @@ class FlounderTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double padding = 20;
-
     return Center(
-      child: Padding(
-        // For now, a constant -- context independent --
-        // padding seems to look fine in all conditions
-        padding: const EdgeInsets.all(padding),
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: Text(
-            _timerToText(),
-            style: const TextStyle(
-              // This is the maximal font size, which will
-              // be scaled down by the FittedBox if needed
-              fontSize: 400,
-              // We keep the text white and update the remaining
-              // colors of the UI to indicate the current state
-              color: Colors.white,
-            ),
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: Text(
+          _timerToText(),
+          style: const TextStyle(
+            // This is the maximal font size, which will
+            // be scaled down by the FittedBox if needed
+            fontSize: 400,
+            // We keep the text white and update the remaining
+            // colors of the UI to indicate the current state
+            color: Colors.white,
           ),
         ),
       ),
@@ -128,32 +136,53 @@ class FlounderBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // For now, a constant -- context independent --
+    // padding seems to look fine in all conditions
+    const double padding = 20;
+
+    final double iconSize = _getDynamicScale(
+      MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 1.25
+    );
+
     return SafeArea(
       child: Column(
         children: [
+          // 1. The FLOUNDER_HEADER displaying the current mode ///////////////
+          /////////////////////////////////////////////////////////////////////
           FlounderHeader(state: state),
           Expanded(
-            child: FlounderTimer (state: state)
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(padding, 0, padding, 0),
+                  child: FlounderTimer (state: state),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.arrow_right_rounded, color: Colors.white),
+                        splashRadius: iconSize/2,
+                        onPressed: () {},
+                        iconSize: iconSize
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, padding/2, 0),
+                        child: Text('00:00', style: TextStyle(fontSize: iconSize+10, color: Colors.white)),
+                      )
+                      
+                    ]
+                  )
+                )
+              ]
+            )
           )
         ],
       ),
     );
   }
-}
-
-
-double _getActionBarScale(double contextWidth, double contextHeight, [double factor = 1]) {
-  double maxSize = factor*min(40, 0.1*contextHeight);
-  double minSize = maxSize/factor/2;
-
-  double size = maxSize;
-  if ( contextWidth < MAGIC_WIDTH ) {
-    final double scale = contextWidth/MAGIC_WIDTH;
-
-    size = minSize + (maxSize - minSize)*scale;
-  }
-
-  return size;
 }
 
 
@@ -172,7 +201,7 @@ class FlounderActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double iconSize = _getActionBarScale(
+    final double iconSize = _getDynamicScale(
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height
     );
 
@@ -236,7 +265,7 @@ class FlounderActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double buttonSize = _getActionBarScale(
+    final double buttonSize = _getDynamicScale(
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 2
     );
 
