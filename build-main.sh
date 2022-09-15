@@ -1,1 +1,0 @@
-./build_scripts/icons.sh && ./build_scripts/web.sh && ./build_scripts/linux.sh && ./build_scripts/android.sh

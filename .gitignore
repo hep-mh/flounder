@@ -22,8 +22,17 @@ doc/api/
 
 .flutter-plugins*
 
+# Data create by flatpak-builder
 .flatpak-builder/*
 
+# Compiled packages
 packages/*
 
+# Old data
 assets/old/*
+
+# Certificate files
+*pfx_info
+
+# Personal build scrips
+build-main.sh
