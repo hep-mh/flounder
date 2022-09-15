@@ -28,10 +28,78 @@ double _getDynamicScale(double contextWidth, double contextHeight, [double facto
 class FlounderHeader extends StatelessWidget {
   final ApplicationState state;
 
-  const FlounderHeader({Key? key, required this.state}) : super(key: key);
+  final Size size;
+
+  const FlounderHeader({Key? key, required this.state, required this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final double width  = size.width;
+    final double height = size.height;
+
+    // Finally, the corner radius is best
+    // adapted to the actual height of the box
+    final double borderRadius = height/5;
+
+    return Container(
+      height: height, width: width,
+      child: FittedBox(fit: BoxFit.contain, child: Text(state.mode.id)),
+      decoration: BoxDecoration(
+        // Increase visibility by coloring the
+        // full box in the respective color
+        color: state.mode.color,
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+    );
+  }
+}
+
+
+class FlounderTimer extends StatelessWidget {
+  final ApplicationState state;
+
+  const FlounderTimer({Key? key, required this.state}) : super(key: key);
+
+  String _timerToText() {
+    int min = state.timer ~/ 60;
+    int sec = state.timer - min*60;
+
+    String minStr = (min < 10) ? '0' + min.toString() : min.toString();
+    String secStr = (sec < 10) ? '0' + sec.toString() : sec.toString();
+
+    return minStr + ':' + secStr;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      fit: BoxFit.contain,
+      child: Text(
+        _timerToText(),
+        style: const TextStyle(
+          // This is the maximal font size, which will
+          // be scaled down by the FittedBox if needed
+          fontSize: 400,
+          // We keep the text white and update the remaining
+          // colors of the UI to indicate the current state
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+
+class FlounderBody extends StatelessWidget {
+  final ApplicationState state;
+
+  // For now, a constant -- context independent --
+  // padding seems to look fine in all conditions
+  final double padding = 20;
+
+  const FlounderBody({Key? key, required this.state}) : super(key: key);
+
+  Size _getHeaderSize(BuildContext context) {
     final double contextWidth  = MediaQuery.of(context).size.width;
     final double contextHeight = MediaQuery.of(context).size.height;
 
@@ -67,112 +135,48 @@ class FlounderHeader extends StatelessWidget {
       width  = heightRatio*maxWidth;
     }
 
-    // Finally, the corner radius is best
-    // adapted to the actual height of the box
-    final double borderRadius = height/5;
-
-    return Center(
-      child: Padding(
-        // We omit the padding at the bottom as this
-        // is handled by FlounderTimer instead
-        padding: const EdgeInsets.fromLTRB(padding, padding, padding, 0),
-        child: Container(
-          height: height, width: width,
-          child: FittedBox(fit: BoxFit.contain, child: Text(state.mode.id)),
-          decoration: BoxDecoration(
-            // Increase visibility by coloring the
-            // full box in the respective color
-            color: state.mode.color,
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
-class FlounderTimer extends StatelessWidget {
-  final ApplicationState state;
-
-  const FlounderTimer({Key? key, required this.state}) : super(key: key);
-
-  String _timerToText() {
-    int min = state.timer ~/ 60;
-    int sec = state.timer - min*60;
-
-    String minStr = (min < 10) ? '0' + min.toString() : min.toString();
-    String secStr = (sec < 10) ? '0' + sec.toString() : sec.toString();
-
-    return minStr + ':' + secStr;
+    return Size(width, height);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: FittedBox(
-        fit: BoxFit.contain,
-        child: Text(
-          _timerToText(),
-          style: const TextStyle(
-            // This is the maximal font size, which will
-            // be scaled down by the FittedBox if needed
-            fontSize: 400,
-            // We keep the text white and update the remaining
-            // colors of the UI to indicate the current state
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
-class FlounderBody extends StatelessWidget {
-  final ApplicationState state;
-
-  const FlounderBody({Key? key, required this.state}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // For now, a constant -- context independent --
-    // padding seems to look fine in all conditions
-    const double padding = 20;
-
-    final double iconSize = _getDynamicScale(
+    final double arrowIconSize = _getDynamicScale(
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 1.25
     );
 
     return SafeArea(
       child: Column(
         children: [
-          // 1. The FLOUNDER_HEADER displaying the current mode ///////////////
-          /////////////////////////////////////////////////////////////////////
-          FlounderHeader(state: state),
+          Center(child: Padding(
+            // We omit the padding at the bottom as this is handeled below
+            padding: EdgeInsets.fromLTRB(padding, padding, padding, 0),
+            // 1. The FLOUNDER_HEADER displaying the current mode ///////////////
+            /////////////////////////////////////////////////////////////////////
+            child: FlounderHeader(state: state, size: _getHeaderSize(context)),
+          )),
           Expanded(
             child: Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(padding, 0, padding, 0),
-                  child: FlounderTimer (state: state),
-                ),
+                Center(child: Padding(
+                  padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
+                  /////////////////////////////////////////////////////////////
+                  child: FlounderTimer(state: state),
+                )),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.arrow_right_rounded, color: Colors.white),
-                        splashRadius: iconSize/2,
+                        icon: Icon(Icons.arrow_left_rounded, color: Colors.white),
+                        splashRadius: arrowIconSize/2,
                         onPressed: () {},
-                        iconSize: iconSize
+                        iconSize: arrowIconSize
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, padding/2, 0),
-                        child: Text('00:00', style: TextStyle(fontSize: iconSize+10, color: Colors.white)),
-                      )
-                      
+                      // Padding(
+                      //   padding: const EdgeInsets.fromLTRB(0, 0, padding/2, 0),
+                      //   child: Text('00:00', style: TextStyle(fontSize: iconSize+10, color: Colors.white)),
+                      // ) 
                     ]
                   )
                 )
