@@ -30,15 +30,18 @@ class FlounderHeader extends StatelessWidget {
 
   final Size size;
 
-  const FlounderHeader({Key? key, required this.state, required this.size}) : super(key: key);
+  const FlounderHeader({
+    Key? key,
+    required this.state,
+    required this.size
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final double width  = size.width;
     final double height = size.height;
 
-    // Finally, the corner radius is best
-    // adapted to the actual height of the box
+    // -->
     final double borderRadius = height/5;
 
     return Container(
@@ -55,27 +58,19 @@ class FlounderHeader extends StatelessWidget {
 }
 
 
-class FlounderTimer extends StatelessWidget {
+abstract class FlounderAbstractTimer extends StatelessWidget {
   final ApplicationState state;
 
-  const FlounderTimer({Key? key, required this.state}) : super(key: key);
+  const FlounderAbstractTimer({Key? key, required this.state}) : super(key: key);
 
-  String _timerToText() {
-    int min = state.timer ~/ 60;
-    int sec = state.timer - min*60;
-
-    String minStr = (min < 10) ? '0' + min.toString() : min.toString();
-    String secStr = (sec < 10) ? '0' + sec.toString() : sec.toString();
-
-    return minStr + ':' + secStr;
-  }
+  String _getTimerText();
 
   @override
   Widget build(BuildContext context) {
     return FittedBox(
       fit: BoxFit.contain,
       child: Text(
-        _timerToText(),
+        _getTimerText(),
         style: const TextStyle(
           // This is the maximal font size, which will
           // be scaled down by the FittedBox if needed
@@ -90,14 +85,38 @@ class FlounderTimer extends StatelessWidget {
 }
 
 
+class FlounderTimer extends FlounderAbstractTimer {
+  final ApplicationState state;
+
+  const FlounderTimer({Key? key, required this.state}) : super(key: key, state: state);
+
+  @override
+  String _getTimerText() {
+    int min = state.timer ~/ 60;
+    int sec = state.timer - min*60;
+
+    String minStr = (min < 10) ? '0' + min.toString() : min.toString();
+    String secStr = (sec < 10) ? '0' + sec.toString() : sec.toString();
+
+    return minStr + ':' + secStr;
+  }
+}
+
+
 class FlounderBody extends StatelessWidget {
   final ApplicationState state;
+
+  final VoidCallback onArrowPressed;
 
   // For now, a constant -- context independent --
   // padding seems to look fine in all conditions
   final double padding = 20;
 
-  const FlounderBody({Key? key, required this.state}) : super(key: key);
+  const FlounderBody({
+    Key? key,
+    required this.state,
+    required this.onArrowPressed
+  }) : super(key: key);
 
   Size _getHeaderSize(BuildContext context) {
     final double contextWidth  = MediaQuery.of(context).size.width;
@@ -144,14 +163,16 @@ class FlounderBody extends StatelessWidget {
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 1.25
     );
 
+    FlounderAbstractTimer primaryTimer   = FlounderTimer(state: state);
+    FlounderAbstractTimer secondaryTimer = FlounderTimer(state: state);
+
     return SafeArea(
       child: Column(
         children: [
           Center(child: Padding(
-            // We omit the padding at the bottom as this is handeled below
             padding: EdgeInsets.fromLTRB(padding, padding, padding, 0),
-            // 1. The FLOUNDER_HEADER displaying the current mode ///////////////
-            /////////////////////////////////////////////////////////////////////
+            // 1. The FLOUNDER_HEADER displaying the current mode ///////////////////////
+            /////////////////////////////////////////////////////////////////////////////
             child: FlounderHeader(state: state, size: _getHeaderSize(context)),
           )),
           Expanded(
@@ -159,24 +180,30 @@ class FlounderBody extends StatelessWidget {
               children: [
                 Center(child: Padding(
                   padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
-                  /////////////////////////////////////////////////////////////
-                  child: FlounderTimer(state: state),
+                  // 2. The primary instance of FLOUNDER_ABSTRACT_TIMER /////////////////
+                  ///////////////////////////////////////////////////////////////////////
+                  child: primaryTimer //FlounderTimer(state: state),
                 )),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      // 4. The secondary instance of FLOUNDER_ABSTRACT_TIMER ///////////
+                      ///////////////////////////////////////////////////////////////////
+                      state.showSecondaryTimer ?
+                        Container(height: arrowIconSize+10, child: secondaryTimer) : SizedBox.shrink(),
+                      // 3. The ICON_BUTTON to show/hide the secondary timer ////////////
+                      ///////////////////////////////////////////////////////////////////
                       IconButton(
-                        icon: Icon(Icons.arrow_left_rounded, color: Colors.white),
+                        icon: Icon(
+                          state.showSecondaryTimer ? Icons.arrow_right_rounded : Icons.arrow_left_rounded,
+                          color: Colors.white
+                        ),
                         splashRadius: arrowIconSize/2,
-                        onPressed: () {},
+                        onPressed: onArrowPressed,
                         iconSize: arrowIconSize
-                      ),
-                      // Padding(
-                      //   padding: const EdgeInsets.fromLTRB(0, 0, padding/2, 0),
-                      //   child: Text('00:00', style: TextStyle(fontSize: iconSize+10, color: Colors.white)),
-                      // ) 
+                      )
                     ]
                   )
                 )
@@ -377,8 +404,8 @@ class FlounderDrawer extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // 1. The DROPDOWN_BUTTON to cycle the presets //////////////////
-                /////////////////////////////////////////////////////////////////
+                // 1. The DROPDOWN_BUTTON to cycle the presets //////////////////////////
+                /////////////////////////////////////////////////////////////////////////
                 Expanded(
                   child: DropdownButton<String>(
                     underline: Container(height: 0, color: state.mode.color),
@@ -390,8 +417,8 @@ class FlounderDrawer extends StatelessWidget {
                     style: const TextStyle(color: Colors.black, fontSize: 25),
                   ),
                 ),
-                // 2. The ICON_BUTTON to delete the active preset ///////////////
-                /////////////////////////////////////////////////////////////////
+                // 2. The ICON_BUTTON to delete the active preset ///////////////////////
+                /////////////////////////////////////////////////////////////////////////
                 IconButton(
                   icon: const Icon(Icons.delete),
                   color: Colors.white,
@@ -403,11 +430,11 @@ class FlounderDrawer extends StatelessWidget {
             const SizedBox(height: 20),
             Text('Custom:', style: TextStyle(fontSize: 35, color: state.mode.color)),
             const SizedBox(height: 15),
-            // 3. The TEXT_FORM_FIELD's to capture user input ///////////////////
-            /////////////////////////////////////////////////////////////////////
+            // 3. The TEXT_FORM_FIELD's to capture user input ///////////////////////////
+            /////////////////////////////////////////////////////////////////////////////
             ...textFieldWidgets,
-            // 4. The ELEVATED_BUTTON to save the current preset ////////////////
-            /////////////////////////////////////////////////////////////////////
+            // 4. The ELEVATED_BUTTON to save the current preset ////////////////////////
+            /////////////////////////////////////////////////////////////////////////////
             Container(
               padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
               child: ElevatedButton.icon(

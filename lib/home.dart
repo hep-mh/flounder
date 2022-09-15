@@ -107,6 +107,12 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   // ACTION FUNCTIONS /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
+  void _onArrowPressed() {
+    setState(() { state.showSecondaryTimer = !state.showSecondaryTimer;});
+
+    _prefs!.setBool('showSecondaryTimer', state.showSecondaryTimer);
+  }
+  
   void _onPlayButtonPressed() {
     setState(() {
       // START THE TIMER WHEN IDLE
@@ -254,8 +260,10 @@ class _FlounderHomeState extends State<FlounderHome> {
     _prefs = await SharedPreferences.getInstance();
 
     // Load the data
-    final List<String>? presetsFromPrefs  = _prefs!.getStringList('presets');
-    final bool?         remindMeFromPrefs = _prefs!.getBool('remindMe');
+    final List<String>? presetsFromPrefs = _prefs!.getStringList('presets');
+
+    final bool? remindMeFromPrefs           = _prefs!.getBool('remindMe');
+    final bool? showSecondaryTimerFromPrefs = _prefs!.getBool('showSecondaryTimer');
 
     Timer.periodic(const Duration(milliseconds: 5), (Timer t) {
       // Wait for the state to initialize before calling setState
@@ -290,6 +298,11 @@ class _FlounderHomeState extends State<FlounderHome> {
         // 2. REMIND_ME ///////////////////////////////////////////////////////
         if (remindMeFromPrefs != null) {
           state.remindMe = remindMeFromPrefs;
+        }
+
+        // 3. SHOW_SECONDARY_TIMER ////////////////////////////////////////////
+        if (showSecondaryTimerFromPrefs != null) {
+          state.showSecondaryTimer = showSecondaryTimerFromPrefs;
         }
       });
 
@@ -375,7 +388,10 @@ class _FlounderHomeState extends State<FlounderHome> {
       endDrawerEnableOpenDragGesture: (state.mode.id == 'Idle'),
       // 1. FLOUNDER_BODY /////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////
-      body: FlounderBody(state: state),
+      body: FlounderBody(
+        state: state,
+        onArrowPressed: _onArrowPressed
+      ),
       // 2. FLOUNDER_ACTION_BAR ///////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////
       bottomNavigationBar: Builder(builder: (context) { return FlounderActionBar(
