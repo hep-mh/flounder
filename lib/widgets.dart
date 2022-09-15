@@ -58,10 +58,10 @@ class FlounderHeader extends StatelessWidget {
 }
 
 
-abstract class FlounderAbstractTimer extends StatelessWidget {
+abstract class FlounderAbstractClock extends StatelessWidget {
   final ApplicationState state;
 
-  const FlounderAbstractTimer({Key? key, required this.state}) : super(key: key);
+  const FlounderAbstractClock({Key? key, required this.state}) : super(key: key);
 
   String _getTimerText();
 
@@ -85,7 +85,7 @@ abstract class FlounderAbstractTimer extends StatelessWidget {
 }
 
 
-class FlounderTimer extends FlounderAbstractTimer {
+class FlounderTimer extends FlounderAbstractClock {
   final ApplicationState state;
 
   const FlounderTimer({Key? key, required this.state}) : super(key: key, state: state);
@@ -103,10 +103,37 @@ class FlounderTimer extends FlounderAbstractTimer {
 }
 
 
+class FlounderStopwatch extends FlounderAbstractClock {
+  final ApplicationState state;
+
+  const FlounderStopwatch({Key? key, required this.state}) : super(key: key, state: state);
+
+  @override
+  String _getTimerText() {
+    late int inverseTimer;
+    if (state.mode.id == 'Idle' || state.mode.id == 'Talk') {
+      inverseTimer = state.profile.talkLength*60 - state.timer;
+    } else if (state.mode.id == 'Discussion') {
+      inverseTimer = state.profile.discussionLength*60 - state.timer;
+    } else if (state.mode.id == 'Overtime') {
+      inverseTimer = state.timer;
+    }
+
+    int min = inverseTimer ~/ 60;
+    int sec = inverseTimer - min*60;
+
+    String minStr = (min < 10) ? '0' + min.toString() : min.toString();
+    String secStr = (sec < 10) ? '0' + sec.toString() : sec.toString();
+
+    return minStr + ':' + secStr;
+  }
+}
+
+
 class FlounderBody extends StatelessWidget {
   final ApplicationState state;
 
-  final VoidCallback onArrowPressed;
+  final VoidCallback onArrowButtonPressed;
 
   // For now, a constant -- context independent --
   // padding seems to look fine in all conditions
@@ -115,7 +142,7 @@ class FlounderBody extends StatelessWidget {
   const FlounderBody({
     Key? key,
     required this.state,
-    required this.onArrowPressed
+    required this.onArrowButtonPressed
   }) : super(key: key);
 
   Size _getHeaderSize(BuildContext context) {
@@ -163,8 +190,8 @@ class FlounderBody extends StatelessWidget {
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 1.25
     );
 
-    FlounderAbstractTimer primaryTimer   = FlounderTimer(state: state);
-    FlounderAbstractTimer secondaryTimer = FlounderTimer(state: state);
+    FlounderAbstractClock primaryClock   = FlounderTimer(state: state);
+    FlounderAbstractClock secondaryClock = FlounderStopwatch(state: state);
 
     return SafeArea(
       child: Column(
@@ -180,28 +207,28 @@ class FlounderBody extends StatelessWidget {
               children: [
                 Center(child: Padding(
                   padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
-                  // 2. The primary instance of FLOUNDER_ABSTRACT_TIMER /////////////////
+                  // 2. The primary instance of FLOUNDER_ABSTRACT_CLOCK /////////////////
                   ///////////////////////////////////////////////////////////////////////
-                  child: primaryTimer //FlounderTimer(state: state),
+                  child: primaryClock
                 )),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      // 4. The secondary instance of FLOUNDER_ABSTRACT_TIMER ///////////
+                      // 4. The secondary instance of FLOUNDER_ABSTRACT_CLOCK ///////////
                       ///////////////////////////////////////////////////////////////////
-                      state.showSecondaryTimer ?
-                        Container(height: arrowIconSize+10, child: secondaryTimer) : SizedBox.shrink(),
+                      state.showSecondaryClock ?
+                        Container(height: arrowIconSize+10, child: secondaryClock) : SizedBox.shrink(),
                       // 3. The ICON_BUTTON to show/hide the secondary timer ////////////
                       ///////////////////////////////////////////////////////////////////
                       IconButton(
                         icon: Icon(
-                          state.showSecondaryTimer ? Icons.arrow_right_rounded : Icons.arrow_left_rounded,
+                          state.showSecondaryClock ? Icons.arrow_right_rounded : Icons.arrow_left_rounded,
                           color: Colors.white
                         ),
                         splashRadius: arrowIconSize/2,
-                        onPressed: onArrowPressed,
+                        onPressed: onArrowButtonPressed,
                         iconSize: arrowIconSize
                       )
                     ]

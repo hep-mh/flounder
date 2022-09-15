@@ -107,10 +107,10 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   // ACTION FUNCTIONS /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  void _onArrowPressed() {
-    setState(() { state.showSecondaryTimer = !state.showSecondaryTimer;});
+  void _onArrowButtonPressed() {
+    setState(() { state.showSecondaryClock = !state.showSecondaryClock;});
 
-    _prefs!.setBool('showSecondaryTimer', state.showSecondaryTimer);
+    _prefs!.setBool('showSecondaryClock', state.showSecondaryClock);
   }
   
   void _onPlayButtonPressed() {
@@ -263,7 +263,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     final List<String>? presetsFromPrefs = _prefs!.getStringList('presets');
 
     final bool? remindMeFromPrefs           = _prefs!.getBool('remindMe');
-    final bool? showSecondaryTimerFromPrefs = _prefs!.getBool('showSecondaryTimer');
+    final bool? showSecondaryClockFromPrefs = _prefs!.getBool('showSecondaryClock');
 
     Timer.periodic(const Duration(milliseconds: 5), (Timer t) {
       // Wait for the state to initialize before calling setState
@@ -300,9 +300,9 @@ class _FlounderHomeState extends State<FlounderHome> {
           state.remindMe = remindMeFromPrefs;
         }
 
-        // 3. SHOW_SECONDARY_TIMER ////////////////////////////////////////////
-        if (showSecondaryTimerFromPrefs != null) {
-          state.showSecondaryTimer = showSecondaryTimerFromPrefs;
+        // 3. SHOW_SECONDARY_CLOCK ////////////////////////////////////////////
+        if (showSecondaryClockFromPrefs != null) {
+          state.showSecondaryClock = showSecondaryClockFromPrefs;
         }
       });
 
@@ -390,7 +390,7 @@ class _FlounderHomeState extends State<FlounderHome> {
       /////////////////////////////////////////////////////////////////////////
       body: FlounderBody(
         state: state,
-        onArrowPressed: _onArrowPressed
+        onArrowButtonPressed: _onArrowButtonPressed
       ),
       // 2. FLOUNDER_ACTION_BAR ///////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////

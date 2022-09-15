@@ -185,7 +185,7 @@ class ApplicationState {
   bool remindMe = true;
 
   // A flag to determine whether to show the secondary timer
-  bool showSecondaryTimer = false;
+  bool showSecondaryClock = false;
 
   // MEMBER FUNCTIONS /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
