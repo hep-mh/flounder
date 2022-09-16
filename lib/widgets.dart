@@ -63,7 +63,7 @@ abstract class FlounderClock extends StatelessWidget {
 
   const FlounderClock({Key? key, required this.state}) : super(key: key);
 
-  String _getTimerText();
+  String _getTimerText(); // abstract method
 
   @override
   Widget build(BuildContext context) {
@@ -294,7 +294,7 @@ class FlounderActionBar extends StatelessWidget {
           Row(
             children: <Widget>[
               Text(
-                (state.profile.talkLength + state.profile.discussionLength).toString() + ' min',
+                state.profile.talkLength.toString() + "+" + state.profile.discussionLength.toString() + ' min',
                 style: TextStyle(fontSize: 0.75*iconSize)
               ),
               SizedBox(width: iconSize/4),
