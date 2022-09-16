@@ -77,7 +77,10 @@ and run (on Wayland it is necessary to add ``GDK_BACKEND=x11`` before the comman
 ```
 ./flounder-latest-linux-x86_64.AppImage
 ```
-to start the application.
+to start the application. If instead, you want to run in a sandbox, install ``firejail`` and run
+```
+firejail --appimage ./flounder-latest-linux-x86_64.AppImage
+```
 
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.debian.binary-package.png" alt="flatpak" width="70"/>
 
