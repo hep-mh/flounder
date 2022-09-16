@@ -86,9 +86,7 @@ abstract class FlounderClock extends StatelessWidget {
 
 
 class FlounderTimer extends FlounderClock {
-  final ApplicationState state;
-
-  const FlounderTimer({Key? key, required this.state}) : super(key: key, state: state);
+  const FlounderTimer({Key? key, required state}) : super(key: key, state: state);
 
   @override
   String _getTimerText() {
@@ -104,9 +102,7 @@ class FlounderTimer extends FlounderClock {
 
 
 class FlounderStopwatch extends FlounderClock {
-  final ApplicationState state;
-
-  const FlounderStopwatch({Key? key, required this.state}) : super(key: key, state: state);
+  const FlounderStopwatch({Key? key, required state}) : super(key: key, state: state);
 
   @override
   String _getTimerText() {
@@ -223,7 +219,7 @@ class FlounderBody extends StatelessWidget {
                       MouseRegion(cursor: SystemMouseCursors.click, child: GestureDetector(
                         onTap: onSecondaryClockPressed,
                         child: state.showSecondaryClock ?
-                                 Container(height: arrowSize+10, child: secondaryClock) : SizedBox.shrink()
+                                 SizedBox(height: arrowSize+10, child: secondaryClock) : const SizedBox.shrink()
                       )),
                       // 4. The ICON_BUTTON to show/hide the secondary timer ////////////
                       ///////////////////////////////////////////////////////////////////
