@@ -33,7 +33,7 @@ The web version of Flounder can be freely accessed at [``timer.hep-mh.com``](htt
 
 <img src="https://hep-mh.com/files/mimetypes/application-apk.png" alt="apk" width="70"/>
 
-The ``.apk`` file for **arm/arm64/x86_64 Android** can be downloaded from [here](https://hep-mh.com/files/packages/flounder-latest-android.apk). After downloading, make sure to allow installation from unknown sources in your settings. And for your own security, turn it back off once you are done.
+The ``.apk`` file for **arm/arm64/x86_64 Android** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/current/flounder-latest-android.apk). After downloading, make sure to allow installation from unknown sources in your settings. And for your own security, turn it back off once you are done.
 
 *Publication on F-Droid is on the Roadmap.*
 
