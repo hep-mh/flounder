@@ -204,7 +204,7 @@ class FlounderBody extends StatelessWidget {
             child: Stack(
               children: [
                 Center(child: Padding(
-                  padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
+                  padding: EdgeInsets.all(padding),
                   // 2. The primary instance of FLOUNDER__CLOCK /////////////////////////
                   ///////////////////////////////////////////////////////////////////////
                   child: primaryClock
