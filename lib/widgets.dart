@@ -209,7 +209,7 @@ class FlounderBody extends StatelessWidget {
               children: [
                 Center(child: Padding(
                   padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
-                  // 2. The primary instance of FLOUNDER_ABSTRACT_CLOCK /////////////////
+                  // 2. The primary instance of FLOUNDER__CLOCK /////////////////////////
                   ///////////////////////////////////////////////////////////////////////
                   child: primaryClock
                 )),
@@ -218,7 +218,7 @@ class FlounderBody extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      // 3. The secondary instance of FLOUNDER_ABSTRACT_CLOCK ///////////
+                      // 3. The secondary instance of FLOUNDER_CLOCK ////////////////////
                       ///////////////////////////////////////////////////////////////////
                       MouseRegion(cursor: SystemMouseCursors.click, child: GestureDetector(
                         onTap: onSecondaryClockPressed,
@@ -274,7 +274,8 @@ class FlounderActionBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          // Left Button
+          // 1. Left ICON_BUTTON ////////////////////////////////////////////////////////
+          ///////////////////////////////////////////////////////////////////////////////
           Row(
             children: <Widget>[
               IconButton(
@@ -292,7 +293,8 @@ class FlounderActionBar extends StatelessWidget {
               ),
             ],
           ),
-          // Right button
+          // 2. Right ICON_BUTTON ///////////////////////////////////////////////////////
+          ///////////////////////////////////////////////////////////////////////////////
           Row(
             children: <Widget>[
               Text(
