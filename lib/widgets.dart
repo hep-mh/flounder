@@ -220,11 +220,11 @@ class FlounderBody extends StatelessWidget {
                     children: [
                       // 3. The secondary instance of FLOUNDER_ABSTRACT_CLOCK ///////////
                       ///////////////////////////////////////////////////////////////////
-                      GestureDetector(
+                      MouseRegion(cursor: SystemMouseCursors.click, child: GestureDetector(
                         onTap: onSecondaryClockPressed,
                         child: state.showSecondaryClock ?
                                  Container(height: arrowSize+10, child: secondaryClock) : SizedBox.shrink()
-                      ),
+                      )),
                       // 4. The ICON_BUTTON to show/hide the secondary timer ////////////
                       ///////////////////////////////////////////////////////////////////
                       IconButton(
