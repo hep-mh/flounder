@@ -11,9 +11,9 @@ The above logo is based on [``this image``](https://imgbin.com/png/D3dzb0eY/turq
 
 ## How to use?
 
-Home Page                                             |  Drawer
-:----------------------------------------------------:|:----------------------------------------------------:
-![](https://hep-mh.com/files/screenshots/usage1.png)  |  ![](https://hep-mh.com/files/screenshots/usage2.png)
+Home Page                                              |  Drawer
+:-----------------------------------------------------:|:-----------------------------------------------------:
+![](https://hep-mh.com/files/screenshots/usage_1.png)  |  ![](https://hep-mh.com/files/screenshots/usage_2.png)
 
 
 Note that presets are persistent and do not get reset upon closing the application.
