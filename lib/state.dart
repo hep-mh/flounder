@@ -184,6 +184,12 @@ class ApplicationState {
   // A flag to determine whether to play an additional reminder DURING the talk
   bool remindMe = true;
 
+  // A flag to determine whether to show the secondary timer
+  bool showSecondaryClock = false;
+
+  // A flag to determine which clock is the primary one
+  bool timerIsPrimary = true;
+
   // MEMBER FUNCTIONS /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
   ApplicationState();

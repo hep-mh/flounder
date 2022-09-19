@@ -10,13 +10,140 @@ import 'state.dart';
 const double MAGIC_WIDTH = 740;
 
 
+double _getDynamicScale(double contextWidth, double contextHeight, [double factor = 1]) {
+  double maxSize = factor*min(40, 0.1*contextHeight);
+  double minSize = maxSize/factor/2;
+
+  double size = maxSize;
+  if ( contextWidth < MAGIC_WIDTH ) {
+    final double scale = contextWidth/MAGIC_WIDTH;
+
+    size = minSize + (maxSize - minSize)*scale;
+  }
+
+  return size;
+}
+
+
 class FlounderHeader extends StatelessWidget {
   final ApplicationState state;
 
-  const FlounderHeader({Key? key, required this.state}) : super(key: key);
+  final Size size;
+
+  const FlounderHeader({
+    Key? key,
+    required this.state,
+    required this.size
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final double width  = size.width;
+    final double height = size.height;
+
+    // -->
+    final double borderRadius = height/5;
+
+    return Container(
+      height: height, width: width,
+      child: FittedBox(fit: BoxFit.contain, child: Text(state.mode.id)),
+      decoration: BoxDecoration(
+        // Increase visibility by coloring the
+        // full box in the respective color
+        color: state.mode.color,
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+    );
+  }
+}
+
+
+abstract class FlounderClock extends StatelessWidget {
+  final ApplicationState state;
+
+  const FlounderClock({Key? key, required this.state}) : super(key: key);
+
+  String _getTimerText(); // abstract method
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      fit: BoxFit.contain,
+      child: Text(
+        _getTimerText(),
+        style: const TextStyle(
+          // This is the maximal font size, which will
+          // be scaled down by the FittedBox if needed
+          fontSize: 400,
+          // We keep the text white and update the remaining
+          // colors of the UI to indicate the current state
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+
+class FlounderTimer extends FlounderClock {
+  const FlounderTimer({Key? key, required state}) : super(key: key, state: state);
+
+  @override
+  String _getTimerText() {
+    int min = state.timer ~/ 60;
+    int sec = state.timer - min*60;
+
+    String minStr = (min < 10) ? '0' + min.toString() : min.toString();
+    String secStr = (sec < 10) ? '0' + sec.toString() : sec.toString();
+
+    return minStr + ':' + secStr;
+  }
+}
+
+
+class FlounderStopwatch extends FlounderClock {
+  const FlounderStopwatch({Key? key, required state}) : super(key: key, state: state);
+
+  @override
+  String _getTimerText() {
+    late int inverseTimer;
+    if (state.mode.id == 'Idle' || state.mode.id == 'Talk') {
+      inverseTimer = state.profile.talkLength*60 - state.timer;
+    } else if (state.mode.id == 'Discussion') {
+      inverseTimer = state.profile.discussionLength*60 - state.timer;
+    } else if (state.mode.id == 'Overtime') {
+      inverseTimer = state.timer;
+    }
+
+    int min = inverseTimer ~/ 60;
+    int sec = inverseTimer - min*60;
+
+    String minStr = (min < 10) ? '0' + min.toString() : min.toString();
+    String secStr = (sec < 10) ? '0' + sec.toString() : sec.toString();
+
+    return minStr + ':' + secStr;
+  }
+}
+
+
+class FlounderBody extends StatelessWidget {
+  final ApplicationState state;
+
+  final VoidCallback onArrowButtonPressed;
+  final VoidCallback onSecondaryClockPressed;
+
+  // For now, a constant -- context independent --
+  // padding seems to look fine in all conditions
+  final double padding = 20;
+
+  const FlounderBody({
+    Key? key,
+    required this.state,
+    required this.onArrowButtonPressed,
+    required this.onSecondaryClockPressed
+  }) : super(key: key);
+
+  Size _getHeaderSize(BuildContext context) {
     final double contextWidth  = MediaQuery.of(context).size.width;
     final double contextHeight = MediaQuery.of(context).size.height;
 
@@ -52,108 +179,69 @@ class FlounderHeader extends StatelessWidget {
       width  = heightRatio*maxWidth;
     }
 
-    // Finally, the corner radius is best
-    // adapted to the actual height of the box
-    final double borderRadius = height/5;
-
-    return Center(
-      child: Padding(
-        // We omit the padding at the bottom as this
-        // is handled by FlounderTimer instead
-        padding: const EdgeInsets.fromLTRB(padding, padding, padding, 0),
-        child: Container(
-          height: height, width: width,
-          child: FittedBox(fit: BoxFit.contain, child: Text(state.mode.id)),
-          decoration: BoxDecoration(
-            // Increase visibility by coloring the
-            // full box in the respective color
-            color: state.mode.color,
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
-class FlounderTimer extends StatelessWidget {
-  final ApplicationState state;
-
-  const FlounderTimer({Key? key, required this.state}) : super(key: key);
-
-  String _timerToText() {
-    int min = state.timer ~/ 60;
-    int sec = state.timer - min*60;
-
-    String minStr = (min < 10) ? '0' + min.toString() : min.toString();
-    String secStr = (sec < 10) ? '0' + sec.toString() : sec.toString();
-
-    return minStr + ':' + secStr;
+    return Size(width, height);
   }
 
   @override
   Widget build(BuildContext context) {
-    const double padding = 20;
-
-    return Center(
-      child: Padding(
-        // For now, a constant -- context independent --
-        // padding seems to look fine in all conditions
-        padding: const EdgeInsets.all(padding),
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: Text(
-            _timerToText(),
-            style: const TextStyle(
-              // This is the maximal font size, which will
-              // be scaled down by the FittedBox if needed
-              fontSize: 400,
-              // We keep the text white and update the remaining
-              // colors of the UI to indicate the current state
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
+    final double arrowSize = _getDynamicScale(
+      MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 1.25
     );
-  }
-}
 
+    FlounderClock primaryClock   = state.timerIsPrimary ? FlounderTimer    (state: state) : FlounderStopwatch(state: state);
+    FlounderClock secondaryClock = state.timerIsPrimary ? FlounderStopwatch(state: state) : FlounderTimer    (state: state);
 
-class FlounderBody extends StatelessWidget {
-  final ApplicationState state;
-
-  const FlounderBody({Key? key, required this.state}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         children: [
-          FlounderHeader(state: state),
+          Center(child: Padding(
+            padding: EdgeInsets.fromLTRB(padding, padding, padding, 0),
+            // 1. The FLOUNDER_HEADER displaying the current mode ///////////////////////
+            /////////////////////////////////////////////////////////////////////////////
+            child: FlounderHeader(state: state, size: _getHeaderSize(context)),
+          )),
           Expanded(
-            child: FlounderTimer (state: state)
+            child: Stack(
+              children: [
+                Center(child: Padding(
+                  padding: EdgeInsets.all(padding),
+                  // 2. The primary instance of FLOUNDER__CLOCK /////////////////////////
+                  ///////////////////////////////////////////////////////////////////////
+                  child: primaryClock
+                )),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // 3. The secondary instance of FLOUNDER_CLOCK ////////////////////
+                      ///////////////////////////////////////////////////////////////////
+                      MouseRegion(cursor: SystemMouseCursors.click, child: GestureDetector(
+                        onTap: onSecondaryClockPressed,
+                        child: state.showSecondaryClock ?
+                                 SizedBox(height: arrowSize+10, child: secondaryClock) : const SizedBox.shrink()
+                      )),
+                      // 4. The ICON_BUTTON to show/hide the secondary timer ////////////
+                      ///////////////////////////////////////////////////////////////////
+                      IconButton(
+                        icon: Icon(
+                          state.showSecondaryClock ? Icons.arrow_right_rounded : Icons.arrow_left_rounded,
+                          color: Colors.white
+                        ),
+                        splashRadius: arrowSize/2,
+                        onPressed: onArrowButtonPressed,
+                        iconSize: arrowSize
+                      )
+                    ]
+                  )
+                )
+              ]
+            )
           )
         ],
       ),
     );
   }
-}
-
-
-double _getActionBarScale(double contextWidth, double contextHeight, [double factor = 1]) {
-  double maxSize = factor*min(40, 0.1*contextHeight);
-  double minSize = maxSize/factor/2;
-
-  double size = maxSize;
-  if ( contextWidth < MAGIC_WIDTH ) {
-    final double scale = contextWidth/MAGIC_WIDTH;
-
-    size = minSize + (maxSize - minSize)*scale;
-  }
-
-  return size;
 }
 
 
@@ -172,7 +260,7 @@ class FlounderActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double iconSize = _getActionBarScale(
+    final double iconSize = _getDynamicScale(
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height
     );
 
@@ -182,7 +270,8 @@ class FlounderActionBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          // Left Button
+          // 1. Left ICON_BUTTON ////////////////////////////////////////////////////////
+          ///////////////////////////////////////////////////////////////////////////////
           Row(
             children: <Widget>[
               IconButton(
@@ -200,11 +289,12 @@ class FlounderActionBar extends StatelessWidget {
               ),
             ],
           ),
-          // Right button
+          // 2. Right ICON_BUTTON ///////////////////////////////////////////////////////
+          ///////////////////////////////////////////////////////////////////////////////
           Row(
             children: <Widget>[
               Text(
-                (state.profile.talkLength + state.profile.discussionLength).toString() + ' min',
+                state.profile.talkLength.toString() + "+" + state.profile.discussionLength.toString() + ' min',
                 style: TextStyle(fontSize: 0.75*iconSize)
               ),
               SizedBox(width: iconSize/4),
@@ -236,7 +326,7 @@ class FlounderActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double buttonSize = _getActionBarScale(
+    final double buttonSize = _getDynamicScale(
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 2
     );
 
@@ -344,8 +434,8 @@ class FlounderDrawer extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // 1. The DROPDOWN_BUTTON to cycle the presets //////////////////
-                /////////////////////////////////////////////////////////////////
+                // 1. The DROPDOWN_BUTTON to cycle the presets //////////////////////////
+                /////////////////////////////////////////////////////////////////////////
                 Expanded(
                   child: DropdownButton<String>(
                     underline: Container(height: 0, color: state.mode.color),
@@ -357,8 +447,8 @@ class FlounderDrawer extends StatelessWidget {
                     style: const TextStyle(color: Colors.black, fontSize: 25),
                   ),
                 ),
-                // 2. The ICON_BUTTON to delete the active preset ///////////////
-                /////////////////////////////////////////////////////////////////
+                // 2. The ICON_BUTTON to delete the active preset ///////////////////////
+                /////////////////////////////////////////////////////////////////////////
                 IconButton(
                   icon: const Icon(Icons.delete),
                   color: Colors.white,
@@ -370,11 +460,11 @@ class FlounderDrawer extends StatelessWidget {
             const SizedBox(height: 20),
             Text('Custom:', style: TextStyle(fontSize: 35, color: state.mode.color)),
             const SizedBox(height: 15),
-            // 3. The TEXT_FORM_FIELD's to capture user input ///////////////////
-            /////////////////////////////////////////////////////////////////////
+            // 3. The TEXT_FORM_FIELD's to capture user input ///////////////////////////
+            /////////////////////////////////////////////////////////////////////////////
             ...textFieldWidgets,
-            // 4. The ELEVATED_BUTTON to save the current preset ////////////////
-            /////////////////////////////////////////////////////////////////////
+            // 4. The ELEVATED_BUTTON to save the current preset ////////////////////////
+            /////////////////////////////////////////////////////////////////////////////
             Container(
               padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
               child: ElevatedButton.icon(
