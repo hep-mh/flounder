@@ -86,7 +86,7 @@ firejail --appimage ./flounder-latest-linux-x86_64.AppImage
 
 A ``.deb`` file for **x86_64 Debian/Ubuntu** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-debian-x86_64.deb). After downloading, install the package via the command
 ```
-sudo dpkg -i flounder-latest-debian-x86_64.deb
+sudo apt install ./flounder-latest-debian-x86_64.deb
 ```
 Afterwards, the application can be started from your launcher or by typing the command
 ```
