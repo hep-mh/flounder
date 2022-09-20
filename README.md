@@ -39,6 +39,8 @@ The ``.apk`` file for **arm | arm64 | x86_64 Android** can be downloaded from [h
 
 ### • **Linux** •
 
+*ATTENTION: In the following, all commands involving``./`` assume that you are in the directory where the respective file is located.*
+
 <img src="https://hep-mh.com/files/mimetypes/application-x-gzip.png" alt="targz" width="70"/>
 
 A ``.tar.gz`` file with pre-combiled binaries for **x86_64 Debian/Ubuntu** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-debian-x86_64.tar.gz). After downloading, unpack the file (preferably in a new directory) and run the command
