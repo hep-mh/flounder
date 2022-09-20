@@ -57,7 +57,7 @@ flatpak install org.freedesktop.Platform/x86_64/21.08
 ```
 Afterwards, the previously downloaded package can be installed at user-level via
 ```
-flatpak install --user flounder-latest-linux-x86_64.flatpak
+flatpak install --user ./flounder-latest-linux-x86_64.flatpak
 ```
 (For installation at system-level, run with ``sudo`` and drop the ``--user`` flag). The application can then be started from your launcher or by typing the command
 ```
@@ -71,7 +71,7 @@ into your terminal.
 
 An ``.AppImage`` file for **arbitrary x86_64 Linux systems** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-linux-x86_64.AppImage). After downloading, mark the file executable via the command
 ```
-chmod 755 flounder-latest-linux-x86_64.AppImage
+chmod 755 ./flounder-latest-linux-x86_64.AppImage
 ```
 and run (on Wayland it is necessary to add ``GDK_BACKEND=x11`` before the command, since AppImages are currently not supported on Wayland)
 ```
