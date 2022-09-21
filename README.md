@@ -108,7 +108,7 @@ A standard installer for **x86_64 Windows** in ``.exe`` format can be downloaded
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-msix.png" alt="msix" width="70"/>
 
-A more moden installer for **x86_64 Windows** in ``.msix`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-windows-x86_64.msix). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
+A more modern installer for **x86_64 Windows** in ``.msix`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-windows-x86_64.msix). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
 
 ### • **macOS / iOS** •
 
