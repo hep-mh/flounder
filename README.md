@@ -129,7 +129,15 @@ Similar commands are also available for other platforms. To get an idea for some
 
 In general, it is possible to build applications for Android, iOS, Web, Linux, Windows, and macOS .
 
-Note that beside the usual flutter dependencies, there also exist dependencies for building the various package formats with the provided build scripts, i.e. ``flatpak-builder`` and `jsonnet` for building the flatpak, ``appimage-builder`` and ``gst-launch-1.0`` for building the AppImage, ``dpkg-deb`` for building the debian package, and ``iscc`` for building the Windows installer file.
+### Additional non-standard dependencies
+
+1. Flounder depends on the [audioplayers](https://pub.dev/packages/audioplayers) package, which -- on Linux -- requires ``gstreamer``. For installation instructions, click [here](https://pub.dev/packages/audioplayers).
+
+2. There also exist additional dependencies for building the various package formats with the provided build scripts, namely
+  - ``flatpak-builder`` and `jsonnet` for building the *flatpak*
+  - ``appimage-builder`` and ``gst-launch-1.0`` for building the *AppImage*
+  - ``dpkg-deb`` for building the *debian package*, and
+  - ``iscc`` for building the *Windows installer file*.
 
 ## Some history
 
