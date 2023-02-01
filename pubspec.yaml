@@ -34,24 +34,23 @@ dependencies:
   flutter:
     sdk: flutter
   
-  msix: ^3.6.3
+  msix: ^3.7.0
 
-  path_provider: ^2.0.11
+  audioplayers: ^3.0.0
+  wakelock: ^0.6.0
+  shared_preferences: ^2.0.0
+  window_manager: ^0.3.0
+  floating: ^1.1.0
 
-  audioplayers: ^1.0.1
-  wakelock: ^0.6.2
-  shared_preferences: ^2.0.15
-  window_manager: ^0.2.5
-
-  flutter_launcher_icons: ^0.10.0
-  cupertino_icons: ^1.0.2
+  flutter_launcher_icons: ^0.11.0
+  cupertino_icons: ^1.0.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.0
 
 
 flutter_icons:
@@ -72,6 +71,8 @@ flutter_icons:
     generate: true
     image_path: "assets/desktop-icon.png"
     icon_size: 48
+  macos:
+    generate: false
 
 
 msix_config:

@@ -3,7 +3,7 @@ local base_dir = "../..";
 {
   "app-id": "com.hepmh.Flounder",
   "runtime": "org.freedesktop.Platform",
-  "runtime-version": "21.08",
+  "runtime-version": "22.08",
   "sdk": "org.freedesktop.Sdk",
   "command": "flounder",
   "separate-locales": false,

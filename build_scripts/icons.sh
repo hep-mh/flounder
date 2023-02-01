@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 echo -e "\e[38;5;209m• Generating launcher icons •\e[0m"
-flutter pub run flutter_launcher_icons:main
+flutter pub run flutter_launcher_icons
 # Use a different file for the maskable web icons
 # flutter_launcher_icons does not currently support that
 convert assets/web-icon.png -resize 192x192 web/icons/Icon-maskable-192.png
