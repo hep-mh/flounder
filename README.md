@@ -59,6 +59,10 @@ into your terminal.
 
 *Publication on Flathub is on the Roadmap.*
 
+<details>
+
+<summary> Click here to show more installation options </summary><br>
+
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.AppImage.png" alt="flatpak" width="70"/>
 
 An ``.AppImage`` file for **arbitrary x86_64 Linux systems** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-linux-x86_64.AppImage). After downloading, mark the file executable via the command
@@ -93,11 +97,17 @@ flounder
 ```
 into your terminal.
 
+</details><br>
+
 ### • **Windows** •
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-msix.png" alt="msix" width="70"/>
 
 A modern installer for **x86_64 Windows** in ``.msix`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-windows-x86_64.msix). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
+
+<details>
+
+<summary> Click here to show more installation options </summary><br>
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-setup-exe.png" alt="exe" width="70"/>
 
@@ -105,7 +115,9 @@ A standard installer for **x86_64 Windows** in ``.exe`` format can be downloaded
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-zip.png" alt="zip" width="70"/>
 
-A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-windows-x86_64.zip). After downloading, unpack the file (preferably in a new directory) and double-click on ``flounder.exe`` to start the application. 
+A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-windows-x86_64.zip). After downloading, unpack the file (preferably in a new directory) and double-click on ``flounder.exe`` to start the application.
+
+</details><br>
 
 ### • **macOS / iOS** •
 
