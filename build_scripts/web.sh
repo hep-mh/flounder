@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 echo -ne "\n\e[38;5;134m• Building web app •\e[0m\r"
-flutter build web
+flutter build web --release
 
 # Create a .tar.gz file and save it in the packages/ directory
 echo -ne "Packaging application as .tar.gz...  \n"

@@ -189,6 +189,8 @@ class _FlounderHomeState extends State<FlounderHome> {
 
       _updateTextFields();
     });
+
+    _prefs!.setString('activeDropdownValue', dropdownValue);
   }
 
   void _onDeleteButtonPressed() {
@@ -272,6 +274,8 @@ class _FlounderHomeState extends State<FlounderHome> {
     final bool? showSecondaryClockFromPrefs = _prefs!.getBool('showSecondaryClock');
     final bool? timerIsPrimaryFromPrefs     = _prefs!.getBool('timerIsPrimary');
 
+    final String? activeDropdownValueFromPrefs = _prefs!.getString('activeDropdownValue');
+
     Timer.periodic(const Duration(milliseconds: 5), (Timer t) {
       // Wait for the state to initialize before calling setState
       if (!mounted) return;
@@ -300,8 +304,6 @@ class _FlounderHomeState extends State<FlounderHome> {
           /**/ dropdownValue = state.profile.key();
         } // else remain 'Custom'
 
-        _updateTextFields();
-
         // 2. REMIND_ME ///////////////////////////////////////////////////////
         if (remindMeFromPrefs != null) {
           state.remindMe = remindMeFromPrefs;
@@ -316,6 +318,20 @@ class _FlounderHomeState extends State<FlounderHome> {
         if (timerIsPrimaryFromPrefs != null) {
           state.timerIsPrimary = timerIsPrimaryFromPrefs;
         }
+
+        // 5. ACTIVE_DROPTOWN_VALUE ///////////////////////////////////////////
+        if (activeDropdownValueFromPrefs != null) {
+          if (state.presets.includes(activeDropdownValueFromPrefs)) {
+            state.profile = state.presets.at(activeDropdownValueFromPrefs);
+            // --> Reset state on profile change
+            state.reset();
+
+            /**/ dropdownValue = state.profile.key();
+          }
+        }
+
+        // CLEANUP
+        _updateTextFields();
       });
 
       t.cancel();

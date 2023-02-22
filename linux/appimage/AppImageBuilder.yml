@@ -34,8 +34,6 @@ AppDir:
     - adwaita-icon-theme
     - ubuntu-mono
   files:
-    include:
-    - /usr/lib/x86_64-linux-gnu/gtk-3.0/modules/*
     exclude:
     - usr/share/man
     - usr/share/doc/*/README.*

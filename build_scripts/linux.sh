@@ -5,7 +5,7 @@ function check_success {
 }
 
 echo -ne "\n\e[38;5;220m• Building Linux app •\e[0m\r"
-flutter build linux
+flutter build linux --release
 
 # Create a .tar.gz file and save it in the packages/ directory
 echo -ne "Packaging application as .tar.gz...  "

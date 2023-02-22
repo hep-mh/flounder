@@ -1,4 +1,4 @@
-flutter build windows
+flutter build windows --release
 
 # Create a .zip file and save it in the packages\ directory
 Write-Output "Packaging application as .zip..."
