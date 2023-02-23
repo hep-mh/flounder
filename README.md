@@ -45,7 +45,7 @@ The ``.apk`` file for **arm | arm64 | x86_64 Android** can be downloaded from [h
 
 A ``.flatpak`` file for **arbitrary x86_64 Linux systems** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-linux-x86_64.flatpak). After downloading, first install the flatpak for the Freedesktop platform via the command (also make sure that flatpak is correctly configured on your system. For more information, check [https://flatpak.org/setup/](https://flatpak.org/setup/).)
 ```
-flatpak install org.freedesktop.Platform/x86_64/21.08
+flatpak install org.freedesktop.Platform/x86_64/22.08
 ```
 Afterwards, the previously downloaded package can be installed at user-level via
 ```
