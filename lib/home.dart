@@ -319,7 +319,7 @@ class _FlounderHomeState extends State<FlounderHome> {
           state.timerIsPrimary = timerIsPrimaryFromPrefs;
         }
 
-        // 5. ACTIVE_DROPTOWN_VALUE ///////////////////////////////////////////
+        // 5. ACTIVE_DROPDOWN_VALUE ///////////////////////////////////////////
         if (activeDropdownValueFromPrefs != null) {
           if (state.presets.includes(activeDropdownValueFromPrefs)) {
             state.profile = state.presets.at(activeDropdownValueFromPrefs);

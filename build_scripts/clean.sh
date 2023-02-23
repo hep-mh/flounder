@@ -4,9 +4,8 @@ echo -ne "\n\e[38;5;212m• Cleaning build directories and caches •\e[0m\n"
 flutter clean
 
 rm -rf ~/.pub-cache
-rm -rf packages/*
+rm -f packages/flounder-latest-*
 
 flutter pub get
-#dart pub global activate flutter_to_debian
 
 echo
