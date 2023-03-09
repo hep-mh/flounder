@@ -45,7 +45,7 @@ The ``.apk`` file for **arm | arm64 | x86_64 Android** can be downloaded from [h
 
 A ``.flatpak`` file for **arbitrary x86_64 Linux systems** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-linux-x86_64.flatpak). After downloading, first install the flatpak for the Freedesktop platform via the command (also make sure that flatpak is correctly configured on your system. For more information, check [https://flatpak.org/setup/](https://flatpak.org/setup/).)
 ```
-flatpak install org.freedesktop.Platform/x86_64/21.08
+flatpak install org.freedesktop.Platform/x86_64/22.08
 ```
 Afterwards, the previously downloaded package can be installed at user-level via
 ```
@@ -61,7 +61,7 @@ into your terminal.
 
 <details>
 
-<summary> Click here to show more installation options </summary><br>
+<summary> <b>Click here to show more installation options</b> </summary><br>
 
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.AppImage.png" alt="flatpak" width="70"/>
 
@@ -97,7 +97,7 @@ flounder
 ```
 into your terminal.
 
-</details><br>
+</details>
 
 ### • **Windows** •
 
@@ -107,7 +107,7 @@ A modern installer for **x86_64 Windows** in ``.msix`` format can be downloaded 
 
 <details>
 
-<summary> Click here to show more installation options </summary><br>
+<summary> <b>Click here to show more installation options</b> </summary><br>
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-setup-exe.png" alt="exe" width="70"/>
 
@@ -117,7 +117,7 @@ A standard installer for **x86_64 Windows** in ``.exe`` format can be downloaded
 
 A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-windows-x86_64.zip). After downloading, unpack the file (preferably in a new directory) and double-click on ``flounder.exe`` to start the application.
 
-</details><br>
+</details>
 
 ### • **macOS / iOS** •
 
