@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:window_manager/window_manager.dart';
+import 'package:simple_pip_mode/simple_pip.dart';
 
 import 'home.dart';
 
@@ -27,6 +28,14 @@ void main() async {
         await windowManager.show();
         await windowManager.focus();
       });
+    }
+  }
+
+  // Enable Picture-in-Picture mode on Android
+  if (Platform.isAndroid) {
+    // Only enable this feature if the system supports 'Auto PiP'
+    if (await SimplePip.isAutoPipAvailable) {
+        SimplePip().setAutoPipMode();
     }
   }
 
