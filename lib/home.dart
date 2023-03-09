@@ -379,7 +379,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   void _buildDropdownMenuIfNeeded() {
     // Only run if necessary
     if (!state.presets.hasChanged()) return;
-    
+    // Otherwise commit and rebuild
     state.presets.commit();
 
     dropdownItems.clear();
@@ -395,7 +395,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     dropdownItems.add(
       const DropdownMenuItem<String>(
         value: 'Custom',
-        child: Text('Custom', style: TextStyle(color: Colors.white))
+        child: Text('Custom', style: const TextStyle(color: Colors.white))
       ),
     );
   }
@@ -451,7 +451,7 @@ class _FlounderHomeState extends State<FlounderHome> {
         onAnyTextFieldFocusChanged: (bool? hasFocus) {
           setState(() {
             if (!hasFocus!) {
-            _updateTextFields(true); // onlyIfEmpty
+              _updateTextFields(true); // onlyIfEmpty
             }
           });
         },
