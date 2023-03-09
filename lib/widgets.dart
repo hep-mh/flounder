@@ -131,18 +131,38 @@ class FlounderPip extends StatelessWidget {
 
   const FlounderPip({Key? key, required this.state}) : super(key: key);
 
-  // For now, a constant -- context independent --
-  // padding seems to look fine in all conditions
-  final double padding = 20;
-
   @override
   Widget build(BuildContext context) {
     FlounderClock primaryClock = state.timerIsPrimary ? FlounderTimer(state: state) : FlounderStopwatch(state: state);
 
-    return Center(child: Padding(
-      padding: EdgeInsets.all(padding),
-      child: primaryClock
-    ));
+    // Define the width of the indicator line
+    final double indicatorWidth  = 0.4*MediaQuery.of(context).size.width;
+
+    // Define a context-dependent padding
+    final double padding = 0.1*MediaQuery.of(context).size.height;
+
+    return Stack(
+      children: [
+        Center(child: Padding(
+          padding: EdgeInsets.all(padding),
+          child: primaryClock
+        )),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: padding/2),
+            child: Container(
+              height: padding/2, width: indicatorWidth,
+              child: SizedBox.shrink(),
+              decoration: BoxDecoration(
+                color: state.mode.color,
+                borderRadius: BorderRadius.circular(padding/4), // height = padding/2
+              ),
+            ),
+          )
+        )
+      ]
+    );
   }
 }
 
