@@ -126,6 +126,27 @@ class FlounderStopwatch extends FlounderClock {
 }
 
 
+class FlounderPip extends StatelessWidget {
+  final ApplicationState state;
+
+  const FlounderPip({Key? key, required this.state}) : super(key: key);
+
+  // For now, a constant -- context independent --
+  // padding seems to look fine in all conditions
+  final double padding = 20;
+
+  @override
+  Widget build(BuildContext context) {
+    FlounderClock primaryClock = state.timerIsPrimary ? FlounderTimer(state: state) : FlounderStopwatch(state: state);
+
+    return Center(child: Padding(
+      padding: EdgeInsets.all(padding),
+      child: primaryClock
+    ));
+  }
+}
+
+
 class FlounderBody extends StatelessWidget {
   final ApplicationState state;
 
