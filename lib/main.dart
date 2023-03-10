@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:window_manager/window_manager.dart';
-import 'package:simple_pip_mode/simple_pip.dart';
 
 import 'home.dart';
 
@@ -30,12 +29,6 @@ void main() async {
       });
     }
   }
-
-  // Enable Picture-in-Picture mode on Android, if automatic
-  // PiP mode is available on the current Android system
-  if (Platform.isAndroid) { if (await SimplePip.isAutoPipAvailable) {
-        SimplePip().setAutoPipMode();
-  }}
 
   // Run the app
   runApp(const Flounder());

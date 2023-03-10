@@ -8,8 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_pip_mode/simple_pip.dart';
-import 'package:simple_pip_mode/pip_widget.dart';
+import 'package:floating/floating.dart';
 
 import 'state.dart';
 import 'widgets.dart';
@@ -40,7 +39,7 @@ class FlounderHome extends StatefulWidget {
 }
 
 
-class _FlounderHomeState extends State<FlounderHome> {
+class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver {
   final ApplicationState state = ApplicationState();
 
   // The current list of items in the DropdownMenu
@@ -63,6 +62,9 @@ class _FlounderHomeState extends State<FlounderHome> {
   // The SharedPreferences object to read the
   // user-defined presets
   SharedPreferences? _prefs;
+
+  // The Floating object to enable PiP on Android
+  final Floating _floating = Floating();
 
   // The AudioPlayer to play the reminder sound
   final AudioPlayer _player = AudioPlayer();
@@ -344,6 +346,10 @@ class _FlounderHomeState extends State<FlounderHome> {
   void initState() {
     super.initState();
 
+    // Add observer for life-cycle changes to enable PiP on Android
+    WidgetsBinding.instance.addObserver(this);
+
+    // Load the relevant assets and preferences
     Future.wait([
       _loadSoundAssets(),
       _loadPreferences()
@@ -365,6 +371,10 @@ class _FlounderHomeState extends State<FlounderHome> {
     // Dispose of the Timer
     _runner!.cancel();
 
+    // Dispose of the Floating object
+    WidgetsBinding.instance.removeObserver(this);
+    _floating.dispose();
+
     // Dispose of the AudioPlayer
     _player.dispose();
 
@@ -374,6 +384,15 @@ class _FlounderHomeState extends State<FlounderHome> {
     });
 
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState lifecycleState) {
+    if (lifecycleState == AppLifecycleState.inactive) {
+      if (!kIsWeb) { if (Platform.isAndroid) {
+        _floating.enable();
+      }}
+    }
   }
 
   // BUILD FUNCTIONS ////////////////////////////////////////////////////////////////////
@@ -473,13 +492,14 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     // RETURN ///////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
-    if (Platform.isAndroid) {
-        return PipWidget(
-          child: home,
-          pipChild: pip
+    if (!kIsWeb) { if (Platform.isAndroid) {
+        return PiPSwitcher(
+          childWhenDisabled: home,
+          childWhenEnabled: pip
         );
-    } else {
-      return home;
-    }
+    }}
+
+    // in any other case
+    return home;
   }
 }
