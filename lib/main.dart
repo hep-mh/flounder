@@ -31,13 +31,11 @@ void main() async {
     }
   }
 
-  // Enable Picture-in-Picture mode on Android
-  if (Platform.isAndroid) {
-    // Only enable this feature if the system supports 'Auto PiP'
-    if (await SimplePip.isAutoPipAvailable) {
+  // Enable Picture-in-Picture mode on Android, if automatic
+  // PiP mode is available on the current Android system
+  if (Platform.isAndroid) { if (await SimplePip.isAutoPipAvailable) {
         SimplePip().setAutoPipMode();
-    }
-  }
+  }}
 
   // Run the app
   runApp(const Flounder());

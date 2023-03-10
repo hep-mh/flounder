@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_pip_mode/simple_pip.dart';
+import 'package:simple_pip_mode/pip_widget.dart';
 
 import 'state.dart';
 import 'widgets.dart';
@@ -404,13 +406,12 @@ class _FlounderHomeState extends State<FlounderHome> {
   Widget build(BuildContext context) {
     // If the height is too small, do not draw anything at all
     final double contextHeight = MediaQuery.of(context).size.height;
-    if (contextHeight < 200) {
-      return const Scaffold(backgroundColor: Color(0xff1f1f1f));
-    }
 
     _buildDropdownMenuIfNeeded();
 
-    return Scaffold(
+    // Build the MAIN_SCREEN ////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    Widget home = Scaffold(
       backgroundColor: const Color(0xff1f1f1f),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       endDrawerEnableOpenDragGesture: (state.mode.id == 'Idle'),
@@ -458,5 +459,27 @@ class _FlounderHomeState extends State<FlounderHome> {
         onSaveButtonPressed: _onSaveButtonPressed,
       ),
     );
+    // If the height of the window is to small, draw nothing instead
+    if (contextHeight < 200) {
+      home = Scaffold(backgroundColor: Color(0xff1f1f1f));
+    }
+
+    // Build the PIP_SCREEN /////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    Widget pip = Scaffold(
+      backgroundColor: Color(0xff1f1f1f),
+      body: FlounderPip(state: state)
+    );
+
+    // RETURN ///////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    if (Platform.isAndroid) {
+        return PipWidget(
+          child: home,
+          pipChild: pip
+        );
+    } else {
+      return home;
+    }
   }
 }
