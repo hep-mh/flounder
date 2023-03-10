@@ -65,6 +65,8 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
 
   // The Floating object to enable PiP on Android
   final Floating _floating = Floating();
+  // A flag to store wether the device supports PiP
+  bool _pipIsSupported = false;
 
   // The AudioPlayer to play the reminder sound
   final AudioPlayer _player = AudioPlayer();
@@ -342,9 +344,18 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     });
   }
 
+  Future<void> _checkPipAvailability() async {
+    if (!kIsWeb) { if (Platform.isAndroid) {
+      _pipIsSupported = await _floating.isPipAvailable;
+    }}
+  }
+
   @override
   void initState() {
     super.initState();
+
+    // Check if the current device supports PiP
+    Future.wait([_checkPipAvailability()]);
 
     // Add observer for life-cycle changes to enable PiP on Android
     WidgetsBinding.instance.addObserver(this);
@@ -390,7 +401,9 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
   void didChangeAppLifecycleState(AppLifecycleState lifecycleState) {
     if (lifecycleState == AppLifecycleState.inactive) {
       if (!kIsWeb) { if (Platform.isAndroid) {
-        _floating.enable();
+        if (_pipIsSupported) {
+          _floating.enable();
+        }
       }}
     }
   }
