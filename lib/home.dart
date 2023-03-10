@@ -478,7 +478,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
         onSaveButtonPressed: _onSaveButtonPressed,
       ),
     );
-    // If the height of the window is to small, draw nothing instead
+    // If the height of the window is too small, draw nothing instead
     if (contextHeight < 200) {
       home = Scaffold(backgroundColor: Color(0xff1f1f1f));
     }

@@ -5,3 +5,6 @@ convert web-icon.png -bordercolor none -border 52 web-icon.png
 # Create android icon
 convert desktop-icon.png -resize 314x314 android-icon.png
 convert android-icon.png -bordercolor none -border 99 android-icon.png
+
+convert monochrome-icon.png -resize 314x314 monochrome-android-icon.png
+convert monochrome-android-icon.png -bordercolor none -border 99 monochrome-android-icon.png
