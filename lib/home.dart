@@ -406,7 +406,10 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     if (lifecycleState == AppLifecycleState.inactive) {
       if (!kIsWeb) { if (Platform.isAndroid) {
         if (_pipIsSupported) {
-          _floating.enable();
+          // Only enable PiP if the timer is currently running
+          if (state.mode != ModeRegister.IDLE) {
+            _floating.enable();
+          }
         }
       }}
     }
