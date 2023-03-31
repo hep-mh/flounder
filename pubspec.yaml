@@ -15,7 +15,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/ding.mp3
+    - assets/ding.wav
   
   fonts:
     - family: Roboto
@@ -40,7 +40,7 @@ dependencies:
   floating: ^2.0.0
   wakelock: ^0.6.0
   shared_preferences: ^2.0.0
-  window_manager: ^0.3.0
+  window_manager: ^0.2.0
 
   flutter_launcher_icons: ^0.11.0
   cupertino_icons: ^1.0.0

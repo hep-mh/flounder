@@ -81,7 +81,8 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
 
     _audioIsPlaying = true;
 
-    await _player.resume();
+    await _player.play( AssetSource('ding.wav') );
+    //await _player.resume();
   }
 
   void _toggleWakelock(bool enable) {
@@ -263,7 +264,10 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
   // INIT & DISPOSE FUNCTIONS ///////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   Future<void> _loadSoundAssets() async {
-    await _player.setSourceAsset('ding.mp3');
+    //await _player.setReleaseMode(ReleaseMode.stop);
+    //await _player.setPlayerMode(PlayerMode.lowLatency);
+
+    //await _player.setSourceAsset('ding.wav');
 
     _player.onPlayerComplete.listen((event) {
       _audioIsPlaying = false;
