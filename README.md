@@ -119,6 +119,18 @@ A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloa
 
 </details>
 
+### • **ChromeOS** •
+
+Open the web version at [``timer.hep-mh.com``](https://timer.hep-mh.com/) and install it as a PWA (Progressive Web App) by clicking on the installation button in the right corner of the URL input field.
+
+<details>
+
+<summary> <b>Click here to show more installation options</b> </summary><br>
+
+On Chrombooks with Linux support, any of the above Linux variants should also work.
+
+</details>
+
 ### • **macOS / iOS** •
 
 Currently, there do not exist any builds for macOS and iOS, as I lack access to a macOS device, which is needed to build for these platforms. There might be a native version for macOS in the future, but since Apple does not allow sideloading on iOS (and I will not pay the money to upload it to the App Store), the future looks a lot less promising for iOS.
