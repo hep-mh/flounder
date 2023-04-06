@@ -119,9 +119,9 @@ A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloa
 
 </details>
 
-### • **ChromeOS** •
+### • **chromeOS** •
 
-Open the web version at [``timer.hep-mh.com``](https://timer.hep-mh.com/) and install it as a PWA (Progressive Web App) by clicking on the installation button in the right corner of the URL input field.
+Go to [``timer.hep-mh.com``](https://timer.hep-mh.com/) and install the web version as a PWA (Progressive Web App) by clicking on the installation button in the right corner of the URL input field.
 
 <details>
 
