@@ -443,9 +443,6 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
 
   @override
   Widget build(BuildContext context) {
-    // If the height is too small, do not draw anything at all
-    final double contextHeight = MediaQuery.of(context).size.height;
-
     _buildDropdownMenuIfNeeded();
 
     // Build the MAIN_SCREEN ////////////////////////////////////////////////////////////
@@ -463,15 +460,24 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
       ),
       // 2. FLOUNDER_ACTION_BAR /////////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////////////////////////////////
-      bottomNavigationBar: Builder(builder: (context) { return FlounderActionBar(
-        state: state,
-        onPressedL: _onBellButtonPressed,
-        onPressedR: () {
-          if ( state.mode.id == 'Idle' ) {
-            Scaffold.of(context).openEndDrawer();
-          }
-        }
-      );}),
+      bottomNavigationBar: Container(
+        padding: new EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          child: Builder(builder: (context) { return FlounderActionBar(
+            state: state,
+            onPressedL: _onBellButtonPressed,
+            onPressedR: () {
+              if ( state.mode.id == 'Idle' ) {
+                Scaffold.of(context).openEndDrawer();
+              }
+            }
+          );})
+        )
+      ),
       // 3. FLOUNDER_ACTION_BUTTON //////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////////////////////////////////
       floatingActionButton: FlounderActionButton(
@@ -499,6 +505,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
       ),
     );
     // If the height of the window is too small, draw nothing instead
+    final double contextHeight = MediaQuery.of(context).size.height;
     if (contextHeight < 200) {
       home = Scaffold(backgroundColor: Color(0xff1f1f1f));
     }

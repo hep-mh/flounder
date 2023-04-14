@@ -18,9 +18,11 @@ AppDir:
     # Output of: flutter_to_debian dependencies build/linux/x64/release/bundle/lib/
     - libc6-i386
     - libstdc++6
-    - libgtk-3-0
     - libgcrypt20
     - liblz4-1
+    # https://docs.flutter.dev/development/platform-integration/linux/building
+    - libgtk-3-0
+    - libblkid1
     - liblzma5
     # plus additional gstreamer dependencies
     - gstreamer1.0-plugins-good # depends on libgstreamer-plugins-base1.0-0, libgstreamer1.0-0

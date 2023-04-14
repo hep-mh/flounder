@@ -374,6 +374,9 @@ class FlounderActionButton extends StatelessWidget {
     return SizedBox(
       width: buttonSize, height: buttonSize,
       child: FloatingActionButton(
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.all(Radius.circular(15))
+        // ),
         child: Icon(
           (state.mode.id == 'Idle') ? Icons.play_arrow_rounded : Icons.sync_rounded,
           color: Colors.black,
