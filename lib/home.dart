@@ -355,7 +355,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
   Future<void> _loadPackageInfo() async {
     PackageInfo _packageInfo = await PackageInfo.fromPlatform();
 
-    _version = _packageInfo.version;
+    _version = "1.2.1"; //_packageInfo.version;
   }
 
   Future<void> _checkPipAvailability() async {
