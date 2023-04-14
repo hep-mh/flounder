@@ -74,7 +74,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
   // A flag to check if audio is currently playing
   bool _audioIsPlaying = false;
 
-  //The PackageInfo object to read data from pubspec.yaml
+  // The current version of Flounder
   String _version = "0.0.0";
 
   // UTILITY FUNCTIONS //////////////////////////////////////////////////////////////////
