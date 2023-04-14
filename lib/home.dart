@@ -9,6 +9,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:floating/floating.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'state.dart';
 import 'widgets.dart';
@@ -72,6 +73,9 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
   final AudioPlayer _player = AudioPlayer();
   // A flag to check if audio is currently playing
   bool _audioIsPlaying = false;
+
+  //The PackageInfo object to read data from pubspec.yaml
+  String _version = "0.0.0";
 
   // UTILITY FUNCTIONS //////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
@@ -348,6 +352,12 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     });
   }
 
+  Future<void> _loadPackageInfo() async {
+    PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+
+    _version = _packageInfo.version;
+  }
+
   Future<void> _checkPipAvailability() async {
     if (!kIsWeb) { if (Platform.isAndroid) {
       _pipIsSupported = await _floating.isPipAvailable;
@@ -367,7 +377,8 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     // Load the relevant assets and preferences
     Future.wait([
       _loadSoundAssets(),
-      _loadPreferences()
+      _loadPreferences(),
+      _loadPackageInfo()
     ]);
 
     // Ensure that the navigation bar has a matching color on
@@ -502,6 +513,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
           });
         },
         onSaveButtonPressed: _onSaveButtonPressed,
+        version: _version
       ),
     );
     // If the height of the window is too small, draw nothing instead

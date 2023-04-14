@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:package_info_plus/package_info_plus.dart';
-
 import 'state.dart';
 
 
@@ -413,6 +411,9 @@ class FlounderDrawer extends StatelessWidget {
   // ElevatedButton properties
   final VoidCallback onSaveButtonPressed;
 
+  // The current version of Flounder
+  final String version;
+
   const FlounderDrawer({
     Key? key,
     required this.state,
@@ -424,6 +425,7 @@ class FlounderDrawer extends StatelessWidget {
     required this.onAnyTextFieldChanged,
     required this.onAnyTextFieldFocusChanged,
     required this.onSaveButtonPressed,
+    required this.version
   }) : super(key: key);
 
   @override
@@ -534,7 +536,7 @@ class FlounderDrawer extends StatelessWidget {
               Container(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text('v1.2.1', style: TextStyle(fontSize: 15, color: Colors.white))
+                  child: Text('v${this.version}', style: TextStyle(fontSize: 15, color: Colors.white))
                 )
               )
             ],
