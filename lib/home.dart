@@ -490,7 +490,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
             state: state,
             onPressedL: _onBellButtonPressed,
             onPressedR: () {
-              if ( state.mode.id == 'Idle' ) {
+              if (state.mode.id == 'Idle') {
                 Scaffold.of(context).openEndDrawer();
               }
             }
