@@ -544,7 +544,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
           childWhenDisabled: home,
           childWhenEnabled: pip
         );
-    }}
+    }
 
     // in any other case
     return home;
