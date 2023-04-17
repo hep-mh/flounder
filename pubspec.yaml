@@ -38,7 +38,7 @@ dependencies:
 
   audioplayers: ^3.0.0
   floating:
-    path: ../floating
+    path: ./floating
   package_info_plus: ^3.1.0
   shared_preferences: ^2.0.0
   wakelock: ^0.6.0
