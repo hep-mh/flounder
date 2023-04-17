@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:wakelock/wakelock.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:floating/floating.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wakelock/wakelock.dart';
 
 import 'state.dart';
 import 'widgets.dart';
@@ -66,7 +66,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
 
   // The Floating object to enable PiP on Android
   final Floating _floating = Floating();
-  // A flag to store wether the device supports PiP
+  // A flag to store wether the device supports (automatic) PiP
   bool _pipIsSupported = false;
 
   // The AudioPlayer to play the reminder sound
@@ -75,7 +75,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
   bool _audioIsPlaying = false;
 
   // The current version of Flounder
-  String _version = "0.0.0";
+  String _version = "1.2.2";
 
   // UTILITY FUNCTIONS //////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
@@ -93,8 +93,14 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     if (kIsWeb) {
       Wakelock.toggle(enable: enable);
     } else {
-      // Wacklock currently does not work on Linux
+      // Wacklock currently does not work on Linux desktop
       if (!Platform.isLinux) { Wakelock.toggle(enable: enable); }
+    }
+  }
+
+  void _toggleAutoPip(bool enable) {
+    if (_pipIsSupported) {
+      _floating.toggleAutoPip(autoEnter: enable);
     }
   }
 
@@ -134,8 +140,10 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     setState(() {
       // START THE TIMER WHEN IDLE
       if ( state.mode.id == 'Idle' ) {
-        // Enable the wakelock when the timer is started
+        // Enable the wakelock while the timer is running
         _toggleWakelock(true);
+        // Enable automatic PiP mode while the timer is running
+        _toggleAutoPip(true);
 
         state.mode = ModeRegister.TALK;
 
@@ -173,6 +181,8 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
       } else {
         // Disable the wakelock when the timer is stopped
         _toggleWakelock(false);
+        // Disable automatic PiP mode when the timer is stopped
+        _toggleAutoPip(false);
 
         state.mode = ModeRegister.IDLE;
         state.reset();
@@ -353,14 +363,14 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
   }
 
   Future<void> _loadPackageInfo() async {
-    PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+    //PackageInfo _packageInfo = await PackageInfo.fromPlatform();
 
-    _version = "1.2.1"; //_packageInfo.version;
+    //_version = _packageInfo.version;
   }
 
-  Future<void> _checkPipAvailability() async {
+  Future<void> _checkAutoPipAvailability() async {
     if (!kIsWeb) { if (Platform.isAndroid) {
-      _pipIsSupported = await _floating.isPipAvailable;
+      _pipIsSupported = await _floating.isAutoPipAvailable;
     }}
   }
 
@@ -369,10 +379,10 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     super.initState();
 
     // Check if the current device supports PiP
-    Future.wait([_checkPipAvailability()]);
+    Future.wait([_checkAutoPipAvailability()]);
 
     // Add observer for life-cycle changes to enable PiP on Android
-    WidgetsBinding.instance.addObserver(this);
+    //WidgetsBinding.instance.addObserver(this);
 
     // Load the relevant assets and preferences
     Future.wait([
@@ -398,7 +408,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     _runner!.cancel();
 
     // Dispose of the Floating object
-    WidgetsBinding.instance.removeObserver(this);
+    //WidgetsBinding.instance.removeObserver(this);
     _floating.dispose();
 
     // Dispose of the AudioPlayer
@@ -412,17 +422,17 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     super.dispose();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState lifecycleState) {
-    if (_pipIsSupported) { // only true if '!kIsWeb && Platform.isAndroid'
-      if (lifecycleState == AppLifecycleState.inactive) {
-        // Only enable PiP if the timer is currently running
-        if (state.mode != ModeRegister.IDLE) {
-          _floating.enable();
-        }
-      }
-    }
-  }
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState lifecycleState) {
+  //   if (_pipIsSupported) { // only true if '!kIsWeb && Platform.isAndroid'
+  //     if (lifecycleState == AppLifecycleState.inactive) {
+  //       // Only enable PiP if the timer is currently running
+  //       if (state.mode != ModeRegister.IDLE) {
+  //         _floating.enable();
+  //       }
+  //     }
+  //   }
+  // }
 
   // BUILD FUNCTIONS ////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
@@ -529,7 +539,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
 
     // RETURN ///////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
-    if (!kIsWeb) { if (Platform.isAndroid) {
+    if (_pipIsSupported) {
         return PiPSwitcher(
           childWhenDisabled: home,
           childWhenEnabled: pip
