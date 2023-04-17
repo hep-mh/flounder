@@ -540,10 +540,10 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     // RETURN ///////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     if (_pipIsSupported) {
-        return PiPSwitcher(
-          childWhenDisabled: home,
-          childWhenEnabled: pip
-        );
+      return PiPSwitcher(
+        childWhenDisabled: home,
+        childWhenEnabled: pip
+      );
     }
 
     // in any other case
