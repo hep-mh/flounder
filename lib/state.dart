@@ -51,7 +51,7 @@ class Profile {
     String reminderStr   = reminderAt.toString();
 
 
-    return talkStr + '-' + discussionStr + '-' + reminderStr;
+    return '$talkStr-$discussionStr-$reminderStr';
   }
 
   String key() {
@@ -59,7 +59,7 @@ class Profile {
     String discussionStr = discussionLength.toString();
     String reminderStr   = reminderAt.toString();
 
-    return talkStr + '+' + discussionStr + ' (' + reminderStr + ')';
+    return '$talkStr+$discussionStr ($reminderStr)';
   }
 
   Profile clone() {

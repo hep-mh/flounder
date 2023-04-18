@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:floating/floating.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -75,7 +74,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
   bool _audioIsPlaying = false;
 
   // The current version of Flounder
-  String _version = "1.2.2";
+  final String _version = "1.2.2";
 
   // UTILITY FUNCTIONS //////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
@@ -362,11 +361,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     });
   }
 
-  Future<void> _loadPackageInfo() async {
-    //PackageInfo _packageInfo = await PackageInfo.fromPlatform();
-
-    //_version = _packageInfo.version;
-  }
+  Future<void> _loadPackageInfo() async {}
 
   Future<void> _checkAutoPipAvailability() async {
     if (!kIsWeb) { if (Platform.isAndroid) {
@@ -455,7 +450,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     dropdownItems.add(
       const DropdownMenuItem<String>(
         value: 'Custom',
-        child: Text('Custom', style: const TextStyle(color: Colors.white))
+        child: Text('Custom', style: TextStyle(color: Colors.white))
       ),
     );
   }
@@ -480,12 +475,12 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
       // 2. FLOUNDER_ACTION_BAR /////////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////////////////////////////////
       bottomNavigationBar: Container(
-        padding: new EdgeInsets.all(10),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.all(10),
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
           child: Builder(builder: (context) { return FlounderActionBar(
             state: state,
             onPressedL: _onBellButtonPressed,
@@ -528,13 +523,13 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     // If the height of the window is too small, draw nothing instead
     final double contextHeight = MediaQuery.of(context).size.height;
     if (contextHeight < 300) {
-      home = Scaffold(backgroundColor: Color(0xff1f1f1f));
+      home = const Scaffold(backgroundColor: Color(0xff1f1f1f));
     }
 
     // Build the PIP_SCREEN /////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     Widget pip = Scaffold(
-      backgroundColor: Color(0xff1f1f1f),
+      backgroundColor: const Color(0xff1f1f1f),
       body: FlounderPip(state: state)
     );
 

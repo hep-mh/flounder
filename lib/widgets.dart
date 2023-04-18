@@ -48,13 +48,13 @@ class FlounderHeader extends StatelessWidget {
 
     return Container(
       height: height, width: width,
-      child: FittedBox(fit: BoxFit.contain, child: Text(state.mode.id)),
       decoration: BoxDecoration(
         // Increase visibility by coloring the
         // full box in the respective color
         color: state.mode.color,
         borderRadius: BorderRadius.circular(borderRadius),
       ),
+      child: FittedBox(fit: BoxFit.contain, child: Text(state.mode.id))
     );
   }
 }
@@ -95,10 +95,10 @@ class FlounderTimer extends FlounderClock {
     int min = state.timer ~/ 60;
     int sec = state.timer - min*60;
 
-    String minStr = (min < 10) ? '0' + min.toString() : min.toString();
-    String secStr = (sec < 10) ? '0' + sec.toString() : sec.toString();
+    String minStr = (min < 10) ? '0${min.toString()}' : min.toString();
+    String secStr = (sec < 10) ? '0${sec.toString()}' : sec.toString();
 
-    return minStr + ':' + secStr;
+    return '$minStr:$secStr';
   }
 }
 
@@ -120,10 +120,10 @@ class FlounderStopwatch extends FlounderClock {
     int min = inverseTimer ~/ 60;
     int sec = inverseTimer - min*60;
 
-    String minStr = (min < 10) ? '0' + min.toString() : min.toString();
-    String secStr = (sec < 10) ? '0' + sec.toString() : sec.toString();
+    String minStr = (min < 10) ? '0${min.toString()}' : min.toString();
+    String secStr = (sec < 10) ? '0${sec.toString()}' : sec.toString();
 
-    return minStr + ':' + secStr;
+    return '$minStr:$secStr';
   }
 }
 
@@ -155,11 +155,11 @@ class FlounderPip extends StatelessWidget {
             padding: EdgeInsets.only(bottom: padding/2),
             child: Container(
               height: padding/2, width: indicatorWidth,
-              child: SizedBox.shrink(),
               decoration: BoxDecoration(
                 color: state.mode.color,
                 borderRadius: BorderRadius.circular(padding/4), // height = padding/2
               ),
+              child: const SizedBox.shrink(),
             ),
           )
         )
@@ -327,7 +327,7 @@ class FlounderActionBar extends StatelessWidget {
               ),
               SizedBox(width: iconSize/4),
               Text(
-                state.profile.reminderAt.toString() + ' min',
+                '${state.profile.reminderAt.toString()} min',
                 style: TextStyle(fontSize: 0.75*iconSize)
               ),
             ],
@@ -337,7 +337,7 @@ class FlounderActionBar extends StatelessWidget {
           Row(
             children: <Widget>[
               Text(
-                state.profile.talkLength.toString() + "+" + state.profile.discussionLength.toString() + ' min',
+                '${state.profile.talkLength.toString()}+${state.profile.discussionLength.toString()} min',
                 style: TextStyle(fontSize: 0.75*iconSize)
               ),
               SizedBox(width: iconSize/4),
@@ -379,13 +379,13 @@ class FlounderActionButton extends StatelessWidget {
         // shape: RoundedRectangleBorder(
         //   borderRadius: BorderRadius.all(Radius.circular(15))
         // ),
+        onPressed: onPressed,
+        backgroundColor: state.mode.color,
         child: Icon(
           (state.mode.id == 'Idle') ? Icons.play_arrow_rounded : Icons.sync_rounded,
           color: Colors.black,
           size: 0.6*buttonSize,
-        ),
-        onPressed: onPressed,
-        backgroundColor: state.mode.color,
+        )
       ),
     );
   }
@@ -530,14 +530,12 @@ class FlounderDrawer extends StatelessWidget {
                 ),
               )
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // 5. The TEXT to show the current version ////////////////////////////////
             ///////////////////////////////////////////////////////////////////////////
-            Container(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text('v${this.version}', style: TextStyle(fontSize: 15, color: Colors.white))
-              )
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text('v$version', style: const TextStyle(fontSize: 15, color: Colors.white))
             )
           ]
         )
