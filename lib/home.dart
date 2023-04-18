@@ -361,7 +361,8 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     });
   }
 
-  Future<void> _loadPackageInfo() async {}
+  Future<void> _loadPackageInfo() async {
+  }
 
   Future<void> _checkAutoPipAvailability() async {
     if (!kIsWeb) { if (Platform.isAndroid) {
@@ -474,24 +475,15 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
       ),
       // 2. FLOUNDER_ACTION_BAR /////////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////////////////////////////////
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          child: Builder(builder: (context) { return FlounderActionBar(
-            state: state,
-            onPressedL: _onBellButtonPressed,
-            onPressedR: () {
-              if (state.mode.id == 'Idle') {
-                Scaffold.of(context).openEndDrawer();
-              }
-            }
-          );})
-        )
-      ),
+      bottomNavigationBar: Builder(builder: (context) { return FlounderActionBar(
+        state: state,
+        onPressedL: _onBellButtonPressed,
+        onPressedR: () {
+          if (state.mode.id == 'Idle') {
+            Scaffold.of(context).openEndDrawer();
+          }
+        }
+      );}),
       // 3. FLOUNDER_ACTION_BUTTON //////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////////////////////////////////
       floatingActionButton: FlounderActionButton(

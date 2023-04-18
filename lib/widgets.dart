@@ -80,8 +80,8 @@ abstract class FlounderClock extends StatelessWidget {
           // We keep the text white and update the remaining
           // colors of the UI to indicate the current state
           color: Colors.white,
-        ),
-      ),
+        )
+      )
     );
   }
 }
@@ -160,7 +160,7 @@ class FlounderPip extends StatelessWidget {
                 borderRadius: BorderRadius.circular(padding/4), // height = padding/2
               ),
               child: const SizedBox.shrink(),
-            ),
+            )
           )
         )
       ]
@@ -190,8 +190,8 @@ class FlounderBody extends StatelessWidget {
     final double contextWidth  = MediaQuery.of(context).size.width;
     final double contextHeight = MediaQuery.of(context).size.height;
 
-    const double padding   = PADDING;
-    const double maxWidth  = MAGIC_WIDTH - 2*padding;
+    //const double padding   = PADDING;
+          double maxWidth  = MAGIC_WIDTH - 2*padding;
     const double maxHeight = 150;
 
     double width = maxWidth;
@@ -281,8 +281,8 @@ class FlounderBody extends StatelessWidget {
               ]
             )
           )
-        ],
-      ),
+        ]
+      )
     );
   }
 }
@@ -293,6 +293,10 @@ class FlounderActionBar extends StatelessWidget {
 
   final VoidCallback onPressedL;
   final VoidCallback onPressedR;
+
+  // For now, a constant -- context independent --
+  // padding seems to look fine in all conditions
+  final double padding = PADDING;
 
   const FlounderActionBar({
     Key? key,
@@ -307,50 +311,61 @@ class FlounderActionBar extends StatelessWidget {
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height
     );
 
-    return BottomAppBar(
-      color: state.mode.color,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          // 1. Left ICON_BUTTON ////////////////////////////////////////////////////////
-          ///////////////////////////////////////////////////////////////////////////////
-          Row(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(
-                  (state.remindMe == true) ? Icons.notifications_active_outlined
-                                           : Icons.notifications_off_outlined
-                ),
-                onPressed: onPressedL,
-                iconSize: iconSize,
-              ),
-              SizedBox(width: iconSize/4),
-              Text(
-                '${state.profile.reminderAt.toString()} min',
-                style: TextStyle(fontSize: 0.75*iconSize)
-              ),
-            ],
-          ),
-          // 2. Right ICON_BUTTON ///////////////////////////////////////////////////////
-          ///////////////////////////////////////////////////////////////////////////////
-          Row(
-            children: <Widget>[
-              Text(
-                '${state.profile.talkLength.toString()}+${state.profile.discussionLength.toString()} min',
-                style: TextStyle(fontSize: 0.75*iconSize)
-              ),
-              SizedBox(width: iconSize/4),
-              IconButton(
-                icon: const Icon(Icons.access_time_rounded),
-                onPressed: onPressedR,
-                iconSize: iconSize,
-                color: (state.mode.id == 'Idle') ? Colors.black : const Color(0x2b2b2bff),
-              ),
-            ],
-          ),
-        ],
+    const double borderRadius = PADDING;
+
+    return Container(
+      padding: const EdgeInsets.all(PADDING),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
       ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
+        child: BottomAppBar(
+          color: state.mode.color,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              // 1. Left ICON_BUTTON ////////////////////////////////////////////////////////
+              ///////////////////////////////////////////////////////////////////////////////
+              Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      (state.remindMe == true) ? Icons.notifications_active_outlined
+                                              : Icons.notifications_off_outlined
+                    ),
+                    onPressed: onPressedL,
+                    iconSize: iconSize,
+                  ),
+                  SizedBox(width: iconSize/4),
+                  Text(
+                    '${state.profile.reminderAt.toString()} min',
+                    style: TextStyle(fontSize: 0.75*iconSize)
+                  ),
+                ],
+              ),
+              // 2. Right ICON_BUTTON ///////////////////////////////////////////////////////
+              ///////////////////////////////////////////////////////////////////////////////
+              Row(
+                children: <Widget>[
+                  Text(
+                    '${state.profile.talkLength.toString()}+${state.profile.discussionLength.toString()} min',
+                    style: TextStyle(fontSize: 0.75*iconSize)
+                  ),
+                  SizedBox(width: iconSize/4),
+                  IconButton(
+                    icon: const Icon(Icons.access_time_rounded),
+                    onPressed: onPressedR,
+                    iconSize: iconSize,
+                    color: (state.mode.id == 'Idle') ? Colors.black : const Color(0x2b2b2bff),
+                  ),
+                ],
+              )
+            ]
+          )
+        )
+      )
     );
   }
 }
@@ -386,7 +401,7 @@ class FlounderActionButton extends StatelessWidget {
           color: Colors.black,
           size: 0.6*buttonSize,
         )
-      ),
+      )
     );
   }
 }
