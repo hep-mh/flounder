@@ -468,7 +468,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     /////////////////////////////////////////////////////////////////////////////////////
     Widget home = Scaffold(
       backgroundColor: const Color(0xff1f1f1f),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      resizeToAvoidBottomInset: false,
       endDrawerEnableOpenDragGesture: (state.mode.id == 'Idle'),
       // 1. FLOUNDER_BODY ///////////////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////////////////////////////////
@@ -503,6 +503,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
         state: state,
         onPressed: _onPlayButtonPressed,
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       // 4. FLOUNDER_DRAWER /////////////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////////////////////////////////
       endDrawer: FlounderDrawer(
@@ -526,7 +527,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
     );
     // If the height of the window is too small, draw nothing instead
     final double contextHeight = MediaQuery.of(context).size.height;
-    if (contextHeight < 200) {
+    if (contextHeight < 300) {
       home = Scaffold(backgroundColor: Color(0xff1f1f1f));
     }
 

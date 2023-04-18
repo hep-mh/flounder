@@ -8,6 +8,8 @@ import 'state.dart';
 
 // ignore: constant_identifier_names
 const double MAGIC_WIDTH = 740;
+// ignore: constant_identifier_names
+const double PADDING = 10;
 
 
 double _getDynamicScale(double contextWidth, double contextHeight, [double factor = 1]) {
@@ -175,7 +177,7 @@ class FlounderBody extends StatelessWidget {
 
   // For now, a constant -- context independent --
   // padding seems to look fine in all conditions
-  final double padding = 20;
+  final double padding = PADDING;
 
   const FlounderBody({
     Key? key,
@@ -188,7 +190,7 @@ class FlounderBody extends StatelessWidget {
     final double contextWidth  = MediaQuery.of(context).size.width;
     final double contextHeight = MediaQuery.of(context).size.height;
 
-    const double padding   = 20;
+    const double padding   = PADDING;
     const double maxWidth  = MAGIC_WIDTH - 2*padding;
     const double maxHeight = 150;
 
