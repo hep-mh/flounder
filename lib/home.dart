@@ -65,7 +65,7 @@ class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver
 
   // The Floating object to enable PiP on Android
   final Floating _floating = Floating();
-  // A flag to store wether the device supports (automatic) PiP
+  // A flag to store whether the device supports (automatic) PiP
   bool _pipIsSupported = false;
 
   // The AudioPlayer to play the reminder sound
