@@ -9,7 +9,7 @@ import 'state.dart';
 // ignore: constant_identifier_names
 const double MAGIC_WIDTH = 740;
 // ignore: constant_identifier_names
-const double PADDING = 10;
+const double PADDING     =  10;
 
 
 double _getDynamicScale(double contextWidth, double contextHeight, [double factor = 1]) {

@@ -39,7 +39,7 @@ class FlounderHome extends StatefulWidget {
 }
 
 
-class _FlounderHomeState extends State<FlounderHome> with WidgetsBindingObserver {
+class _FlounderHomeState extends State<FlounderHome> {
   final ApplicationState state = ApplicationState();
 
   // The current list of items in the DropdownMenu
