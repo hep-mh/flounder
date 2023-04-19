@@ -7,9 +7,7 @@ import 'state.dart';
 
 
 // ignore: constant_identifier_names
-const double MAGIC_WIDTH = 740;
-// ignore: constant_identifier_names
-const double PADDING     =  10;
+const double MAGIC_WIDTH = 760;
 
 
 double _getDynamicScale(double contextWidth, double contextHeight, [double factor = 1]) {
@@ -175,6 +173,10 @@ class FlounderBody extends StatelessWidget {
   final VoidCallback onArrowButtonPressed;
   final VoidCallback onSecondaryClockPressed;
 
+  // For now, a constant -- context independent --
+  // padding seems to look fine in all conditions
+  final double padding = 30;
+
   const FlounderBody({
     Key? key,
     required this.state,
@@ -186,8 +188,7 @@ class FlounderBody extends StatelessWidget {
     final double contextWidth  = MediaQuery.of(context).size.width;
     final double contextHeight = MediaQuery.of(context).size.height;
 
-    const double padding   = PADDING;
-    const double maxWidth  = MAGIC_WIDTH - 2*padding;
+    final double maxWidth  = MAGIC_WIDTH - 2*padding;
     const double maxHeight = 150;
 
     double width = maxWidth;
@@ -221,8 +222,6 @@ class FlounderBody extends StatelessWidget {
     return Size(width, height);
   }
 
-  // For now, a constant -- context independent --
-  // padding seems to look fine in all conditions
   @override
   Widget build(BuildContext context) {
     final double arrowSize = _getDynamicScale(
@@ -236,7 +235,7 @@ class FlounderBody extends StatelessWidget {
       child: Column(
         children: [
           Center(child: Padding(
-            padding: const EdgeInsets.fromLTRB(PADDING, PADDING, PADDING, 0),
+            padding: EdgeInsets.fromLTRB(padding, padding, padding, 0),
             // 1. The FLOUNDER_HEADER displaying the current mode ///////////////////////
             /////////////////////////////////////////////////////////////////////////////
             child: FlounderHeader(state: state, size: _getHeaderSize(context)),
@@ -245,7 +244,7 @@ class FlounderBody extends StatelessWidget {
             child: Stack(
               children: [
                 Center(child: Padding(
-                  padding: const EdgeInsets.all(PADDING),
+                  padding: EdgeInsets.all(padding),
                   // 2. The primary instance of FLOUNDER_CLOCK /////////////////////////
                   ///////////////////////////////////////////////////////////////////////
                   child: primaryClock
@@ -299,18 +298,19 @@ class FlounderActionBar extends StatelessWidget {
     required this.onPressedR
   }) : super(key: key);
 
-  // For now, a constant -- context independent --
-  // padding seems to look fine in all conditions
   @override
   Widget build(BuildContext context) {
     final double iconSize = _getDynamicScale(
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height
     );
 
-    const double borderRadius = PADDING;
+    // For now, a constant -- context independent --
+    // padding seems to look fine in all conditions
+    const double padding      = 10;
+    const double borderRadius = padding;
 
     return Container(
-      padding: const EdgeInsets.all(PADDING),
+      padding: const EdgeInsets.all(padding),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
       ),
