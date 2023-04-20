@@ -127,7 +127,7 @@ Go to [``timer.hep-mh.com``](https://timer.hep-mh.com/) and install the web vers
 
 <summary> <b>Click here to show more installation options</b> </summary><br>
 
-On Chrombooks with Linux support, any of the above Linux variants should also work.
+On Chromebooks with Linux support, any of the above Linux variants should also work.
 
 </details>
 
