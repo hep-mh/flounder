@@ -291,7 +291,7 @@ class FlounderActionBar extends StatelessWidget {
     const double padding = actionBarPadding;
     
     // Adapt the border raduis to the height of the action bar
-    double borderRadius = iconSize/3;
+    double borderRadius = iconSize/4;
 
     return Container(
       padding: const EdgeInsets.all(padding),
