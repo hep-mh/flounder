@@ -72,11 +72,11 @@ class FlounderTimer extends FlounderClock {
 
   @override
   String _getTimerText() {
-    int min = state.timer ~/ 60;
-    int sec = state.timer - min*60;
+    final int min = state.timer ~/ 60;
+    final int sec = state.timer - min*60;
 
-    String minStr = (min < 10) ? '0${min.toString()}' : min.toString();
-    String secStr = (sec < 10) ? '0${sec.toString()}' : sec.toString();
+    final String minStr = (min < 10) ? '0${min.toString()}' : min.toString();
+    final String secStr = (sec < 10) ? '0${sec.toString()}' : sec.toString();
 
     return '$minStr:$secStr';
   }
@@ -97,11 +97,11 @@ class FlounderStopwatch extends FlounderClock {
       inverseTimer = state.timer;
     }
 
-    int min = inverseTimer ~/ 60;
-    int sec = inverseTimer - min*60;
+    final int min = inverseTimer ~/ 60;
+    final int sec = inverseTimer - min*60;
 
-    String minStr = (min < 10) ? '0${min.toString()}' : min.toString();
-    String secStr = (sec < 10) ? '0${sec.toString()}' : sec.toString();
+    final String minStr = (min < 10) ? '0${min.toString()}' : min.toString();
+    final String secStr = (sec < 10) ? '0${sec.toString()}' : sec.toString();
 
     return '$minStr:$secStr';
   }
@@ -115,7 +115,7 @@ class FlounderPip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlounderClock primaryClock = state.timerIsPrimary ? FlounderTimer(state: state) : FlounderStopwatch(state: state);
+    final FlounderClock primaryClock = state.timerIsPrimary ? FlounderTimer(state: state) : FlounderStopwatch(state: state);
 
     // Define the width of the indicator line
     final double indicatorWidth  = 0.4*MediaQuery.of(context).size.width;
@@ -210,8 +210,8 @@ class FlounderBody extends StatelessWidget {
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 1.25
     );
 
-    FlounderClock primaryClock   = state.timerIsPrimary ? FlounderTimer    (state: state) : FlounderStopwatch(state: state);
-    FlounderClock secondaryClock = state.timerIsPrimary ? FlounderStopwatch(state: state) : FlounderTimer    (state: state);
+    final FlounderClock primaryClock   = state.timerIsPrimary ? FlounderTimer    (state: state) : FlounderStopwatch(state: state);
+    final FlounderClock secondaryClock = state.timerIsPrimary ? FlounderStopwatch(state: state) : FlounderTimer    (state: state);
 
     return SafeArea(
       child: Column(
@@ -291,7 +291,7 @@ class FlounderActionBar extends StatelessWidget {
     const double padding = actionBarPadding;
     
     // Adapt the border raduis to the height of the action bar
-    double borderRadius = iconSize/4;
+    final double borderRadius = iconSize/4;
 
     return Container(
       padding: const EdgeInsets.all(padding),
@@ -427,7 +427,7 @@ class FlounderDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> textFieldIds = ['Talk', 'Discussion', 'Reminder@'];
+    const List<String> textFieldIds = ['Talk', 'Discussion', 'Reminder@'];
 
     List<Widget> textFieldWidgets = [];
     // Prepare the different text fields that are used
