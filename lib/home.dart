@@ -24,7 +24,7 @@ class Flounder extends StatelessWidget {
       home: const FlounderHome(),
       theme: ThemeData(
         primaryColor: const Color(0xff1f1f1f),
-        fontFamily: "Roboto"
+        fontFamily: 'Roboto'
       ),
     );
   }
@@ -74,7 +74,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   bool _audioIsPlaying = false;
 
   // The current version of Flounder
-  final String _version = "1.2.3";
+  final String _version = '1.2.3';
 
   // UTILITY FUNCTIONS //////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////

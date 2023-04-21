@@ -34,7 +34,7 @@ class Profile {
   }
 
   static Profile fromString(String? profileStr) {
-    List<String> entries = profileStr!.split("-");
+    List<String> entries = profileStr!.split('-');
 
     int  talkLength       = int.parse(entries[0]);
     int  discussionLength = int.parse(entries[1]);
