@@ -18,7 +18,7 @@ void main() async {
       // Ensure initialization of window_manager
       await windowManager.ensureInitialized();
 
-      WindowOptions windowOptions = const WindowOptions(
+      const WindowOptions windowOptions = WindowOptions(
         title: 'Flounder',
         minimumSize: Size(450, 600)
       );

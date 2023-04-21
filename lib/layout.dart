@@ -11,8 +11,8 @@ const double magicWidth = 700 + 2*bodyPadding;
 
 
 double getDynamicScale(double contextWidth, double contextHeight, [double factor = 1]) {
-  double maxSize = factor*min(40, 0.1*contextHeight);
-  double minSize = maxSize/factor/2;
+  final double maxSize = factor*min(40, 0.1*contextHeight);
+  final double minSize = maxSize/factor/2;
 
   double size = maxSize;
   if ( contextWidth < magicWidth ) {

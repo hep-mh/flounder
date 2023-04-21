@@ -429,7 +429,7 @@ class FlounderDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     const List<String> textFieldIds = ['Talk', 'Discussion', 'Reminder@'];
 
-    List<Widget> textFieldWidgets = [];
+    final List<Widget> textFieldWidgets = [];
     // Prepare the different text fields that are used
     // to get custom input from the user
     for (var id in textFieldIds) {

@@ -34,11 +34,11 @@ class Profile {
   }
 
   static Profile fromString(String? profileStr) {
-    List<String> entries = profileStr!.split('-');
+    final List<String> entries = profileStr!.split('-');
 
-    int  talkLength       = int.parse(entries[0]);
-    int  discussionLength = int.parse(entries[1]);
-    int  reminderAt       = int.parse(entries[2]);
+    final int talkLength       = int.parse(entries[0]);
+    final int discussionLength = int.parse(entries[1]);
+    final int reminderAt       = int.parse(entries[2]);
 
 
     return Profile(talkLength, discussionLength, reminderAt);
@@ -46,18 +46,18 @@ class Profile {
 
   @override
   String toString() {
-    String talkStr       = talkLength.toString();
-    String discussionStr = discussionLength.toString();
-    String reminderStr   = reminderAt.toString();
+    final String talkStr       = talkLength.toString();
+    final String discussionStr = discussionLength.toString();
+    final String reminderStr   = reminderAt.toString();
 
 
     return '$talkStr-$discussionStr-$reminderStr';
   }
 
   String key() {
-    String talkStr       = talkLength.toString();
-    String discussionStr = discussionLength.toString();
-    String reminderStr   = reminderAt.toString();
+    final String talkStr       = talkLength.toString();
+    final String discussionStr = discussionLength.toString();
+    final String reminderStr   = reminderAt.toString();
 
     return '$talkStr+$discussionStr ($reminderStr)';
   }
@@ -146,7 +146,7 @@ class ProfileCollection {
   }
 
   List<String> export() {
-    List<String> exportList = [];
+    final List<String> exportList = [];
 
     // Fill the list with every available profiles
     _data.forEach((_, profile) {

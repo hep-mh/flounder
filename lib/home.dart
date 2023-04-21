@@ -106,9 +106,9 @@ class _FlounderHomeState extends State<FlounderHome> {
   // HELPER FUNCTIONS ///////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   void _updateTextFields([bool onlyIfEmpty = false]) {
-    String talkText       = textFieldControllers['Talk'      ].text;
-    String discussionText = textFieldControllers['Discussion'].text;
-    String reminderText   = textFieldControllers['Reminder@' ].text;
+    final String talkText       = textFieldControllers['Talk'      ].text;
+    final String discussionText = textFieldControllers['Discussion'].text;
+    final String reminderText   = textFieldControllers['Reminder@' ].text;
 
     if (!onlyIfEmpty || talkText == '') {
       textFieldControllers['Talk'].text = state.profile.talkLength.toString();
@@ -306,10 +306,10 @@ class _FlounderHomeState extends State<FlounderHome> {
       setState(() {
         // 1. PRESETS /////////////////////////////////////////////////////////
         if (presetsFromPrefs != null) {
-          ProfileCollection sharedPresets = ProfileCollection();
+          final ProfileCollection sharedPresets = ProfileCollection();
 
           for (var presetStr in presetsFromPrefs) {
-            Profile profile = Profile.fromString(presetStr);
+            final Profile profile = Profile.fromString(presetStr);
             // -->
             sharedPresets.add(profile);
           }
@@ -508,7 +508,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     // Build the PIP_SCREEN /////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
-    Widget pip = Scaffold(
+    final Widget pip = Scaffold(
       backgroundColor: const Color(0xff1f1f1f),
       body: FlounderPip(state: state)
     );
