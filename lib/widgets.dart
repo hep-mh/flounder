@@ -3,26 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'layout.dart';
 import 'state.dart';
-
-
-// ignore: constant_identifier_names
-const double MAGIC_WIDTH = 760;
-
-
-double _getDynamicScale(double contextWidth, double contextHeight, [double factor = 1]) {
-  double maxSize = factor*min(40, 0.1*contextHeight);
-  double minSize = maxSize/factor/2;
-
-  double size = maxSize;
-  if ( contextWidth < MAGIC_WIDTH ) {
-    final double scale = contextWidth/MAGIC_WIDTH;
-
-    size = minSize + (maxSize - minSize)*scale;
-  }
-
-  return size;
-}
 
 
 class FlounderHeader extends StatelessWidget {
@@ -175,7 +157,7 @@ class FlounderBody extends StatelessWidget {
 
   // For now, a constant -- context independent --
   // padding seems to look fine in all conditions
-  final double padding = 30;
+  final double padding = bodyPadding;
 
   const FlounderBody({
     Key? key,
@@ -188,7 +170,7 @@ class FlounderBody extends StatelessWidget {
     final double contextWidth  = MediaQuery.of(context).size.width;
     final double contextHeight = MediaQuery.of(context).size.height;
 
-    final double maxWidth  = MAGIC_WIDTH - 2*padding;
+    final double maxWidth  = magicWidth - 2*padding;
     const double maxHeight = 150;
 
     double width = maxWidth;
@@ -197,7 +179,7 @@ class FlounderBody extends StatelessWidget {
     //       contextWidth - 2*padding
     // if the box covers the full width of the
     // application
-    if ( contextWidth < MAGIC_WIDTH ) {
+    if ( contextWidth < magicWidth ) {
       width = contextWidth - 2*padding;
     }
     // -->
@@ -224,7 +206,7 @@ class FlounderBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double arrowSize = _getDynamicScale(
+    final double arrowSize = getDynamicScale(
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 1.25
     );
 
@@ -300,22 +282,24 @@ class FlounderActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double iconSize = _getDynamicScale(
+    final double iconSize = getDynamicScale(
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height
     );
 
     // For now, a constant -- context independent --
     // padding seems to look fine in all conditions
-    const double padding      = 10;
-    const double borderRadius = padding;
+    const double padding = actionBarPadding;
+    
+    // Adapt the border raduis to the height of the action bar
+    double borderRadius = iconSize/3;
 
     return Container(
       padding: const EdgeInsets.all(padding),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
       ),
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
+        borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
         child: BottomAppBar(
           color: state.mode.color,
           child: Row(
@@ -380,7 +364,7 @@ class FlounderActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double buttonSize = _getDynamicScale(
+    final double buttonSize = getDynamicScale(
       MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 2
     );
 
