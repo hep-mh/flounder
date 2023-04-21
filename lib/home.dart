@@ -418,18 +418,6 @@ class _FlounderHomeState extends State<FlounderHome> {
     super.dispose();
   }
 
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState lifecycleState) {
-  //   if (_pipIsSupported) { // only true if '!kIsWeb && Platform.isAndroid'
-  //     if (lifecycleState == AppLifecycleState.inactive) {
-  //       // Only enable PiP if the timer is currently running
-  //       if (state.mode != ModeRegister.IDLE) {
-  //         _floating.enable();
-  //       }
-  //     }
-  //   }
-  // }
-
   // BUILD FUNCTIONS ////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   void _buildDropdownMenuIfNeeded() {

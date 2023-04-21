@@ -313,7 +313,7 @@ class FlounderActionBar extends StatelessWidget {
                   IconButton(
                     icon: Icon(
                       (state.remindMe == true) ? Icons.notifications_active_outlined
-                                              : Icons.notifications_off_outlined
+                                               : Icons.notifications_off_outlined
                     ),
                     onPressed: onPressedL,
                     iconSize: iconSize,
