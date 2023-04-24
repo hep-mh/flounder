@@ -206,9 +206,7 @@ class FlounderBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double arrowSize = getDynamicScale(
-      MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 1.25
-    );
+    final double arrowSize = getDynamicScale(MediaQuery.of(context).size, 1.25);
 
     final FlounderClock primaryClock   = state.timerIsPrimary ? FlounderTimer    (state: state) : FlounderStopwatch(state: state);
     final FlounderClock secondaryClock = state.timerIsPrimary ? FlounderStopwatch(state: state) : FlounderTimer    (state: state);
@@ -282,9 +280,7 @@ class FlounderActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double iconSize = getDynamicScale(
-      MediaQuery.of(context).size.width, MediaQuery.of(context).size.height
-    );
+    final double iconSize = getDynamicScale(MediaQuery.of(context).size);
 
     // For now, a constant -- context independent --
     // padding seems to look fine in all conditions
@@ -364,9 +360,7 @@ class FlounderActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double buttonSize = getDynamicScale(
-      MediaQuery.of(context).size.width, MediaQuery.of(context).size.height, 2
-    );
+    final double buttonSize = getDynamicScale(MediaQuery.of(context).size, 2);
 
     return SizedBox(
       width: buttonSize, height: buttonSize,

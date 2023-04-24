@@ -10,6 +10,7 @@ import 'package:floating/floating.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock/wakelock.dart';
 
+import 'layout.dart';
 import 'state.dart';
 import 'widgets.dart';
 
@@ -501,9 +502,14 @@ class _FlounderHomeState extends State<FlounderHome> {
       ),
     );
     // If the height of the window is too small, draw nothing instead
-    final double contextHeight = MediaQuery.of(context).size.height;
-    if (contextHeight < 300) {
-      home = const Scaffold(backgroundColor: Color(0xff1f1f1f));
+    final Size contextSize = MediaQuery.of(context).size;
+    if (contextSize.height < minRenderHeight || contextSize.width < minRenderWidth) {
+      home = Scaffold(
+        backgroundColor: Color(0xff1f1f1f),
+        body: (contextSize.shortestSide < indicatorSize ) ?
+            SizedBox.shrink() 
+          : Center(child: Icon(Icons.open_in_full, size: indicatorSize, color: Colors.white)) 
+      );
     }
 
     // Build the PIP_SCREEN /////////////////////////////////////////////////////////////
