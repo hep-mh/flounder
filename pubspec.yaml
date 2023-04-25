@@ -33,18 +33,17 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  
-  msix: ^3.7.0
 
   audioplayers: ^3.0.0
   floating:
     path: ./floating
+  flutter_launcher_icons: ^0.11.0
+  msix: ^3.7.0
   shared_preferences: ^2.0.0
   wakelock: ^0.6.0
   window_manager: ^0.2.0
-
-  flutter_launcher_icons: ^0.11.0
-  cupertino_icons: ^1.0.0
+  
+  #cupertino_icons: ^1.0.0
 
 
 dev_dependencies:
