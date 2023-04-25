@@ -74,6 +74,9 @@ class _FlounderHomeState extends State<FlounderHome> {
   // A flag to check if audio is currently playing
   bool _audioIsPlaying = false;
 
+  // A flag to check whether the state is fully initialized
+  bool _stateIsInitialized = false;
+
   // The current version of Flounder
   final String _version = '1.2.4';
 
@@ -356,6 +359,9 @@ class _FlounderHomeState extends State<FlounderHome> {
 
         // CLEANUP
         _updateTextFields();
+
+        // Mark the state as initialized
+        _stateIsInitialized = true;
       });
 
       t.cancel();
@@ -377,9 +383,6 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     // Check if the current device supports PiP
     Future.wait([_checkAutoPipAvailability()]);
-
-    // Add observer for life-cycle changes to enable PiP on Android
-    //WidgetsBinding.instance.addObserver(this);
 
     // Load the relevant assets and preferences
     Future.wait([
@@ -405,7 +408,6 @@ class _FlounderHomeState extends State<FlounderHome> {
     _runner!.cancel();
 
     // Dispose of the Floating object
-    //WidgetsBinding.instance.removeObserver(this);
     _floating.dispose();
 
     // Dispose of the AudioPlayer
@@ -447,6 +449,13 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   @override
   Widget build(BuildContext context) {
+    // If the state is not yet fully initialized (i.e. the settings have
+    // not yet been read), draw an empty scaffold. This way, the timer
+    // does not jump from 00:00 to its initial value
+    if (!_stateIsInitialized) {
+      return const Scaffold(backgroundColor: Color(0xff1f1f1f));
+    }
+
     _buildDropdownMenuIfNeeded();
 
     // Build the MAIN_SCREEN ////////////////////////////////////////////////////////////
@@ -505,10 +514,10 @@ class _FlounderHomeState extends State<FlounderHome> {
     final Size contextSize = MediaQuery.of(context).size;
     if (contextSize.height < minRenderHeight || contextSize.width < minRenderWidth) {
       home = Scaffold(
-        backgroundColor: Color(0xff1f1f1f),
+        backgroundColor: const Color(0xff1f1f1f),
         body: (contextSize.shortestSide < indicatorSize ) ?
-            SizedBox.shrink() 
-          : Center(child: Icon(Icons.open_in_full, size: indicatorSize, color: Colors.white)) 
+            const SizedBox.shrink() 
+          : const Center(child: Icon(Icons.open_in_full, size: indicatorSize, color: Colors.white)) 
       );
     }
 

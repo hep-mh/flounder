@@ -30,5 +30,8 @@ assets/old/*
 # Certificate files
 *pfx*
 
-# Personal build scrips
-build-main.sh
+# Personal build scripts
+#build-main.sh
+
+# Backup files
+*~
