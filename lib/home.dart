@@ -450,10 +450,10 @@ class _FlounderHomeState extends State<FlounderHome> {
   @override
   Widget build(BuildContext context) {
     // If the state is not yet fully initialized (i.e. the settings have
-    // not yet been read), draw an empty scaffold. This way, the timer
+    // not yet been read), draw an empty container. This way, the timer
     // does not jump from 00:00 to its initial value
     if (!_stateIsInitialized) {
-      return const Scaffold(backgroundColor: Color(0xff1f1f1f));
+      return Container(color: const Color(0xff1f1f1f));
     }
 
     _buildDropdownMenuIfNeeded();
@@ -510,14 +510,15 @@ class _FlounderHomeState extends State<FlounderHome> {
         version: _version
       ),
     );
-    // If the height of the window is too small, draw nothing instead
+    // If the height of the window is too small, draw an empty container instead
+    // (potentially with a resize indicator)
     final Size contextSize = MediaQuery.of(context).size;
     if (contextSize.height < minRenderHeight || contextSize.width < minRenderWidth) {
-      home = Scaffold(
-        backgroundColor: const Color(0xff1f1f1f),
-        body: (contextSize.shortestSide < indicatorSize ) ?
+      home = Container(
+        color: const Color(0xff1f1f1f),
+        child: (contextSize.shortestSide < indicatorSize ) ?
             const SizedBox.shrink() 
-          : const Center(child: Icon(Icons.open_in_full, size: indicatorSize, color: Colors.white)) 
+          : const Center(child: Icon(Icons.open_in_full, size: indicatorSize, color: Colors.white)),
       );
     }
 
