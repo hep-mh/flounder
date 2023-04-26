@@ -514,19 +514,26 @@ class _FlounderHomeState extends State<FlounderHome> {
     // (potentially with a resize indicator)
     final Size contextSize = MediaQuery.of(context).size;
     if (contextSize.height < minRenderHeight || contextSize.width < minRenderWidth) {
-      home = Container(
-        color: const Color(0xff1f1f1f),
-        child: (contextSize.shortestSide < indicatorSize ) ?
-            const SizedBox.shrink() 
-          : const Center(child: Icon(Icons.open_in_full, size: indicatorSize, color: Colors.white)),
-      );
+      if (contextSize.shortestSide < indicatorSize) {
+        home = Container(color: const Color(0xff1f1f1f));
+      } else {
+        home = Container(
+          color: const Color(0xff1f1f1f),
+          child: const Center(
+            child: Icon(
+              Icons.open_in_full,
+              size: indicatorSize,
+              color: Colors.white)
+          ),
+        );
+      }
     }
 
     // Build the PIP_SCREEN /////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
-    final Widget pip = Scaffold(
-      backgroundColor: const Color(0xff1f1f1f),
-      body: FlounderPip(state: state)
+    final Widget pip = Material(
+      color: const Color(0xff1f1f1f),
+      child: FlounderPip(state: state)
     );
 
     // RETURN ///////////////////////////////////////////////////////////////////////////
