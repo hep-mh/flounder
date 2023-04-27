@@ -1,5 +1,7 @@
 #! /usr/bin/bash
 
+set -e
+
 echo "Choose what to build:"
 build_types=$(gum choose --no-limit --selected=web,linux,android 'clean' 'icons' 'web' 'linux' 'android')
 

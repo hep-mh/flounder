@@ -1,4 +1,4 @@
-flutter build windows --release
+flutter build windows --release --no-tree-shake-icons
 
 # Create a .zip file and save it in the packages\ directory
 Write-Output "Packaging application as .zip..."

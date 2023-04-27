@@ -11,3 +11,6 @@ for size in $(echo "16 32 64 128 256")
 do
     convert assets/desktop-icon.png -resize ${size}x${size} linux/debian/flounder/usr/share/icons/hicolor/${size}x${size}/apps/flounder.png
 done
+
+# Exit
+exit 0

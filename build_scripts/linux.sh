@@ -5,7 +5,10 @@ function check_success {
 }
 
 echo -ne "\n\e[38;5;220m• Building Linux app •\e[0m\r"
-flutter build linux --release
+flutter build linux --release --no-tree-shake-icons
+
+# Exit if the build failed
+if [ $? -ne 0 ]; then exit 1; fi
 
 # Create a .tar.gz file and save it in the packages/ directory
 echo -ne "Packaging application as .tar.gz...  "
@@ -26,3 +29,6 @@ check_success
 echo -ne "Packaging application as .deb...     "
 ./build_scripts/pack/deb.sh > build/deb.log 2>&1
 check_success
+
+# Exit
+exit 0

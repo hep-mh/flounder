@@ -9,3 +9,6 @@ rm -f packages/flounder-latest-*
 flutter pub get
 
 echo
+
+# Exit
+exit 0
