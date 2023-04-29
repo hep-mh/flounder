@@ -131,11 +131,13 @@ On Chromebooks with Linux support, any of the above Linux variants should also w
 
 </details>
 
-### • **macOS / iOS** •
+### • **macOS** •
 
-Currently, there do not exist any builds for macOS and iOS, as I lack access to a macOS device, which is needed to build for these platforms. There might be a native version for macOS in the future, but since Apple does not allow sideloading on iOS (and I will not pay the money to upload it to the App Store), the future looks a lot less promising for iOS.
+Coming soon...
 
-*However, even on these platforms, you can always use the web version.*
+### • **iOS/iPadOS** •
+
+Since Apple currently does not allow sideloading on iOS (and I will not pay the money to upload it to the App Store), it does not make sense to provide a native iOS/iPadOS version here. Hence, on these platforms its best to use the web version. **Note however, that on these platforms, sound does not currently seem to work.**
 
 Alternatively, you can, of course, always build it yourself!
 
