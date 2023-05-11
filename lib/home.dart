@@ -88,8 +88,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     _audioIsPlaying = true;
 
-    await _player.play( AssetSource('ding.wav') );
-    //await _player.resume();
+    await _player.play( AssetSource('ding.mp3') );
   }
 
   void _toggleWakelock(bool enable) {
@@ -281,11 +280,6 @@ class _FlounderHomeState extends State<FlounderHome> {
   // INIT & DISPOSE FUNCTIONS ///////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   Future<void> _loadSoundAssets() async {
-    //await _player.setReleaseMode(ReleaseMode.stop);
-    //await _player.setPlayerMode(PlayerMode.lowLatency);
-
-    //await _player.setSourceAsset('ding.wav');
-
     _player.onPlayerComplete.listen((event) {
       _audioIsPlaying = false;
     });
@@ -513,8 +507,8 @@ class _FlounderHomeState extends State<FlounderHome> {
     // If the height of the window is too small, draw an empty container instead
     // (potentially with a resize indicator)
     final Size contextSize = MediaQuery.of(context).size;
-    if (contextSize.height < minRenderHeight || contextSize.width < minRenderWidth) {
-      if (contextSize.shortestSide < indicatorSize) {
+    if (contextSize.height < minRenderHeight) { // || contextSize.width < minRenderWidth) {
+      if (contextSize.height < indicatorSize) {
         home = Container(color: const Color(0xff1f1f1f));
       } else {
         home = Container(
