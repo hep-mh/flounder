@@ -34,12 +34,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-  audioplayers: ^4.0.0
+  audioplayers: ^5.1.0
   floating:
     path: ./floating
   flutter_launcher_icons: ^0.13.0
-  msix: ^3.11.0
-  shared_preferences: ^2.0.0
+  msix: ^3.16.0
+  shared_preferences: ^2.2.0
   wakelock: ^0.6.0
   window_manager: ^0.3.0
   
@@ -55,7 +55,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 
-flutter_icons:
+flutter_launcher_icons:
   android: true
   image_path_android: "assets/android-icon.png"
   adaptive_icon_foreground: "assets/android-icon.png"
@@ -73,8 +73,6 @@ flutter_icons:
     generate: true
     image_path: "assets/desktop-icon.png"
     icon_size: 48
-  macos:
-    generate: false
 
 
 msix_config:
