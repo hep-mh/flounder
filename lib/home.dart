@@ -25,6 +25,11 @@ class Flounder extends StatelessWidget {
       home: const FlounderHome(),
       theme: ThemeData(
         primaryColor: const Color(0xff1f1f1f),
+        textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: Colors.white,
+            selectionColor: Colors.grey,
+            selectionHandleColor: Colors.grey,
+        ),
         fontFamily: 'Roboto'
       ),
     );
@@ -78,7 +83,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   bool _stateIsInitialized = false;
 
   // The current version of Flounder
-  final String _version = '1.2.4';
+  final String _version = '1.3.0';
 
   // UTILITY FUNCTIONS //////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////

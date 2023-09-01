@@ -291,12 +291,10 @@ class FlounderActionBar extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(padding),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-      ),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-        child: BottomAppBar(
+        child: Container(
+          padding: const EdgeInsets.all(5),
           color: state.mode.color,
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -313,6 +311,7 @@ class FlounderActionBar extends StatelessWidget {
                     ),
                     onPressed: onPressedL,
                     iconSize: iconSize,
+                    color: Colors.black,
                   ),
                   SizedBox(width: iconSize/4),
                   Text(
@@ -365,9 +364,7 @@ class FlounderActionButton extends StatelessWidget {
     return SizedBox(
       width: buttonSize, height: buttonSize,
       child: FloatingActionButton(
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.all(Radius.circular(15))
-        // ),
+        shape: const CircleBorder(),
         onPressed: onPressed,
         backgroundColor: state.mode.color,
         child: Icon(
@@ -507,7 +504,7 @@ class FlounderDrawer extends StatelessWidget {
             Container(
               padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
               child: ElevatedButton.icon(
-                icon: const Icon(Icons.save),
+                icon: const Icon(Icons.save, color: Colors.white),
                 label: const Text('Save as preset', style: TextStyle(fontSize: 22, color: Colors.white)),
                 onPressed: onSaveButtonPressed,
                 style: ButtonStyle(
