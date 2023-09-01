@@ -294,7 +294,8 @@ class FlounderActionBar extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
         child: Container(
-          padding: const EdgeInsets.all(5),
+          // Add a small padding to obtain a better look
+          padding: const EdgeInsets.all(2),
           color: state.mode.color,
           child: Row(
             mainAxisSize: MainAxisSize.max,
