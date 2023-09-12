@@ -247,12 +247,12 @@ class FlounderActionBar extends StatelessWidget {
     final double borderRadius = iconSize/3;
 
     // Check wether to print the full text in the action bar
-    final int rightStrLength = state.profile.talkLength.toString().length + state.profile.discussionLength.toString().length;
+    final int rightStrLength = ( state.profile.talkLength.toString() + state.profile.discussionLength.toString() ).length;
 
     final double freeSpace = MediaQuery.of(context).size.width/2 - iconSize - actionBarPadding;
     final double rightStrSize = 0.8*(rightStrLength+5)*fontSize;
-    // ATTENTION: This is a heuristic formula, which seems to
-    // work fine for all reasonable scenarios, i.e. times
+    // ATTENTION: This is a heuristic relation, which seems
+    // to work fine for all reasonable scenarios / times
     // -->
     final bool trimRightStr = (freeSpace < rightStrSize);
 
