@@ -164,7 +164,6 @@ class FlounderBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final double iconSize = getClockSwitcherScale( MediaQuery.of(context).size );
     // -->
-    final double clockSize = iconSize + 10;
     final double slpashRadius = iconSize/2;
 
     final FlounderClock primaryClock   = state.timerIsPrimary ? FlounderTimer    (state: state) : FlounderStopwatch(state: state);
@@ -198,11 +197,12 @@ class FlounderBody extends StatelessWidget {
                       MouseRegion(cursor: SystemMouseCursors.click, child: GestureDetector(
                         onTap: onSecondaryClockPressed,
                         child: state.showSecondaryClock ?
-                                 SizedBox(height: clockSize, child: secondaryClock) : const SizedBox.shrink()
+                                 SizedBox(height: iconSize, child: secondaryClock) : const SizedBox.shrink()
                       )),
                       // 4. The ICON_BUTTON to show/hide the secondary timer ////////////
                       ///////////////////////////////////////////////////////////////////
                       IconButton(
+                        padding: const EdgeInsets.all(0),
                         icon: Icon(
                           state.showSecondaryClock ? Icons.arrow_right_rounded : Icons.arrow_left_rounded,
                           color: Colors.white
@@ -247,7 +247,7 @@ class FlounderActionBar extends StatelessWidget {
     final double borderRadius = iconSize/3;
 
     return Container(
-      padding: const EdgeInsets.all(actionBarPadding),
+      padding: const EdgeInsets.fromLTRB(actionBarPadding, 0, actionBarPadding, actionBarPadding),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
         child: Container(
