@@ -18,7 +18,7 @@ pubspec.lock
 
 .flutter-plugins*
 
-# Data create by flatpak-builder
+# Data created by flatpak-builder
 .flatpak-builder/*
 
 # Compiled packages
@@ -29,9 +29,6 @@ assets/old/*
 
 # Certificate files
 *pfx*
-
-# Personal build scripts
-#build-main.sh
 
 # Backup files
 *~
