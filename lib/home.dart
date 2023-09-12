@@ -218,7 +218,7 @@ class _FlounderHomeState extends State<FlounderHome> {
       _updateTextFields();
     });
 
-    _prefs!.setString('activeDropdownValue', dropdownValue);
+    /**/ _prefs!.setString('activeDropdownValue', dropdownValue);
   }
 
   void _onDeleteButtonPressed() {
@@ -242,6 +242,8 @@ class _FlounderHomeState extends State<FlounderHome> {
     });
 
     _prefs!.setStringList('presets', state.presets.export());
+
+    /**/ _prefs!.setString('activeDropdownValue', dropdownValue);
   }
 
   void _onAnyTextFieldChanged(String? id, String? text) {
@@ -268,6 +270,10 @@ class _FlounderHomeState extends State<FlounderHome> {
         /**/ dropdownValue = 'Custom';
       }
     });
+
+    if ( dropdownValue != 'Custom' ) {
+      /**/ _prefs!.setString('activeDropdownValue', dropdownValue);
+    }
   }
 
   void _onSaveButtonPressed() {
@@ -280,6 +286,8 @@ class _FlounderHomeState extends State<FlounderHome> {
     });
 
     _prefs!.setStringList('presets', state.presets.export());
+
+    /**/ _prefs!.setString('activeDropdownValue', dropdownValue);
   }
 
   // INIT & DISPOSE FUNCTIONS ///////////////////////////////////////////////////////////
@@ -353,7 +361,7 @@ class _FlounderHomeState extends State<FlounderHome> {
             state.reset();
 
             /**/ dropdownValue = state.profile.key();
-          }
+          } // else do nothing, e.g. if 'Custom'
         }
 
         // CLEANUP
