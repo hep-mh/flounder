@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -155,10 +153,6 @@ class FlounderBody extends StatelessWidget {
   final VoidCallback onArrowButtonPressed;
   final VoidCallback onSecondaryClockPressed;
 
-  // For now, a constant -- context independent --
-  // padding seems to look fine in all conditions
-  final double padding = bodyPadding;
-
   const FlounderBody({
     Key? key,
     required this.state,
@@ -166,47 +160,12 @@ class FlounderBody extends StatelessWidget {
     required this.onSecondaryClockPressed
   }) : super(key: key);
 
-  Size _getHeaderSize(BuildContext context) {
-    final double contextWidth  = MediaQuery.of(context).size.width;
-    final double contextHeight = MediaQuery.of(context).size.height;
-
-    final double maxWidth  = magicWidth - 2*padding;
-    const double maxHeight = 150;
-
-    double width = maxWidth;
-    // The width needs to be adapted according
-    // to the contextWidth. Hence, set width to
-    //       contextWidth - 2*padding
-    // if the box covers the full width of the
-    // application
-    if ( contextWidth < magicWidth ) {
-      width = contextWidth - 2*padding;
-    }
-    // -->
-    final double widthRatio = width/maxWidth;
-
-    // The height needs to be adjusted according
-    // to the contextHeight. Here, we force the
-    // header to cover at most 20% of the full
-    // height of the window
-    double height = min(maxHeight, 0.2*contextHeight);
-    // -->
-    final double heightRatio = height/maxHeight;
-
-    // Adjust height/width in such a way that the
-    // ratio remains constant
-    if ( widthRatio < heightRatio ) {
-      height = widthRatio*maxHeight;
-    } else {
-      width  = heightRatio*maxWidth;
-    }
-
-    return Size(width, height);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final double arrowSize = getDynamicScale(MediaQuery.of(context).size, 1.25);
+    final double iconSize = getClockSwitcherScale( MediaQuery.of(context).size );
+    // -->
+    final double clockSize = iconSize + 10;
+    final double slpashRadius = iconSize/2;
 
     final FlounderClock primaryClock   = state.timerIsPrimary ? FlounderTimer    (state: state) : FlounderStopwatch(state: state);
     final FlounderClock secondaryClock = state.timerIsPrimary ? FlounderStopwatch(state: state) : FlounderTimer    (state: state);
@@ -215,16 +174,16 @@ class FlounderBody extends StatelessWidget {
       child: Column(
         children: [
           Center(child: Padding(
-            padding: EdgeInsets.fromLTRB(padding, padding, padding, 0),
+            padding: const EdgeInsets.fromLTRB(headerPadding, headerPadding, headerPadding, 0),
             // 1. The FLOUNDER_HEADER displaying the current mode ///////////////////////
             /////////////////////////////////////////////////////////////////////////////
-            child: FlounderHeader(state: state, size: _getHeaderSize(context)),
+            child: FlounderHeader(state: state, size: getHeaderSize( MediaQuery.of(context).size )),
           )),
           Expanded(
             child: Stack(
               children: [
                 Center(child: Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: const EdgeInsets.fromLTRB(bodyPaddingLR, bodyPaddingTB, bodyPaddingLR, bodyPaddingTB),
                   // 2. The primary instance of FLOUNDER_CLOCK /////////////////////////
                   ///////////////////////////////////////////////////////////////////////
                   child: primaryClock
@@ -239,7 +198,7 @@ class FlounderBody extends StatelessWidget {
                       MouseRegion(cursor: SystemMouseCursors.click, child: GestureDetector(
                         onTap: onSecondaryClockPressed,
                         child: state.showSecondaryClock ?
-                                 SizedBox(height: arrowSize+10, child: secondaryClock) : const SizedBox.shrink()
+                                 SizedBox(height: clockSize, child: secondaryClock) : const SizedBox.shrink()
                       )),
                       // 4. The ICON_BUTTON to show/hide the secondary timer ////////////
                       ///////////////////////////////////////////////////////////////////
@@ -248,9 +207,9 @@ class FlounderBody extends StatelessWidget {
                           state.showSecondaryClock ? Icons.arrow_right_rounded : Icons.arrow_left_rounded,
                           color: Colors.white
                         ),
-                        splashRadius: arrowSize/2,
+                        splashRadius: slpashRadius,
                         onPressed: onArrowButtonPressed,
-                        iconSize: arrowSize
+                        iconSize: iconSize
                       )
                     ]
                   )
@@ -280,22 +239,19 @@ class FlounderActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double iconSize = getDynamicScale(MediaQuery.of(context).size);
-
-    // For now, a constant -- context independent --
-    // padding seems to look fine in all conditions
-    const double padding = actionBarPadding;
-    
+    final double height = getActionBarHeight( MediaQuery.of(context).size );
     // -->
-    final double borderRadius = iconSize/4;
+    final double iconSize = 0.6*height;
+    final double fontSize = 0.5*height;
+    // -->
+    final double borderRadius = iconSize/3;
 
     return Container(
-      padding: const EdgeInsets.all(padding),
+      padding: const EdgeInsets.all(actionBarPadding),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
         child: Container(
-          // Add a small padding to obtain a better look
-          padding: const EdgeInsets.all(2),
+          height: height,
           color: state.mode.color,
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -314,10 +270,10 @@ class FlounderActionBar extends StatelessWidget {
                     iconSize: iconSize,
                     color: Colors.black,
                   ),
-                  SizedBox(width: iconSize/4),
+                  const SizedBox(width: actionBarPadding),
                   Text(
                     '${state.profile.reminderAt.toString()} min',
-                    style: TextStyle(fontSize: 0.75*iconSize)
+                    style: TextStyle(fontSize: fontSize)
                   ),
                 ],
               ),
@@ -327,9 +283,9 @@ class FlounderActionBar extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     '${state.profile.talkLength.toString()}+${state.profile.discussionLength.toString()} min',
-                    style: TextStyle(fontSize: 0.75*iconSize)
+                    style: TextStyle(fontSize: fontSize)
                   ),
-                  SizedBox(width: iconSize/4),
+                  const SizedBox(width: actionBarPadding),
                   IconButton(
                     icon: const Icon(Icons.access_time_rounded),
                     onPressed: onPressedR,
@@ -360,7 +316,9 @@ class FlounderActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double buttonSize = getDynamicScale(MediaQuery.of(context).size, 2);
+    final double buttonSize = getActionButtonScale( MediaQuery.of(context).size );
+    // -->
+    final double iconSize = 0.6*buttonSize;
 
     return SizedBox(
       width: buttonSize, height: buttonSize,
@@ -371,7 +329,7 @@ class FlounderActionButton extends StatelessWidget {
         child: Icon(
           (state.mode.id == 'Idle') ? Icons.play_arrow_rounded : Icons.sync_rounded,
           color: Colors.black,
-          size: 0.6*buttonSize,
+          size: iconSize,
         )
       )
     );
