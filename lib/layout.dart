@@ -8,10 +8,6 @@ const double minRenderWidth  = 300;
 const double minRenderHeight = 200;
 
 
-// The size of the resize indicator
-const double indicatorSize   = 70;
-
-
 // FLOUNDER_HEADER //////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 
@@ -92,6 +88,7 @@ double _getDynamicScale(Size contextSize, double maxSize, double maxSizePct, [do
   // of the total height of the window
   return min(maxSizebyWidth, maxSizePct*contextHeight);
 }
+
 
 // FLOUNDER_BODY ////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
