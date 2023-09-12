@@ -3,9 +3,9 @@ import 'dart:ui';
 
 
 // The minimal width that is used to render the UI
-const double minRenderWidth  = 400;
+const double minRenderWidth  = 300;
 // The minimal width that is used to render the UI
-const double minRenderHeight = 300;
+const double minRenderHeight = 200;
 
 
 // The size of the resize indicator
@@ -71,19 +71,19 @@ const double magicWidth = headerMaxWidth + 2*headerPadding;
 // -->
 // Function to dynamically calculate the
 // scale of various widgets in the tree
-double _getDynamicScale(Size contextSize, double maxSize, double maxSizePct) {
+double _getDynamicScale(Size contextSize, double maxSize, double maxSizePct, [double a = 0.5]) {
   final double contextWidth  = contextSize.width;
   final double contextHeight = contextSize.height;
 
   // Adapt the height to the width of the
   // context. Here, we vary the height
-  // between maxHeight and maxHeight/2
+  // between maxHeight and a*maxHeight
   // depending on the width of the context
   double maxSizebyWidth = maxSize;
   if (contextWidth < magicWidth) {
     final double scaling = contextWidth/magicWidth;
 
-    maxSizebyWidth *= (scaling + 1)/2; // between 0.5 and 1
+    maxSizebyWidth *= a + (1-a)*scaling;
   }
 
   // Adapt the height to the height of the
@@ -141,7 +141,7 @@ double getActionButtonScale(Size contextSize) {
 // FLOUNDER_CLOCK_SWITCHER /////////////////////////////////////////
 
 // The maximal scale of the clock switcher
-const double clockSwitcherMaxScale    = 70;
+const double clockSwitcherMaxScale    = 75;
 // The maximal scale of the clock switcher
 // (in percent of the total height)
 const double clockSwitcherMaxScalePct = 0.1;
@@ -149,5 +149,5 @@ const double clockSwitcherMaxScalePct = 0.1;
 // Function to dynamically calculate the
 // ~width of the clock switcher
 double getClockSwitcherScale(Size contextSize) {
-  return _getDynamicScale(contextSize, clockSwitcherMaxScale, clockSwitcherMaxScalePct);
+  return _getDynamicScale(contextSize, clockSwitcherMaxScale, clockSwitcherMaxScalePct, 0.3);
 }

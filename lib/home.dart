@@ -457,6 +457,13 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     _buildDropdownMenuIfNeeded();
 
+    // Build the PIP_SCREEN /////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    final Widget pip = Material(
+      color: const Color(0xff1f1f1f),
+      child: FlounderPip(state: state)
+    );
+
     // Build the MAIN_SCREEN ////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     Widget home = Scaffold(
@@ -509,31 +516,13 @@ class _FlounderHomeState extends State<FlounderHome> {
         version: _version
       ),
     );
+
     // If the height of the window is too small, draw an empty container instead
     // (potentially with a resize indicator)
     final Size contextSize = MediaQuery.of(context).size;
-    if (contextSize.height < minRenderHeight) { // || contextSize.width < minRenderWidth) {
-      if (contextSize.height < indicatorSize) {
-        home = Container(color: const Color(0xff1f1f1f));
-      } else {
-        home = Container(
-          color: const Color(0xff1f1f1f),
-          child: const Center(
-            child: Icon(
-              Icons.open_in_full,
-              size: indicatorSize,
-              color: Colors.white)
-          ),
-        );
-      }
+    if (contextSize.height < minRenderHeight || contextSize.width < minRenderWidth) {
+      home = Container(color: const Color(0xff1f1f1f));
     }
-
-    // Build the PIP_SCREEN /////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////
-    final Widget pip = Material(
-      color: const Color(0xff1f1f1f),
-      child: FlounderPip(state: state)
-    );
 
     // RETURN ///////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////

@@ -246,6 +246,16 @@ class FlounderActionBar extends StatelessWidget {
     // -->
     final double borderRadius = iconSize/3;
 
+    // Check wether to print the full text in the action bar
+    final int rightStrLength = state.profile.talkLength.toString().length + state.profile.discussionLength.toString().length;
+
+    final double freeSpace = MediaQuery.of(context).size.width/2 - iconSize - actionBarPadding;
+    final double rightStrSize = 0.8*(rightStrLength+5)*fontSize;
+    // ATTENTION: This is a heuristic formula, which seems to
+    // work fine for all reasonable scenarios, i.e. times
+    // -->
+    final bool trimRightStr = (freeSpace < rightStrSize);
+
     return Container(
       padding: const EdgeInsets.fromLTRB(actionBarPadding, 0, actionBarPadding, actionBarPadding),
       child: ClipRRect(
@@ -270,7 +280,6 @@ class FlounderActionBar extends StatelessWidget {
                     iconSize: iconSize,
                     color: Colors.black,
                   ),
-                  const SizedBox(width: actionBarPadding),
                   Text(
                     '${state.profile.reminderAt.toString()} min',
                     style: TextStyle(fontSize: fontSize)
@@ -282,10 +291,11 @@ class FlounderActionBar extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Text(
+                    trimRightStr ? 
+                    '${state.profile.talkLength.toString()} min' :
                     '${state.profile.talkLength.toString()}+${state.profile.discussionLength.toString()} min',
                     style: TextStyle(fontSize: fontSize)
                   ),
-                  const SizedBox(width: actionBarPadding),
                   IconButton(
                     icon: const Icon(Icons.access_time_rounded),
                     onPressed: onPressedR,
