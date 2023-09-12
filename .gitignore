@@ -32,3 +32,6 @@ assets/old/*
 
 # Backup files
 *~
+
+# Private files
+PREFS

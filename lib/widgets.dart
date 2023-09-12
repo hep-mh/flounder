@@ -394,6 +394,9 @@ class FlounderDrawer extends StatelessWidget {
     // to get custom input from the user
     for (var id in textFieldIds) {
       textFieldWidgets.add(
+        const SizedBox(height: 15)
+      );
+      textFieldWidgets.add(
         Focus(
           onFocusChange: onAnyTextFieldFocusChanged,
           skipTraversal: true,
@@ -432,10 +435,9 @@ class FlounderDrawer extends StatelessWidget {
       backgroundColor: const Color(0xff1f1f1f),
       child: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(drawerPadding),
           children: <Widget>[
             Text('Presets:', style: TextStyle(fontSize: 35, color: state.mode.color)),
-            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -462,9 +464,8 @@ class FlounderDrawer extends StatelessWidget {
                 )
               ]
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: drawerPadding),
             Text('Custom:', style: TextStyle(fontSize: 35, color: state.mode.color)),
-            const SizedBox(height: 15),
             // 3. The TEXT_FORM_FIELD's to capture user input ///////////////////////////
             /////////////////////////////////////////////////////////////////////////////
             ...textFieldWidgets,
@@ -485,13 +486,15 @@ class FlounderDrawer extends StatelessWidget {
                 ),
               )
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: drawerPadding),
             // 5. The TEXT to show the current version ////////////////////////////////
             ///////////////////////////////////////////////////////////////////////////
             Align(
               alignment: Alignment.centerRight,
               child: Text('v$version', style: const TextStyle(fontSize: 15, color: Colors.white))
-            )
+            ),
+            // Enable overscrolling
+            SizedBox(height: MediaQuery.of(context).size.height)
           ]
         )
       )

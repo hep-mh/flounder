@@ -148,3 +148,9 @@ const double clockSwitcherMaxScalePct = 0.1;
 double getClockSwitcherScale(Size contextSize) {
   return _getDynamicScale(contextSize, clockSwitcherMaxScale, clockSwitcherMaxScalePct, 0.3);
 }
+
+
+// FLOUNDER_DRAWER //////////////////////////////////////////////////
+
+// The padding that is used for the drawer
+const double drawerPadding = 20;
