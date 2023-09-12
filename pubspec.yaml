@@ -20,14 +20,24 @@ flutter:
   fonts:
     - family: Roboto
       fonts:
-        - asset: assets/fonts/roboto/Roboto-Light.ttf
+        - asset: assets/fonts/Roboto/Roboto-Light.ttf
           weight: 300
-        - asset: assets/fonts/roboto/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
           weight: 400
-        - asset: assets/fonts/roboto/Roboto-Medium.ttf
+        - asset: assets/fonts/Roboto/Roboto-Medium.ttf
           weight: 500
-        - asset: assets/fonts/roboto/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
           weight: 700
+    # - family: Roboto Mono
+    #   fonts:
+    #     - asset: assets/fonts/RobotoMono/RobotoMono-Light.ttf
+    #       weight: 300
+    #     - asset: assets/fonts/RobotoMono/RobotoMono-Regular.ttf
+    #       weight: 400
+    #     - asset: assets/fonts/RobotoMono/RobotoMono-Medium.ttf
+    #       weight: 500
+    #     - asset: assets/fonts/RobotoMono/RobotoMono-Bold.ttf
+    #       weight: 700
 
 
 dependencies:
