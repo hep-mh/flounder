@@ -162,9 +162,12 @@ class FlounderBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double iconSize = getClockSwitcherScale( MediaQuery.of(context).size );
-    // -->
-    final double slpashRadius = iconSize/2;
+    final Size contextSize = MediaQuery.of(context).size;
+
+    final double clockSwitcherHeight = getClockSwitcherHeight(contextSize);
+    
+    // Here, height = width of the IconButton object
+    final double clockSwitcherMaxTextWidth = contextSize.width/2 - getActionButtonRadius(contextSize) - clockSwitcherHeight - 10;
 
     final FlounderClock primaryClock   = state.timerIsPrimary ? FlounderTimer    (state: state) : FlounderStopwatch(state: state);
     final FlounderClock secondaryClock = state.timerIsPrimary ? FlounderStopwatch(state: state) : FlounderTimer    (state: state);
@@ -176,7 +179,7 @@ class FlounderBody extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(headerPadding, headerPadding, headerPadding, 0),
             // 1. The FLOUNDER_HEADER displaying the current mode ///////////////////////
             /////////////////////////////////////////////////////////////////////////////
-            child: FlounderHeader(state: state, size: getHeaderSize( MediaQuery.of(context).size )),
+            child: FlounderHeader(state: state, size: getHeaderSize(contextSize)),
           )),
           Expanded(
             child: Stack(
@@ -196,20 +199,37 @@ class FlounderBody extends StatelessWidget {
                       ///////////////////////////////////////////////////////////////////
                       MouseRegion(cursor: SystemMouseCursors.click, child: GestureDetector(
                         onTap: onSecondaryClockPressed,
-                        child: state.showSecondaryClock ?
-                                 SizedBox(height: iconSize, child: secondaryClock) : const SizedBox.shrink()
+                        child: Builder(
+                          builder: (context) {
+                            if (!state.showSecondaryClock) return const SizedBox.shrink();
+
+                            return SizedBox(
+                              height: clockSwitcherHeight,
+                              width: clockSwitcherMaxTextWidth,
+                              child: FittedBox(
+                                fit: BoxFit.contain,
+                                alignment: Alignment.centerRight,
+                                child: secondaryClock
+                              )
+                            );
+                          }
+                        )
                       )),
                       // 4. The ICON_BUTTON to show/hide the secondary timer ////////////
                       ///////////////////////////////////////////////////////////////////
-                      IconButton(
-                        padding: const EdgeInsets.all(0),
-                        icon: Icon(
-                          state.showSecondaryClock ? Icons.arrow_right_rounded : Icons.arrow_left_rounded,
-                          color: Colors.white
-                        ),
-                        splashRadius: slpashRadius,
-                        onPressed: onArrowButtonPressed,
-                        iconSize: iconSize
+                      SizedBox(
+                        height: clockSwitcherHeight,
+                        width: clockSwitcherHeight,
+                        child: FittedBox(
+                          fit: BoxFit.fitHeight,
+                          child: IconButton(
+                            icon: Icon(
+                              state.showSecondaryClock ? Icons.arrow_right_rounded : Icons.arrow_left_rounded,
+                              color: Colors.white
+                            ),
+                            onPressed: onArrowButtonPressed
+                          )
+                        )
                       )
                     ]
                   )
@@ -246,7 +266,7 @@ class FlounderActionBar extends StatelessWidget {
     final double borderRadius = height/5;
 
     // Here, height = width of the IconButton object
-    final double maxTextWidth = contextSize.width/2 - actionBarPadding - getActionButtonRadius(contextSize) - height;
+    final double maxTextWidth = contextSize.width/2 - actionBarPadding - getActionButtonRadius(contextSize) - height - 10;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(actionBarPadding, 0, actionBarPadding, actionBarPadding),

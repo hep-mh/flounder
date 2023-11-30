@@ -137,16 +137,16 @@ double getActionButtonRadius(Size contextSize) {
 
 // FLOUNDER_CLOCK_SWITCHER /////////////////////////////////////////
 
-// The maximal scale of the clock switcher
-const double clockSwitcherMaxScale    = 75;
-// The maximal scale of the clock switcher
+// The maximal height of the clock switcher
+const double clockSwitcherMaxHeight    = 75;
+// The maximal height of the clock switcher
 // (in percent of the total height)
-const double clockSwitcherMaxScalePct = 0.1;
+const double clockSwitcherMaxHeightPct = 0.1;
 
 // Function to dynamically calculate the
-// ~width of the clock switcher
-double getClockSwitcherScale(Size contextSize) {
-  return _getDynamicScale(contextSize, clockSwitcherMaxScale, clockSwitcherMaxScalePct, 0.3);
+// height of the clock switcher
+double getClockSwitcherHeight(Size contextSize) {
+  return _getDynamicScale(contextSize, clockSwitcherMaxHeight, clockSwitcherMaxHeightPct);
 }
 
 
