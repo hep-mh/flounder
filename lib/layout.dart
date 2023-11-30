@@ -4,7 +4,7 @@ import 'dart:ui';
 
 // The minimal width that is used to render the UI
 const double minRenderWidth  = 300;
-// The minimal width that is used to render the UI
+// The minimal height that is used to render the UI
 const double minRenderHeight = 200;
 
 
