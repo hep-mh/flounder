@@ -245,8 +245,8 @@ class FlounderActionBar extends StatelessWidget {
     // -->
     final double borderRadius = height/5;
 
-    // Here height = width of the IconButton object
-    final double maxTextWidth = contextSize.width/2 - actionBarPadding - getActionButtonScale(contextSize)/2 - height;
+    // Here, height = width of the IconButton object
+    final double maxTextWidth = contextSize.width/2 - actionBarPadding - getActionButtonRadius(contextSize) - height;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(actionBarPadding, 0, actionBarPadding, actionBarPadding),
@@ -332,7 +332,8 @@ class FlounderActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double buttonSize = getActionButtonScale( MediaQuery.of(context).size );
+    // Here, size = diameter = 2*radius
+    final double buttonSize = 2*getActionButtonRadius( MediaQuery.of(context).size );
     // -->
     final double iconSize = 0.6*buttonSize;
 

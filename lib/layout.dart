@@ -121,17 +121,17 @@ double getActionBarHeight(Size contextSize) {
 
 // FLOUNDER_ACTION_BUTTON ///////////////////////////////////////////
 
-// The maximal scale of the action button
-const double actionButtonMaxScale    = 80;
-// The maximal scale of the actiom button
+// The maximal raduis of the action button
+const double actionButtonMaxRadius    = 40;
+// The maximal raduis of the actiom button
 // (in percent of the total height)
-const double actionButtonMaxScalePct = 0.2;
+const double actionButtonMaxRadiusPct = 0.1;
 
 
 // Function to dynamically calculate the
-// height = width of the action button
-double getActionButtonScale(Size contextSize) {
-  return _getDynamicScale(contextSize, actionButtonMaxScale, actionButtonMaxScalePct);
+// raduis of the action button
+double getActionButtonRadius(Size contextSize) {
+  return _getDynamicScale(contextSize, actionButtonMaxRadius, actionButtonMaxRadiusPct);
 }
 
 
