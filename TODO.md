@@ -1,6 +1,11 @@
 # TODO
 
 - Open git issue for Linux error / Try to fix
-- Reimplement the action bar to better adapt to different screen sizes (user header as a reference)
 - Reimplement the drawer to better adapt to different screen sizes
-- Fix AppImage errors/warnings
+
+
+
+# KNOWN ISSUES
+
+- On iOS and iPadOS, when using the web app, no sound is played
+- On Android, when using the web app, the devices is not prevented from sleeping

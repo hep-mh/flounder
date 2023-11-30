@@ -96,7 +96,7 @@ double _getDynamicScale(Size contextSize, double maxSize, double maxSizePct, [do
 // The left and right padding that is
 // used for the body
 const double bodyPaddingLR = headerPadding;
-// The top and bottom pading that is
+// The top and bottom padding that is
 // used for the body
 const double bodyPaddingTB = 15;
 
@@ -121,9 +121,9 @@ double getActionBarHeight(Size contextSize) {
 
 // FLOUNDER_ACTION_BUTTON ///////////////////////////////////////////
 
-// The maximal raduis of the action button
+// The maximal radius of the action button
 const double actionButtonMaxRadius    = 40;
-// The maximal raduis of the actiom button
+// The maximal radius of the actiom button
 // (in percent of the total height)
 const double actionButtonMaxRadiusPct = 0.1;
 
