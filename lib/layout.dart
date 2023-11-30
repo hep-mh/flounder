@@ -98,7 +98,7 @@ double _getDynamicScale(Size contextSize, double maxSize, double maxSizePct, [do
 const double bodyPaddingLR = headerPadding;
 // The top and bottom pading that is
 // used for the body
-const double bodyPaddingTB = 15;//headerPadding;
+const double bodyPaddingTB = 15;
 
 
 // FLOUNDER_ACTION_BAR //////////////////////////////////////////////

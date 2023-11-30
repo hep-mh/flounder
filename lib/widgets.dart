@@ -239,27 +239,15 @@ class FlounderActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double height = getActionBarHeight( MediaQuery.of(context).size );
+    final double height     = getActionBarHeight( MediaQuery.of(context).size );
+    final double buttonSize = getActionButtonScale( MediaQuery.of(context).size );
     // -->
-    final double iconSize = 0.6*height;
-    final double fontSize = 0.5*height;
-    // -->
-    final double borderRadius = iconSize/3;
-
-    // Check wether to print the full text in the action bar
-    final int rightStrLength = ( state.profile.talkLength.toString() + state.profile.discussionLength.toString() ).length;
-
-    final double freeSpace = MediaQuery.of(context).size.width/2 - iconSize - actionBarPadding;
-    final double rightStrSize = 0.8*(rightStrLength+5)*fontSize;
-    // ATTENTION: This is a heuristic relation, which seems
-    // to work fine for all reasonable scenarios / times
-    // -->
-    final bool trimRightStr = (freeSpace < rightStrSize);
+    final double maxTextWidth = MediaQuery.of(context).size.width/2 - actionBarPadding - buttonSize/2 - height;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(actionBarPadding, 0, actionBarPadding, actionBarPadding),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+        borderRadius: BorderRadius.all(Radius.circular(height/5)),
         child: Container(
           height: height,
           color: state.mode.color,
@@ -271,38 +259,52 @@ class FlounderActionBar extends StatelessWidget {
               ///////////////////////////////////////////////////////////////////////////////
               Row(
                 children: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      (state.remindMe == true) ? Icons.notifications_active_outlined
-                                               : Icons.notifications_off_outlined
-                    ),
-                    onPressed: onPressedL,
-                    iconSize: iconSize,
-                    color: Colors.black,
+                  SizedBox(height: height, width: height,
+                    child: FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: IconButton(
+                        icon: Icon(
+                          (state.remindMe == true) ? Icons.notifications_active_outlined
+                                                   : Icons.notifications_off_outlined
+                        ),
+                        onPressed: onPressedL,
+                        color: Colors.black,
+                      )
+                    )
                   ),
-                  Text(
-                    '${state.profile.reminderAt.toString()} min',
-                    style: TextStyle(fontSize: fontSize)
-                  ),
-                ],
+                  SizedBox(height: height/1.5, width: maxTextWidth,
+                    child: FittedBox(
+                      alignment: Alignment.centerLeft,
+                      fit: BoxFit.contain,
+                      child: Text('${state.profile.reminderAt.toString()} min',)
+                    )
+                  )
+                ]
               ),
               // 2. Right ICON_BUTTON ///////////////////////////////////////////////////////
               ///////////////////////////////////////////////////////////////////////////////
               Row(
                 children: <Widget>[
-                  Text(
-                    trimRightStr ? 
-                    '${state.profile.talkLength.toString()} min' :
-                    '${state.profile.talkLength.toString()}+${state.profile.discussionLength.toString()} min',
-                    style: TextStyle(fontSize: fontSize)
+                  SizedBox(height: height/1.5, width: maxTextWidth,
+                    child: FittedBox(
+                      alignment: Alignment.centerRight,
+                      fit: BoxFit.contain,
+                      child: Text('${state.profile.talkLength.toString()}+${state.profile.discussionLength.toString()} min')
+                    )
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.access_time_rounded),
-                    onPressed: onPressedR,
-                    iconSize: iconSize,
-                    color: (state.mode.id == 'Idle') ? Colors.black : const Color(0x2b2b2bff),
-                  ),
-                ],
+                  SizedBox(
+                    height: height,
+                    width: height,
+                    child: FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: IconButton(
+                        icon: const Icon(Icons.access_time_rounded),
+                        onPressed: onPressedR,
+                        color: (state.mode.id == 'Idle') ? Colors.black : const Color(0x2b2b2bff),
+                      )
+                    )
+                  )
+                ]
               )
             ]
           )

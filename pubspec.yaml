@@ -44,7 +44,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  audioplayers: ^5.1.0
+  audioplayers: ^5.2.0
   floating:
     path: ./floating
   flutter_launcher_icons: ^0.13.0
