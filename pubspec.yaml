@@ -90,7 +90,7 @@ msix_config:
   display_name: Flounder
   publisher_display_name: Marco Hufnagel
   identity_name: com.hepmh.Flounder
-  msix_version: 1.2.4.0
+  msix_version: 1.3.0.0
   logo_path: .\assets\desktop-icon.png
   #
   output_path: packages
