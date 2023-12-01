@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:floating/floating.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -69,6 +70,10 @@ class _FlounderHomeState extends State<FlounderHome> {
   // user-defined presets
   SharedPreferences? _prefs;
 
+  // The PackageInfo object to extract the
+  // current Flounder version
+  PackageInfo? _packageInfo;
+
   // The Floating object to enable PiP on Android
   final Floating _floating = Floating();
   // A flag to store whether the device supports (automatic) PiP
@@ -83,7 +88,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   bool _stateIsInitialized = false;
 
   // The current version of Flounder
-  final String _version = '1.3.0';
+  String _version = '0.0.0';
 
   // UTILITY FUNCTIONS //////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
@@ -374,6 +379,9 @@ class _FlounderHomeState extends State<FlounderHome> {
   }
 
   Future<void> _loadPackageInfo() async {
+    _packageInfo = await PackageInfo.fromPlatform();
+
+    _version = _packageInfo!.version;
   }
 
   Future<void> _checkAutoPipAvailability() async {
