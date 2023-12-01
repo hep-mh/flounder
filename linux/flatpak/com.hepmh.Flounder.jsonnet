@@ -12,7 +12,8 @@ local base_dir = "../..";
     "--socket=fallback-x11",
     "--socket=wayland",
     "--socket=pulseaudio",
-    "--device=dri"
+    "--device=dri",
+    "--talk-name=org.freedesktop.ScreenSaver"
   ],
   "modules": [
     {
