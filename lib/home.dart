@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:floating/floating.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'layout.dart';
 import 'state.dart';
@@ -74,7 +74,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   // A flag to store whether the device supports (automatic) PiP
   bool _pipIsSupported = false;
 
-  // The AudioPlayer to play the reminder sound
+  // The AudioPlayer object to play the reminder sound
   final AudioPlayer _player = AudioPlayer();
   // A flag to check if audio is currently playing
   bool _audioIsPlaying = false;
@@ -93,16 +93,12 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     _audioIsPlaying = true;
 
-    await _player.play( AssetSource('ding.mp3') );
+    //await _player.play( AssetSource('ding.mp3') );
+    await _player.resume();
   }
 
   void _toggleWakelock(bool enable) {
-    if (kIsWeb) {
-      Wakelock.toggle(enable: enable);
-    } else {
-      // Wacklock currently does not work on Linux desktop
-      if (!Platform.isLinux) { Wakelock.toggle(enable: enable); }
-    }
+    WakelockPlus.toggle(enable: enable);
   }
 
   void _toggleAutoPip(bool enable) {
@@ -293,6 +289,8 @@ class _FlounderHomeState extends State<FlounderHome> {
   // INIT & DISPOSE FUNCTIONS ///////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   Future<void> _loadSoundAssets() async {
+     await _player.setSource(AssetSource('ding.mp3'));
+
     _player.onPlayerComplete.listen((event) {
       _audioIsPlaying = false;
     });

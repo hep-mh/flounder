@@ -50,7 +50,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.0
   msix: ^3.16.0
   shared_preferences: ^2.2.0
-  wakelock: ^0.6.0
+  wakelock_plus: ^1.1.0
   window_manager: ^0.3.0
   
   # The following adds the Cupertino Icons font to your application.
