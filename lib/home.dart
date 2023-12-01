@@ -87,8 +87,9 @@ class _FlounderHomeState extends State<FlounderHome> {
   // A flag to check whether the state is fully initialized
   bool _stateIsInitialized = false;
 
-  // The current version of Flounder
-  String _version = '0.0.0';
+  // The current version of Flounder, which will be
+  // dynamically changed later
+  String _version = '1.0.0';
 
   // UTILITY FUNCTIONS //////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
