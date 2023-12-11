@@ -75,7 +75,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   bool _pipIsSupported = false;
 
   // The AudioPlayer object to play the reminder sound
-  final AudioPlayer _player = AudioPlayer();
+  final AudioPlayer _player = AudioPlayer()..setReleaseMode(ReleaseMode.stop);
   // A flag to check if audio is currently playing
   bool _audioIsPlaying = false;
 
@@ -94,8 +94,8 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     _audioIsPlaying = true;
 
-    //await _player.play( AssetSource('ding.mp3') );
-    await _player.resume();
+    await _player.stop();
+    await _player.play( AssetSource('ding.mp3') );
   }
 
   void _toggleWakelock(bool enable) {
@@ -290,8 +290,6 @@ class _FlounderHomeState extends State<FlounderHome> {
   // INIT & DISPOSE FUNCTIONS ///////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   Future<void> _loadSoundAssets() async {
-     await _player.setSource(AssetSource('ding.mp3'));
-
     _player.onPlayerComplete.listen((event) {
       _audioIsPlaying = false;
     });
