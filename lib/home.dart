@@ -74,28 +74,64 @@ class _FlounderHomeState extends State<FlounderHome> {
   // A flag to store whether the device supports (automatic) PiP
   bool _pipIsSupported = false;
 
+  // The Timer object driving the sound loop
+  Timer? _soundLoop;
   // The AudioPlayer object to play the reminder sound
   final AudioPlayer _player = AudioPlayer()..setReleaseMode(ReleaseMode.stop);
-  // A flag to check if audio is currently playing
+  // A flag to check if the actual sound is currently playing
   bool _audioIsPlaying = false;
+  // A flag to check if the sound loop is currently running
+  bool _soundIsLooping = false;
 
   // A flag to check whether the state is fully initialized
   bool _stateIsInitialized = false;
 
-  // The current version of Flounder, which will be
-  // dynamically changed later
+  // The current version of Flounder
   final String _version = '1.3.0';
 
   // UTILITY FUNCTIONS //////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
+  Future<void> _startSoundLoop() async {
+    // Only start if not already looping
+    if (_soundIsLooping) return;
+
+    _soundIsLooping = true;
+
+    await _player.play( AssetSource('ding.mp3') );
+
+    // Loop back to the beginning every second,
+    // unless the actual audio should be played
+    _soundLoop = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      if (!_audioIsPlaying) {
+        _player.seek(Duration(seconds: 0));
+      }
+    });
+  }
+
+  Future<void> _breakSoundLoop() async {
+    // Only break if looping
+    if (!_soundIsLooping) return;
+
+    _player.stop();
+
+    _soundLoop!.cancel();
+
+    _soundIsLooping = false;
+  }
+
   Future<void> _playSound() async {
     // Only play if not already playing
     if (_audioIsPlaying) return;
 
     _audioIsPlaying = true;
 
-    await _player.stop();
-    await _player.play( AssetSource('ding.mp3') );
+    // Jump to the actual sound
+    await _player.seek(Duration(seconds: 5));
+
+    // Wait for 3 seconds before resuming the loop
+    Future.delayed(Duration(seconds: 3), () {
+      _audioIsPlaying = false;
+    });
   }
 
   void _toggleWakelock(bool enable) {
@@ -151,6 +187,9 @@ class _FlounderHomeState extends State<FlounderHome> {
 
         state.mode = ModeRegister.TALK;
 
+        // Start the sound loop...
+        _startSoundLoop();
+        // ...as well as the timer
         _runner = Timer.periodic(const Duration(seconds: 1), (Timer t) {
           setState(() {
             // Check if a reminder needs to be given
@@ -183,6 +222,9 @@ class _FlounderHomeState extends State<FlounderHome> {
         });
       // STOP THE TIMER WHEN RUNNING
       } else {
+        // Break the sound loop when the timer is stopped
+        _breakSoundLoop();
+
         // Disable the wakelock when the timer is stopped
         _toggleWakelock(false);
         // Disable automatic PiP mode when the timer is stopped
@@ -290,9 +332,9 @@ class _FlounderHomeState extends State<FlounderHome> {
   // INIT & DISPOSE FUNCTIONS ///////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   Future<void> _loadSoundAssets() async {
-    _player.onPlayerComplete.listen((event) {
-      _audioIsPlaying = false;
-    });
+    // _player.onPlayerComplete.listen((event) {
+    //   _audioIsPlaying = false;
+    // });
   }
   
   Future<void> _loadPreferences() async {
