@@ -16,6 +16,7 @@ flutter:
 
   assets:
     - assets/ding.mp3
+    - assets/silence.mp3
   
   fonts:
     - family: Roboto
