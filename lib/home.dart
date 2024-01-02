@@ -10,6 +10,7 @@ import 'package:floating/floating.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+import 'audio.dart';
 import 'layout.dart';
 import 'state.dart';
 import 'widgets.dart';
@@ -77,7 +78,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   // The Timer object driving the sound loop
   Timer? _soundLoop;
   // The AudioPlayer object to play the reminder sound
-  final AudioPlayer _player = AudioPlayer()..setReleaseMode(ReleaseMode.stop);
+  final AudioPlayer _player = AudioPlayer();
   // A flag to check if the actual sound is currently playing
   bool _audioIsPlaying = false;
   // A flag to check if the sound loop is currently running
@@ -103,7 +104,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     // unless the actual audio should be played
     _soundLoop = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       if (!_audioIsPlaying) {
-        _player.seek(Duration(seconds: 0));
+        _player.seek(const Duration(seconds: 0));
       }
     });
   }
@@ -112,10 +113,12 @@ class _FlounderHomeState extends State<FlounderHome> {
     // Only break if looping
     if (!_soundIsLooping) return;
 
-    _player.stop();
+    await _player.release();
+    // -->
+    _audioIsPlaying = false;
 
-    _soundLoop!.cancel();
-
+    _soundLoop?.cancel();
+    // -->
     _soundIsLooping = false;
   }
 
@@ -125,13 +128,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     _audioIsPlaying = true;
 
-    // Jump to the actual sound
-    await _player.seek(Duration(seconds: 5));
-
-    // Wait for 3 seconds before resuming the loop
-    Future.delayed(Duration(seconds: 3), () {
-      _audioIsPlaying = false;
-    });
+    await _player.seek(const Duration(seconds: audioPadding));
   }
 
   void _toggleWakelock(bool enable) {
@@ -233,7 +230,7 @@ class _FlounderHomeState extends State<FlounderHome> {
         state.mode = ModeRegister.IDLE;
         state.reset();
 
-        _runner!.cancel();
+        _runner?.cancel();
       }
     });
   }
@@ -332,9 +329,11 @@ class _FlounderHomeState extends State<FlounderHome> {
   // INIT & DISPOSE FUNCTIONS ///////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   Future<void> _loadSoundAssets() async {
-    // _player.onPlayerComplete.listen((event) {
-    //   _audioIsPlaying = false;
-    // });
+    _player.onPositionChanged.listen((Duration position) {
+      if (position.inSeconds > audioPadding + soundLength) {
+        _audioIsPlaying = false;
+      }
+    });
   }
   
   Future<void> _loadPreferences() async {
@@ -427,14 +426,11 @@ class _FlounderHomeState extends State<FlounderHome> {
   void initState() {
     super.initState();
 
-    // Check if the current device supports PiP
-    Future.wait([_checkAutoPipAvailability()]);
-
-    // Load the relevant assets and preferences
     Future.wait([
       _loadSoundAssets(),
       _loadPreferences(),
-      _loadPackageInfo()
+      _loadPackageInfo(),
+      _checkAutoPipAvailability(),
     ]);
 
     // Ensure that the navigation bar has a matching color on
