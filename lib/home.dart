@@ -88,7 +88,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   bool _stateIsInitialized = false;
 
   // The current version of Flounder
-  final String _version = '1.3.0';
+  final String _version = '1.3.0 [dev]';
 
   // UTILITY FUNCTIONS //////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
@@ -328,9 +328,11 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   // INIT & DISPOSE FUNCTIONS ///////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
-  Future<void> _loadSoundAssets() async {
-    _player.onPositionChanged.listen((Duration position) {
-      if (position.inSeconds > audioPadding + soundLength) {
+  Future<void> _initAudioPlayer() async {
+    _player.onPositionChanged.listen((Duration duration) {
+      final int position = duration.inSeconds;
+
+      if (position > audioPadding + soundLength) {
         _audioIsPlaying = false;
       }
     });
@@ -427,7 +429,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     super.initState();
 
     Future.wait([
-      _loadSoundAssets(),
+      _initAudioPlayer(),
       _loadPreferences(),
       _loadPackageInfo(),
       _checkAutoPipAvailability(),
