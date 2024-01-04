@@ -75,7 +75,7 @@ flutter_launcher_icons:
     icon_size: 48
   macos:
     generate: true
-    image_path: "assets/desktop-icon.png"
+    image_path: "assets/macos-icon.png"
 
 
 msix_config:
