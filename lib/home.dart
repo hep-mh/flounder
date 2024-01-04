@@ -88,7 +88,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   bool _stateIsInitialized = false;
 
   // The current version of Flounder
-  final String _version = '1.3.0 [dev]';
+  final String _version = '1.3.0';
 
   // UTILITY FUNCTIONS //////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
