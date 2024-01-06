@@ -3,4 +3,4 @@ $publisher = Get-Content .\windows\msix\pfx_publisher -Raw
 $passwd    = Get-Content .\windows\msix\pfx_passwd    -Raw
 
 # Create the package
-flutter pub run msix:create --publisher $publisher --certificate-password $passwd
+dart run msix:create --publisher $publisher --certificate-password $passwd
