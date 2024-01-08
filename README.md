@@ -19,10 +19,17 @@ Home Page                                              |  Drawer
 Note that presets are persistent and do not get reset upon closing the application.
 
 
-## Known issues!
+## Known issues
 
 * On Gecko-based browsers (like Firefox), the application does not prevent the system from going to sleep. When using such a browser, make sure to manually block sleep and screen locking.
-* On weak hardware (as tested on a 7-year old iMac with i3 processor), the timer might become slighly inaccurate over time. However, the difference is usually only a few seconds.
+* When using the web version on weak hardware (as tested on a 7-year old iMac with i3 processor), the timer might become slighly inaccurate over time. However, the difference is usually only a few seconds.
+
+
+## Notable changes
+
+v1.3.0
+
+* New sound system: Sound now also plays on browsers that block auto-play, e.g. on WebKit-based browsers including **any browser on iOS**.
 
 
 ## How to install?
@@ -51,7 +58,7 @@ The ``.apk`` file for **arm | arm64 | x86_64 Android** can be downloaded from [h
 
 A ``.flatpak`` file for **arbitrary x86_64 Linux systems** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-linux-x86_64.flatpak). After downloading, first install the flatpak for the Freedesktop platform via the command (also make sure that flatpak is correctly configured on your system. For more information, check [https://flatpak.org/setup/](https://flatpak.org/setup/).)
 ```
-flatpak install org.freedesktop.Platform/x86_64/22.08
+flatpak install org.freedesktop.Platform/x86_64/23.08
 ```
 Afterwards, the previously downloaded package can be installed at user-level via
 ```
@@ -126,6 +133,8 @@ A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloa
 </details>
 
 ### • **macOS** •
+
+<img src="https://hep-mh.com/files/mimetypes/application-x-apple-app.png" alt="msix" width="70"/>
 
 A ``.app`` file for **x86_64 macOS** (**arm64 macOS** is also supported via emulation) can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-macos-x86_64.app). After downloading, double-click the file to start the application. For better integration with your system, you can rename the file to ``Flounder.app`` and move it to your ``Applications\`` folder.
 
