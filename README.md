@@ -134,7 +134,7 @@ A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloa
 
 ### • **macOS** •
 
-<img src="https://hep-mh.com/files/mimetypes/application-vnd.app.png" alt="app" width="70"/>
+<img src="https://hep-mh.com/files/mimetypes/application-vnd.app.png" alt="app" width="75"/>
 
 A ``.app`` file for **x86_64 macOS** (**arm64 macOS** is also supported via emulation) can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-macos-x86_64.app). After downloading, double-click the file to start the application. For better integration with your system, you can rename the file to ``Flounder.app`` and move it to your ``Applications\`` folder.
 
