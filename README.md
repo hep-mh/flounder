@@ -19,6 +19,12 @@ Home Page                                              |  Drawer
 Note that presets are persistent and do not get reset upon closing the application.
 
 
+## Known issues!
+
+* On Gecko-based browsers (like Firefox), the application does not prevent the system from going to sleep. When using such a browser, make sure to manually block sleep and screen locking.
+* On weak hardware (as tested on a 7-year old iMac with i3 processor), the timer might become slighly inaccurate over time. However, the difference is usually only a few seconds.
+
+
 ## How to install?
 
 ### • **Web** •
@@ -119,6 +125,11 @@ A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloa
 
 </details>
 
+### • **macOS** •
+
+A ``.app`` file for **x86_64 macOS** (**arm64 macOS** is also supported via emulation) can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-macos-x86_64.app). After downloading, double-click the file to start the application. For better integration with your system, you can rename the file to ``Flounder.app`` and move it to your ``Applications\`` folder.
+
+
 ### • **ChromeOS** •
 
 Go to [``timer.hep-mh.com``](https://timer.hep-mh.com/) and install the web version as a PWA (Progressive Web App) by clicking on the installation button in the right corner of the URL input field.
@@ -131,13 +142,9 @@ On Chromebooks with Linux support, any of the above Linux variants should also w
 
 </details>
 
-### • **macOS** •
-
-Coming soon...
-
 ### • **iOS/iPadOS** •
 
-Since Apple currently does not allow sideloading on iOS (and I will not pay the money to upload it to the App Store), it does not make sense to provide a native iOS/iPadOS version here. Hence, on these platforms its best to use the web version. **Note however, that on these platforms, sound does not currently seem to work.**
+Since Apple currently does not allow sideloading on iOS (and I will not pay the money to upload it to the App Store), it does not make sense to provide a native iOS/iPadOS version here. Hence, on these platforms its best to use the web version.
 
 Alternatively, you can, of course, always build it yourself!
 

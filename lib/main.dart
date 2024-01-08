@@ -20,7 +20,6 @@ void main() async {
 
       const WindowOptions windowOptions = WindowOptions(
         title: 'Flounder',
-        //size: Size(1200, 700),
         minimumSize: Size(400, 500)
       );
 
