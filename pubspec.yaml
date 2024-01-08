@@ -81,3 +81,4 @@ msix_config:
   output_name: flounder-latest-windows-x86_64
   architecture: x64
   build_windows: false
+  languages: en-us
