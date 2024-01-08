@@ -89,10 +89,9 @@ msix_config:
   output_name: flounder-latest-windows-x86_64
   architecture: x64
   build_windows: false
-  #
-  certificate_path: .\MSIX.pfx
-  sign_msix: true
-  install_certificate: true
+  #certificate_path: .\MSIX.pfx
+  #sign_msix: true
+  #install_certificate: true
 
 
 # flutter_native_splash:
