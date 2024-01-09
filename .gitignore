@@ -4,8 +4,10 @@
 .dart_tool/
 .packages
 build/
+
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
+Podfile.lock
 
 # Avoid committing generated Javascript files:
 *.dart.js
@@ -24,14 +26,11 @@ pubspec.lock
 # Compiled packages
 packages/*
 
+# macOS specific files
+.DS_Store
+
 # Old data
 assets/old/*
 
-# Certificate files
-*pfx*
-
 # Backup files
 *~
-
-# Private files
-PREFS
