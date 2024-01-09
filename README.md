@@ -116,7 +116,7 @@ into your terminal.
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-msix.png" alt="msix" width="70"/>
 
-A modern installer for **x86_64 Windows** in ``.msix`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-windows-x86_64.msix). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
+A modern installer for **x86_64 Windows** (or **arm64 Windows** via emulation) in ``.msix`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-windows-x86_64.msix). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
 
 <details>
 
@@ -136,12 +136,12 @@ A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloa
 
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.apple-app.png" alt="app" width="70"/>
 
-A ``.app`` file for **x86_64 macOS** (**arm64 macOS** is also supported via emulation) can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-macos-x86_64.app). After downloading, double-click the file to start the application. For better integration with your system, you can rename the file to ``Flounder.app`` and move it to your ``Applications\`` folder.
+A ``.app`` file for **x86_64 macOS** (or **arm64 macOS** via emulation) can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/flounder-latest-macos-x86_64.app). After downloading, double-click the file to start the application. For better integration with your system, you can rename the file to ``Flounder.app`` and move it to your ``Applications`` folder.
 
 
 ### • **ChromeOS** •
 
-Go to [``timer.hep-mh.com``](https://timer.hep-mh.com/) and install the web version as a PWA (Progressive Web App) by clicking on the installation button in the right corner of the URL input field.
+Visit [``timer.hep-mh.com``](https://timer.hep-mh.com/) and install the web version as a PWA (Progressive Web App) by clicking on the installation button in the right corner of the URL input field. Afterwards, the application can be started from your launcher.
 
 <details>
 
