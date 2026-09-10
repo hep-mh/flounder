@@ -414,6 +414,11 @@ class FlounderDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size contextSize = MediaQuery.of(context).size;
+    // -->
+    final double drawerWidth = getDrawerWidth(contextSize);
+    final double drawerScale = getDrawerScale(contextSize);
+
     const List<String> textFieldIds = ['Talk', 'Discussion', 'Reminder@'];
 
     final List<Widget> textFieldWidgets = [];
@@ -421,7 +426,7 @@ class FlounderDrawer extends StatelessWidget {
     // to get custom input from the user
     for (var id in textFieldIds) {
       textFieldWidgets.add(
-        const SizedBox(height: 15)
+        SizedBox(height: 15 * drawerScale)
       );
       textFieldWidgets.add(
         Focus(
@@ -429,7 +434,7 @@ class FlounderDrawer extends StatelessWidget {
           skipTraversal: true,
           child: TextFormField(
             controller: textFieldControllers[id],
-            style: const TextStyle(fontSize: 25, color: Colors.white),
+            style: TextStyle(fontSize: 25 * drawerScale, color: Colors.white),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
@@ -438,15 +443,19 @@ class FlounderDrawer extends StatelessWidget {
             decoration: InputDecoration(
               border: const UnderlineInputBorder(),
               labelText: id,
-              labelStyle: const TextStyle(fontSize: 20, color: Colors.white),
+              labelStyle: TextStyle(fontSize: 20 * drawerScale, color: Colors.white),
               suffixText: 'min',
-              suffixStyle: const TextStyle(fontSize: 25, color: Colors.white),
+              suffixStyle: TextStyle(fontSize: 25 * drawerScale, color: Colors.white),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 8 * drawerScale,
+                horizontal: 12 * drawerScale
+              ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10 * drawerScale),
                 borderSide: BorderSide(color: state.mode.color, width: 1),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10 * drawerScale),
                 borderSide: const BorderSide(color: Colors.white, width: 1),
               ),
             ),
@@ -454,17 +463,31 @@ class FlounderDrawer extends StatelessWidget {
         )
       );
       textFieldWidgets.add(
-        const SizedBox(height: 15)
+        SizedBox(height: 15 * drawerScale)
       );
     }
 
+    final scaledDropdownItems = dropdownItems.map((item) {
+      return DropdownMenuItem<String>(
+        value: item.value,
+        enabled: item.enabled,
+        onTap: item.onTap,
+        alignment: item.alignment,
+        child: DefaultTextStyle(
+          style: TextStyle(color: Colors.white, fontSize: 25 * drawerScale),
+          child: Text(item.value ?? ''),
+        ),
+      );
+    }).toList();
+
     return Drawer(
+      width: drawerWidth,
       backgroundColor: const Color(0xff1f1f1f),
       child: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.all(drawerPadding),
+          padding: EdgeInsets.all(drawerPadding * drawerScale),
           children: <Widget>[
-            Text('Presets:', style: TextStyle(fontSize: 35, color: state.mode.color)),
+            Text('Presets:', style: TextStyle(fontSize: 35 * drawerScale, color: state.mode.color)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -475,50 +498,51 @@ class FlounderDrawer extends StatelessWidget {
                     underline: Container(height: 0, color: state.mode.color),
                     isExpanded: true,
                     value: dropdownValue,
-                    items: dropdownItems,
+                    items: scaledDropdownItems,
                     dropdownColor: state.mode.color,
                     onChanged: onDropdownValueChanged,
-                    style: const TextStyle(color: Colors.black, fontSize: 25),
+                    iconSize: 24 * drawerScale,
+                    style: TextStyle(color: Colors.black, fontSize: 25 * drawerScale),
                   ),
                 ),
                 // 2. The ICON_BUTTON to delete the active preset ///////////////////////
                 /////////////////////////////////////////////////////////////////////////
                 IconButton(
-                  icon: const Icon(Icons.delete),
+                  icon: Icon(Icons.delete, size: 24 * drawerScale),
                   color: Colors.white,
-                  splashRadius: 17,
+                  splashRadius: 17 * drawerScale,
                   onPressed: onDeleteButtonPressed,
                 )
               ]
             ),
-            const SizedBox(height: drawerPadding),
-            Text('Custom:', style: TextStyle(fontSize: 35, color: state.mode.color)),
+            SizedBox(height: drawerPadding * drawerScale),
+            Text('Custom:', style: TextStyle(fontSize: 35 * drawerScale, color: state.mode.color)),
             // 3. The TEXT_FORM_FIELD's to capture user input ///////////////////////////
             /////////////////////////////////////////////////////////////////////////////
             ...textFieldWidgets,
             // 4. The ELEVATED_BUTTON to save the current preset ////////////////////////
             /////////////////////////////////////////////////////////////////////////////
             Container(
-              padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+              padding: EdgeInsets.fromLTRB(25 * drawerScale, 0, 25 * drawerScale, 0),
               child: ElevatedButton.icon(
-                icon: const Icon(Icons.save, color: Colors.white),
-                label: const Text('Save as preset', style: TextStyle(fontSize: 22, color: Colors.white)),
+                icon: Icon(Icons.save, color: Colors.white, size: 24 * drawerScale),
+                label: Text('Save as preset', style: TextStyle(fontSize: 22 * drawerScale, color: Colors.white)),
                 onPressed: onSaveButtonPressed,
                 style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(15)),
+                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15 * drawerScale)),
                   backgroundColor: MaterialStateProperty.all<Color>(state.mode.color),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(color: state.mode.color)),
+                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10 * drawerScale), side: BorderSide(color: state.mode.color)),
                   ),
                 ),
               )
             ),
-            const SizedBox(height: drawerPadding),
+            SizedBox(height: drawerPadding * drawerScale),
             // 5. The TEXT to show the current version ////////////////////////////////
             ///////////////////////////////////////////////////////////////////////////
             Align(
               alignment: Alignment.centerRight,
-              child: Text('v$version', style: const TextStyle(fontSize: 15, color: Colors.white))
+              child: Text('v$version', style: TextStyle(fontSize: 15 * drawerScale, color: Colors.white))
             ),
             // Enable overscrolling
             SizedBox(height: MediaQuery.of(context).size.height)

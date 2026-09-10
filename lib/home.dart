@@ -479,7 +479,7 @@ class _FlounderHomeState extends State<FlounderHome> {
       dropdownItems.add(
         DropdownMenuItem<String>(
           value: key,
-          child: Text(key, style: const TextStyle(color: Colors.white)),
+          child: Text(''),
         )
       );
     }

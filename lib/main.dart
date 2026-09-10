@@ -20,7 +20,7 @@ void main() async {
 
       const WindowOptions windowOptions = WindowOptions(
         title: 'Flounder',
-        minimumSize: Size(400, 500)
+        minimumSize: Size(400, 550)
       );
 
       windowManager.waitUntilReadyToShow(windowOptions, () async {
