@@ -1,7 +1,9 @@
 # TODO
 
-- Reimplement the drawer to better adapt to different screen sizes
+- rebuild the platform folders
+- test the new drawer design on different android form factors
+- test accessibility settings
 
 # KNOWN ISSUES
 
-- When using Firefox, the device is not prevented from sleeping. Please use a Chromium-based browser.
+- The device is not prevented from sleeping when using firefox
