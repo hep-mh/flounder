@@ -167,6 +167,22 @@ class _FlounderHomeState extends State<FlounderHome> {
     _prefs!.setBool('showSecondaryClock', state.showSecondaryClock);
   }
 
+  void _onPrimaryClockPressed() {
+    if (state.mode.id != 'Idle') {
+      setState(() {
+        state.isPaused = true;
+      });
+    }
+  }
+
+  void _onPrimaryClockReleased() {
+    if (state.isPaused) {
+      setState(() {
+        state.isPaused = false;
+      });
+    }
+  }
+
   void _onSecondaryClockPressed() {
     setState(() { state.timerIsPrimary = !state.timerIsPrimary;});
 
@@ -189,6 +205,8 @@ class _FlounderHomeState extends State<FlounderHome> {
         // ...as well as the timer
         _runner = Timer.periodic(const Duration(seconds: 1), (Timer t) {
           setState(() {
+            if (state.isPaused) return;
+
             // Check if a reminder needs to be given
             if ( state.timer == state.profile.reminderAt*60 ) {
               if ( state.remindMe && state.mode.id == 'Talk' ) { _playSound(); }
@@ -520,6 +538,8 @@ class _FlounderHomeState extends State<FlounderHome> {
       body: FlounderBody(
         state: state,
         onArrowButtonPressed: _onArrowButtonPressed,
+        onPrimaryClockPressed: _onPrimaryClockPressed,
+        onPrimaryClockReleased: _onPrimaryClockReleased,
         onSecondaryClockPressed: _onSecondaryClockPressed
       ),
       // 2. FLOUNDER_ACTION_BAR /////////////////////////////////////////////////////////
