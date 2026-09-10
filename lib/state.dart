@@ -170,6 +170,9 @@ class ApplicationState {
   // The main timer that keeps track of the remaining time
   int timer = 0;
 
+  // A flag to determine whether the timer is currently paused
+  bool isPaused = false;
+
   // The current mode, i.e. either IDLE, TALK, DISCUSSION or OVERTIME
   Mode mode = ModeRegister.IDLE;
 
@@ -190,14 +193,6 @@ class ApplicationState {
   // A flag to determine which clock is the primary one
   bool timerIsPrimary = true;
 
-  // GLOBAL KEYS //////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////////////////
-  // A list of global keys for different objects
-  // Map keys = {
-  //   'timer' : GlobalKey(),
-  //   'stopw' : GlobalKey()
-  // }; 
-
   // MEMBER FUNCTIONS /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
   ApplicationState();
@@ -205,5 +200,7 @@ class ApplicationState {
 
   void reset() {
     timer = profile.talkLength*60;
+
+    isPaused = false;
   }
 }

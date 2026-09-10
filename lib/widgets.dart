@@ -151,12 +151,16 @@ class FlounderBody extends StatelessWidget {
   final ApplicationState state;
 
   final VoidCallback onArrowButtonPressed;
+  final VoidCallback onPrimaryClockPressed;
+  final VoidCallback onPrimaryClockReleased;
   final VoidCallback onSecondaryClockPressed;
 
   const FlounderBody({
     Key? key,
     required this.state,
     required this.onArrowButtonPressed,
+    required this.onPrimaryClockPressed,
+    required this.onPrimaryClockReleased,
     required this.onSecondaryClockPressed
   }) : super(key: key);
 
@@ -188,7 +192,14 @@ class FlounderBody extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(bodyPaddingLR, bodyPaddingTB, bodyPaddingLR, bodyPaddingTB),
                   // 2. The primary instance of FLOUNDER_CLOCK /////////////////////////
                   ///////////////////////////////////////////////////////////////////////
-                  child: primaryClock
+                  //child: primaryClock
+                  child: Listener(
+                    behavior: HitTestBehavior.opaque,
+                    onPointerDown: (_) => onPrimaryClockPressed(),
+                    onPointerUp: (_) => onPrimaryClockReleased(),
+                    onPointerCancel: (_) => onPrimaryClockReleased(),
+                    child: primaryClock
+                  )
                 )),
                 Align(
                   alignment: Alignment.bottomRight,
