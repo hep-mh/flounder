@@ -479,7 +479,7 @@ class _FlounderHomeState extends State<FlounderHome> {
       dropdownItems.add(
         DropdownMenuItem<String>(
           value: key,
-          child: Text(''),
+          child: Text(''), // will be replaced by the FlounderDrawer widget
         )
       );
     }

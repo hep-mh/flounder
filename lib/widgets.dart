@@ -487,7 +487,7 @@ class FlounderDrawer extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.all(drawerPadding * drawerScale),
           children: <Widget>[
-            Text('Presets:', style: TextStyle(fontSize: 35 * drawerScale, color: state.mode.color)),
+            Text('Presets:', style: TextStyle(fontSize: 30 * drawerScale, color: state.mode.color)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -516,7 +516,7 @@ class FlounderDrawer extends StatelessWidget {
               ]
             ),
             SizedBox(height: drawerPadding * drawerScale),
-            Text('Custom:', style: TextStyle(fontSize: 35 * drawerScale, color: state.mode.color)),
+            Text('Custom:', style: TextStyle(fontSize: 30 * drawerScale, color: state.mode.color)),
             // 3. The TEXT_FORM_FIELD's to capture user input ///////////////////////////
             /////////////////////////////////////////////////////////////////////////////
             ...textFieldWidgets,
