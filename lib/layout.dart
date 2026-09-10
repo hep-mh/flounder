@@ -154,3 +154,20 @@ double getClockSwitcherHeight(Size contextSize) {
 
 // The padding that is used for the drawer
 const double drawerPadding = 20;
+// The maximal width of the drawer
+const double drawerMaxWidth = 304.0;
+// The maximal width of the drawer
+// (in percent of the total width)
+const double drawerMaxWidthPct = 0.9;
+
+// Function to dynamically calculate the
+// width of the drawer
+double getDrawerWidth(Size contextSize) {
+  return min(drawerMaxWidth, drawerMaxWidthPct * contextSize.width);
+}
+
+// Function to dynamically calculate the
+// scale factor for elements inside the drawer
+double getDrawerScale(Size contextSize) {
+  return getDrawerWidth(contextSize) / drawerMaxWidth;
+}
