@@ -87,6 +87,9 @@ class _FlounderHomeState extends State<FlounderHome> {
   // A flag to check whether the state is fully initialized
   bool _stateIsInitialized = false;
 
+  // A flag to check whether the timer is paused by holding the main clock
+  bool _isTimerPaused = false;
+
   // The current version of Flounder
   final String _version = '1.3.0';
 
@@ -189,31 +192,33 @@ class _FlounderHomeState extends State<FlounderHome> {
         // ...as well as the timer
         _runner = Timer.periodic(const Duration(seconds: 1), (Timer t) {
           setState(() {
-            // Check if a reminder needs to be given
-            if ( state.timer == state.profile.reminderAt*60 ) {
-              if ( state.remindMe && state.mode.id == 'Talk' ) { _playSound(); }
-            }
-
-            // Check if switch to discussion/overtime is necessary
-            if ( state.timer == 0 && state.mode.id != 'Overtime' ) {
-              _playSound();
-
-              switch(state.mode.id) {
-                // Talk -> Discussion
-                case 'Talk': {
-                  state.mode  = ModeRegister.DISCUSSION;
-                  state.timer = state.profile.discussionLength*60;
-                  break;
-                }
-                // Discussion -> Overtime
-                case 'Discussion': {
-                  state.mode  = ModeRegister.OVERTIME;
-                  break;
-                }
+            if (!_isTimerPaused) {
+              // Check if a reminder needs to be given
+              if ( state.timer == state.profile.reminderAt*60 ) {
+                if ( state.remindMe && state.mode.id == 'Talk' ) { _playSound(); }
               }
-            } else {
-              // Increment the timer
-              state.timer += state.mode.increment;
+
+              // Check if switch to discussion/overtime is necessary
+              if ( state.timer == 0 && state.mode.id != 'Overtime' ) {
+                _playSound();
+
+                switch(state.mode.id) {
+                  // Talk -> Discussion
+                  case 'Talk': {
+                    state.mode  = ModeRegister.DISCUSSION;
+                    state.timer = state.profile.discussionLength*60;
+                    break;
+                  }
+                  // Discussion -> Overtime
+                  case 'Discussion': {
+                    state.mode  = ModeRegister.OVERTIME;
+                    break;
+                  }
+                }
+              } else {
+                // Increment the timer
+                state.timer += state.mode.increment;
+              }
             }
           });
         });
@@ -227,12 +232,37 @@ class _FlounderHomeState extends State<FlounderHome> {
         // Disable automatic PiP mode when the timer is stopped
         _toggleAutoPip(false);
 
+        _isTimerPaused = false;
         state.mode = ModeRegister.IDLE;
         state.reset();
 
         _runner?.cancel();
       }
     });
+  }
+
+  void _onPrimaryClockPointerDown(PointerDownEvent details) {
+    if (state.mode.id != 'Idle') {
+      setState(() {
+        _isTimerPaused = true;
+      });
+    }
+  }
+
+  void _onPrimaryClockPointerUp(PointerUpEvent details) {
+    if (_isTimerPaused) {
+      setState(() {
+        _isTimerPaused = false;
+      });
+    }
+  }
+
+  void _onPrimaryClockPointerCancel(PointerCancelEvent details) {
+    if (_isTimerPaused) {
+      setState(() {
+        _isTimerPaused = false;
+      });
+    }
   }
 
   void _onBellButtonPressed() {
@@ -449,7 +479,7 @@ class _FlounderHomeState extends State<FlounderHome> {
   @override
   void dispose() {
     // Dispose of the Timer
-    _runner!.cancel();
+    _runner?.cancel();
 
     // Dispose of the Floating object
     _floating.dispose();
@@ -520,7 +550,10 @@ class _FlounderHomeState extends State<FlounderHome> {
       body: FlounderBody(
         state: state,
         onArrowButtonPressed: _onArrowButtonPressed,
-        onSecondaryClockPressed: _onSecondaryClockPressed
+        onSecondaryClockPressed: _onSecondaryClockPressed,
+        onPrimaryClockPointerDown: _onPrimaryClockPointerDown,
+        onPrimaryClockPointerUp: _onPrimaryClockPointerUp,
+        onPrimaryClockPointerCancel: _onPrimaryClockPointerCancel,
       ),
       // 2. FLOUNDER_ACTION_BAR /////////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////////////////////////////////

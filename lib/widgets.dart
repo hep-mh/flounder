@@ -152,12 +152,18 @@ class FlounderBody extends StatelessWidget {
 
   final VoidCallback onArrowButtonPressed;
   final VoidCallback onSecondaryClockPressed;
+  final PointerDownEventListener? onPrimaryClockPointerDown;
+  final PointerUpEventListener? onPrimaryClockPointerUp;
+  final PointerCancelEventListener? onPrimaryClockPointerCancel;
 
   const FlounderBody({
     Key? key,
     required this.state,
     required this.onArrowButtonPressed,
-    required this.onSecondaryClockPressed
+    required this.onSecondaryClockPressed,
+    this.onPrimaryClockPointerDown,
+    this.onPrimaryClockPointerUp,
+    this.onPrimaryClockPointerCancel,
   }) : super(key: key);
 
   @override
@@ -184,11 +190,17 @@ class FlounderBody extends StatelessWidget {
           Expanded(
             child: Stack(
               children: [
-                Center(child: Padding(
-                  padding: const EdgeInsets.fromLTRB(bodyPaddingLR, bodyPaddingTB, bodyPaddingLR, bodyPaddingTB),
-                  // 2. The primary instance of FLOUNDER_CLOCK /////////////////////////
-                  ///////////////////////////////////////////////////////////////////////
-                  child: primaryClock
+                Center(child: Listener(
+                  onPointerDown: onPrimaryClockPointerDown,
+                  onPointerUp: onPrimaryClockPointerUp,
+                  onPointerCancel: onPrimaryClockPointerCancel,
+                  behavior: HitTestBehavior.opaque,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(bodyPaddingLR, bodyPaddingTB, bodyPaddingLR, bodyPaddingTB),
+                    // 2. The primary instance of FLOUNDER_CLOCK /////////////////////////
+                    ///////////////////////////////////////////////////////////////////////
+                    child: primaryClock
+                  )
                 )),
                 Align(
                   alignment: Alignment.bottomRight,
