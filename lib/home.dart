@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:floating/floating.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
@@ -137,7 +138,12 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   void _toggleAutoPip(bool enable) {
     if (_pipIsSupported) {
-      _floating.toggleAutoPip(autoEnter: enable);
+      //_floating.toggleAutoPip(autoEnter: enable);
+      if (enable) {
+        _floating.enable(const OnLeavePiP());
+      } else {
+        _floating.cancelOnLeavePiP();
+      }
     }
   }
 
@@ -438,7 +444,12 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   Future<void> _checkAutoPipAvailability() async {
     if (!kIsWeb) { if (Platform.isAndroid) {
-      _pipIsSupported = await _floating.isAutoPipAvailable;
+      _pipIsSupported = await _floating.isPipAvailable;
+
+      final AndroidDeviceInfo androidInfo = await DeviceInfoPlugin().androidInfo;
+      if (androidInfo.version.sdkInt < 31) {
+        _pipIsSupported = false;
+      }
     }}
   }
 
@@ -467,10 +478,10 @@ class _FlounderHomeState extends State<FlounderHome> {
   @override
   void dispose() {
     // Dispose of the Timer
-    _runner!.cancel();
+    _runner?.cancel();
 
     // Dispose of the Floating object
-    _floating.dispose();
+    //_floating.dispose();
 
     // Dispose of the AudioPlayer
     _player.dispose();
