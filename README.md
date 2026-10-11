@@ -166,7 +166,7 @@ In general, it is possible to build applications for Android, iOS, Web, Linux, W
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-java.png" alt="java" width="70"/>
 
-The very first version of the timer was written in Java. If you are interested in how this version looked like, you can download it from [here](https://hep-mh.com/files/packages/flounder/counter-vintage-java.tar.gz). After downloading, extract the archive (preferably in a new directory) and run
+The very first version of the timer was written in Java. If you are interested in how this version looked like, you can download it from [here](https://github.com/hep-mh/flounder/releases/latest/download/counter-vintage-java.tar.gz). After downloading, extract the archive (preferably in a new directory) and run
 ```
 java -jar counter.jar
 ```
