@@ -43,7 +43,7 @@ The ``.apk`` file for **arm | arm64 | x86_64 Android** can be downloaded from [h
 
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.flatpak.png" alt="flatpak" width="70"/>
 
-A ``.flatpak`` file for **arbitrary x86_64 Linux systems** can be downloaded from [here]([https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-linux-x86_64.flatpak). After downloading, first install the flatpak for the Freedesktop platform via the command (also make sure that flatpak is correctly configured on your system. For more information, check [https://flatpak.org/setup/](https://flatpak.org/setup/).)
+A ``.flatpak`` file for **arbitrary x86_64 Linux systems** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-linux-x86_64.flatpak). After downloading, first install the flatpak for the Freedesktop platform via the command (also make sure that flatpak is correctly configured on your system. For more information, check [https://flatpak.org/setup/](https://flatpak.org/setup/).)
 ```
 flatpak install org.freedesktop.Platform/x86_64/22.08
 ```
@@ -65,7 +65,7 @@ into your terminal.
 
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.AppImage.png" alt="flatpak" width="70"/>
 
-An ``.AppImage`` file for **arbitrary x86_64 Linux systems** can be downloaded from [here]([https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-linux-x86_64.AppImage). After downloading, mark the file executable via the command
+An ``.AppImage`` file for **arbitrary x86_64 Linux systems** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-linux-x86_64.AppImage). After downloading, mark the file executable via the command
 ```
 chmod 755 ./flounder-latest-linux-x86_64.AppImage
 ```
@@ -77,7 +77,7 @@ to start the application.
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-gzip.png" alt="targz" width="70"/>
 
-A ``.tar.gz`` file with pre-combiled binaries for **x86_64 Debian/Ubuntu** can be downloaded from [here]([https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-debian-x86_64.tar.gz). After downloading, unpack the file (preferably in a new directory) and run the command
+A ``.tar.gz`` file with pre-combiled binaries for **x86_64 Debian/Ubuntu** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-debian-x86_64.tar.gz). After downloading, unpack the file (preferably in a new directory) and run the command
 ```
 ./flounder
 ```
@@ -87,7 +87,7 @@ Note that this binary might also work on other platforms. But further testing is
 
 <img src="https://hep-mh.com/files/mimetypes/application-vnd.debian.binary-package.png" alt="flatpak" width="70"/>
 
-A ``.deb`` file for **x86_64 Debian/Ubuntu** can be downloaded from [here]([https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-debian-x86_64.deb). After downloading, install the package via the command
+A ``.deb`` file for **x86_64 Debian/Ubuntu** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-debian-x86_64.deb). After downloading, install the package via the command
 ```
 sudo apt install ./flounder-latest-debian-x86_64.deb
 ```
@@ -103,7 +103,7 @@ into your terminal.
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-msix.png" alt="msix" width="70"/>
 
-A modern installer for **x86_64 Windows** in ``.msix`` format can be downloaded from [here]([https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-windows-x86_64.msix). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
+A modern installer for **x86_64 Windows** in ``.msix`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-windows-x86_64.msix). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
 
 <details>
 
@@ -111,11 +111,11 @@ A modern installer for **x86_64 Windows** in ``.msix`` format can be downloaded 
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-setup-exe.png" alt="exe" width="70"/>
 
-A standard installer for **x86_64 Windows** in ``.exe`` format can be downloaded from [here]([https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-windows-x86_64-setup.exe). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
+A standard installer for **x86_64 Windows** in ``.exe`` format can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-windows-x86_64-setup.exe). After downloading, double-click the file and proceed with the installation process. Afterwards, the application can be started from your launcher.
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-zip.png" alt="zip" width="70"/>
 
-A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloaded from [here]([https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-windows-x86_64.zip). After downloading, unpack the file (preferably in a new directory) and double-click on ``flounder.exe`` to start the application.
+A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloaded from [here](https://hep-mh.com/files/packages/flounder/latest/](https://github.com/hep-mh/flounder/releases/latest/download/flounder-latest-windows-x86_64.zip). After downloading, unpack the file (preferably in a new directory) and double-click on ``flounder.exe`` to start the application.
 
 </details>
 
