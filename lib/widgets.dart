@@ -279,69 +279,71 @@ class FlounderActionBar extends StatelessWidget {
     // Here, height = width of the IconButton object
     final double maxTextWidth = contextSize.width/2 - actionBarPadding - getActionButtonRadius(contextSize) - height - 10;
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(actionBarPadding, 0, actionBarPadding, actionBarPadding),
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-        child: Container(
-          height: height,
-          color: state.mode.color,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              // 1. Left ICON_BUTTON ////////////////////////////////////////////////////////
-              ///////////////////////////////////////////////////////////////////////////////
-              Row(
-                children: <Widget>[
-                  SizedBox(height: height, width: height,
-                    child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: IconButton(
-                        icon: Icon(
-                          (state.remindMe == true) ? Icons.notifications_active_outlined
-                                                   : Icons.notifications_off_outlined
-                        ),
-                        onPressed: onPressedL,
-                        color: Colors.black,
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(actionBarPadding, 0, actionBarPadding, actionBarPadding),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+          child: Container(
+            height: height,
+            color: state.mode.color,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                // 1. Left ICON_BUTTON ////////////////////////////////////////////////////////
+                ///////////////////////////////////////////////////////////////////////////////
+                Row(
+                  children: <Widget>[
+                    SizedBox(height: height, width: height,
+                      child: FittedBox(
+                        fit: BoxFit.fitHeight,
+                        child: IconButton(
+                          icon: Icon(
+                            (state.remindMe == true) ? Icons.notifications_active_outlined
+                                                     : Icons.notifications_off_outlined
+                          ),
+                          onPressed: onPressedL,
+                          color: Colors.black,
+                        )
+                      )
+                    ),
+                    SizedBox(height: height/1.5, width: maxTextWidth,
+                      child: FittedBox(
+                        alignment: Alignment.centerLeft,
+                        fit: BoxFit.contain,
+                        child: Text('${state.profile.reminderAt.toString()} min',)
                       )
                     )
-                  ),
-                  SizedBox(height: height/1.5, width: maxTextWidth,
-                    child: FittedBox(
-                      alignment: Alignment.centerLeft,
-                      fit: BoxFit.contain,
-                      child: Text('${state.profile.reminderAt.toString()} min',)
-                    )
-                  )
-                ]
-              ),
-              // 2. Right ICON_BUTTON ///////////////////////////////////////////////////////
-              ///////////////////////////////////////////////////////////////////////////////
-              Row(
-                children: <Widget>[
-                  SizedBox(height: height/1.5, width: maxTextWidth,
-                    child: FittedBox(
-                      alignment: Alignment.centerRight,
-                      fit: BoxFit.contain,
-                      child: Text('${state.profile.talkLength.toString()}+${state.profile.discussionLength.toString()} min')
-                    )
-                  ),
-                  SizedBox(
-                    height: height,
-                    width: height,
-                    child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: IconButton(
-                        icon: const Icon(Icons.access_time_rounded),
-                        onPressed: onPressedR,
-                        color: (state.mode.id == 'Idle') ? Colors.black : const Color(0x2b2b2bff),
+                  ]
+                ),
+                // 2. Right ICON_BUTTON ///////////////////////////////////////////////////////
+                ///////////////////////////////////////////////////////////////////////////////
+                Row(
+                  children: <Widget>[
+                    SizedBox(height: height/1.5, width: maxTextWidth,
+                      child: FittedBox(
+                        alignment: Alignment.centerRight,
+                        fit: BoxFit.contain,
+                        child: Text('${state.profile.talkLength.toString()}+${state.profile.discussionLength.toString()} min')
+                      )
+                    ),
+                    SizedBox(
+                      height: height,
+                      width: height,
+                      child: FittedBox(
+                        fit: BoxFit.fitHeight,
+                        child: IconButton(
+                          icon: const Icon(Icons.access_time_rounded),
+                          onPressed: onPressedR,
+                          color: (state.mode.id == 'Idle') ? Colors.black : const Color(0x2b2b2bff),
+                        )
                       )
                     )
-                  )
-                ]
-              )
-            ]
+                  ]
+                )
+              ]
+            )
           )
         )
       )
