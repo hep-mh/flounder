@@ -480,6 +480,9 @@ class _FlounderHomeState extends State<FlounderHome> {
     // Dispose of the Timer
     _runner?.cancel();
 
+    // Dispose of the Sound Loop
+    _soundLoop?.cancel();
+
     // Dispose of the Floating object
     //_floating.dispose();
 
