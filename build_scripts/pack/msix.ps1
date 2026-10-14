@@ -1,2 +1,2 @@
 # Create the package
-dart run msix:create
+fvm dart run msix:create
