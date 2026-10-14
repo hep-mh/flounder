@@ -71,10 +71,10 @@ class FlounderTimer extends FlounderClock {
   @override
   String _getTimerText() {
     final int min = state.timer ~/ 60;
-    final int sec = state.timer - min*60;
+    final int sec = state.timer % 60;
 
-    final String minStr = (min < 10) ? '0${min.toString()}' : min.toString();
-    final String secStr = (sec < 10) ? '0${sec.toString()}' : sec.toString();
+    final String minStr = min.toString().padLeft(2, '0');
+    final String secStr = sec.toString().padLeft(2, '0');
 
     return '$minStr:$secStr';
   }
@@ -96,10 +96,10 @@ class FlounderStopwatch extends FlounderClock {
     }
 
     final int min = inverseTimer ~/ 60;
-    final int sec = inverseTimer - min*60;
+    final int sec = inverseTimer % 60;
 
-    final String minStr = (min < 10) ? '0${min.toString()}' : min.toString();
-    final String secStr = (sec < 10) ? '0${sec.toString()}' : sec.toString();
+    final String minStr = min.toString().padLeft(2, '0');
+    final String secStr = sec.toString().padLeft(2, '0');
 
     return '$minStr:$secStr';
   }
