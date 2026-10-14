@@ -34,3 +34,6 @@ assets/old/*
 
 # Backup files
 *~
+
+# FVM Version Cache
+.fvm/

@@ -1,5 +1,5 @@
-flutter clean
+fvm flutter clean
 
 Remove-Item "packages\*" -Force
 
-flutter pub get
+fvm flutter pub get
