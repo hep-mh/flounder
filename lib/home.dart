@@ -98,7 +98,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     if (_soundIsLooping) return;
 
     _soundIsLooping = true;
-
+    // -->
     await _player.resume();
 
     // // Stop was pressed while play() was still loading
@@ -135,7 +135,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     if (_audioIsPlaying) return;
 
     _audioIsPlaying = true;
-
+    // -->
     await _player.seek(const Duration(seconds: audioPadding));
   }
 
@@ -145,7 +145,6 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   void _toggleAutoPip(bool enable) {
     if (_pipIsSupported) {
-      //_floating.toggleAutoPip(autoEnter: enable);
       if (enable) {
         _floating.enable(const OnLeavePiP());
       } else {
@@ -373,7 +372,8 @@ class _FlounderHomeState extends State<FlounderHome> {
       }
     });
 
-    await _player.setReleaseMode(ReleaseMode.stop); // Keep the loaded source
+    // Ensure that the source file remains loaded
+    await _player.setReleaseMode(ReleaseMode.stop);
 
     // Load the source file
     if (kIsWeb) {
