@@ -1,6 +1,6 @@
 $ESC = [char]27
 
-Write-Host "$ESC[38;5;26mBuilding Windows app$ESC[0m"
+Write-Host "$ESC[38;5;32mBuilding Windows app$ESC[0m"
 
 # Run the build command
 fvm flutter build windows --release
