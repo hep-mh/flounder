@@ -9,12 +9,12 @@ fvm flutter build windows --release
 Write-Output "Packaging application as .zip..."
 Compress-Archive -Path "build\windows\x64\Runner\Release\*" -DestinationPath "packages/flounder-latest-windows-x64.zip" -Force
 
+# Create a .exe installer and save it in the packages\ directory
+Write-Output "Creating .exe installer..."
+.\scripts\pack\setup-exe.ps1 *> "build\setup-exe.log"
+
 # Exit
 exit 0
-
-# # Create a .exe installer and save it in the packages\ directory
-# Write-Output "Creating .exe installer..."
-# .\build_scripts\pack\setup-exe.ps1 *> "build\setup-exe.log"
 
 # # Create an .msix installer and save it in the packages\ directory
 # Write-Output "Creating .msix installer..."
