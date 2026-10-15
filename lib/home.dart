@@ -84,8 +84,6 @@ class _FlounderHomeState extends State<FlounderHome> {
   bool _audioIsPlaying = false;
   // A flag to check if the sound loop is currently running
   bool _soundIsLooping = false;
-  // The bytes used to play the sound on the web
-  Uint8List? _soundBytes;
 
   // A flag to check whether the state is fully initialized
   bool _stateIsInitialized = false;
@@ -101,25 +99,20 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     _soundIsLooping = true;
 
-    if (kIsWeb) {
-      // Use inline bytes on web, so seeking doesn't depend on Range support
-      await _player.play( BytesSource(_soundBytes!, mimeType: 'audio/mpeg') );
-    } else {
-      await _player.play( AssetSource('ding.mp3') );
+    await _player.resume();
+
+    // Stop was pressed while play() was still loading
+    if (!_soundIsLooping) {
+      await _player.stop();
+      return;
     }
 
-    // // Stop was pressed while play() was still loading
-    // if (!_soundIsLooping) {
-    //   await _player.release();
-    //   return;
-    // }
-
-    // _soundLoop?.cancel(); // Cancel any old loop before starting a new one
+    _soundLoop?.cancel(); // Cancel any old loop before starting a new one
     // Loop back to the beginning every second,
     // unless the actual audio should be played
     _soundLoop = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       if (!_audioIsPlaying) {
-        _player.seek(Duration.zero);//.catchError((_) {});
+        _player.seek(Duration.zero).catchError((_) {});
       }
     });
   }
@@ -128,7 +121,7 @@ class _FlounderHomeState extends State<FlounderHome> {
     // Only break if looping
     if (!_soundIsLooping) return;
 
-    await _player.release();
+    await _player.stop(); // Keep source loaded
     // -->
     _audioIsPlaying = false;
 
@@ -367,10 +360,10 @@ class _FlounderHomeState extends State<FlounderHome> {
   // INIT & DISPOSE FUNCTIONS ///////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   Future<void> _initAudioPlayer() async {
-    // _player.positionUpdater = TimerPositionUpdater(
-    //   getPosition: _player.getCurrentPosition,
-    //   interval: const Duration(milliseconds: 100),
-    // );
+    _player.positionUpdater = TimerPositionUpdater(
+      getPosition: _player.getCurrentPosition,
+      interval: const Duration(milliseconds: 250),
+    );
 
     _player.onPositionChanged.listen((Duration duration) {
       final int position = duration.inSeconds;
@@ -380,10 +373,18 @@ class _FlounderHomeState extends State<FlounderHome> {
       }
     });
 
+    await _player.setReleaseMode(ReleaseMode.stop); // Keep the loaded source
+
+    // Load the source file
     if (kIsWeb) {
+      // Use inline bytes on web, so seeking doesn't depend on Range support
       final data = await rootBundle.load('assets/ding.mp3');
       // -->
-      _soundBytes = data.buffer.asUint8List();
+      await _player.setSource(
+        BytesSource(data.buffer.asUint8List(), mimeType: 'audio/mpeg'),
+      );
+    } else {
+      await _player.setSource( AssetSource('ding.mp3') );
     }
   }
   
