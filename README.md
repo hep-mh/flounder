@@ -25,7 +25,7 @@ Note that presets are persistent and do not get reset upon closing the applicati
 
 <img src="https://hep-mh.com/files/mimetypes/application-x-mswinurl.png" alt="web" width="70"/>
 
-The web version of Flounder can be freely accessed at [``timer.hep-mh.com``](https://timer.hep-mh.com/). Feel free to use it on your platform of choice, as it works on mobile and desktop. In fact, Flounder even is a full-fledged PWA and can thus be installed as such.
+The web version of Flounder can be freely accessed at [``hep-mh.com/flounder-beta``](https://hep-mh.com/flounder-beta). Feel free to use it on your platform of choice, as it works on mobile and desktop. In fact, Flounder even is a full-fledged PWA and can thus be installed as such.
 
 *Alternatively, there also exist native versions for various platforms, which are discussed in the following:*
 
@@ -121,7 +121,7 @@ A ``.zip`` file with pre-combiled binaries for **x86_64 Windows** can be downloa
 
 ### • **ChromeOS** •
 
-Go to [``timer.hep-mh.com``](https://timer.hep-mh.com/) and install the web version as a PWA (Progressive Web App) by clicking on the installation button in the right corner of the URL input field.
+Go to [``hep-mh.com/flounder-beta``](https://hep-mh.com/flounder-beta) and install the web version as a PWA (Progressive Web App) by clicking on the installation button in the right corner of the URL input field.
 
 <details>
 
