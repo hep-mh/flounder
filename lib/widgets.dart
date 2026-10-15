@@ -542,9 +542,9 @@ class FlounderDrawer extends StatelessWidget {
                 label: Text('Save as preset', style: TextStyle(fontSize: 22 * drawerScale, color: Colors.white)),
                 onPressed: onSaveButtonPressed,
                 style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15 * drawerScale)),
-                  backgroundColor: MaterialStateProperty.all<Color>(state.mode.color),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(15 * drawerScale)),
+                  backgroundColor: WidgetStateProperty.all<Color>(state.mode.color),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10 * drawerScale), side: BorderSide(color: state.mode.color)),
                   ),
                 ),
