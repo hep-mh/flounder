@@ -84,6 +84,8 @@ class _FlounderHomeState extends State<FlounderHome> {
   bool _audioIsPlaying = false;
   // A flag to check if the sound loop is currently running
   bool _soundIsLooping = false;
+  // The bytes used to play the sound on the web
+  Uint8List? _soundBytes;
 
   // A flag to check whether the state is fully initialized
   bool _stateIsInitialized = false;
@@ -99,13 +101,25 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     _soundIsLooping = true;
 
-    await _player.play( AssetSource('ding.mp3') );
+    if (kIsWeb) {
+      // Use inline bytes on web, so seeking doesn't depend on Range support
+      await _player.play( BytesSource(_soundBytes!, mimeType: 'audio/mpeg') );
+    } else {
+      await _player.play( AssetSource('ding.mp3') );
+    }
 
+    // // Stop was pressed while play() was still loading
+    // if (!_soundIsLooping) {
+    //   await _player.release();
+    //   return;
+    // }
+
+    // _soundLoop?.cancel(); // Cancel any old loop before starting a new one
     // Loop back to the beginning every second,
     // unless the actual audio should be played
     _soundLoop = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       if (!_audioIsPlaying) {
-        _player.seek(const Duration(seconds: 0));
+        _player.seek(Duration.zero);//.catchError((_) {});
       }
     });
   }
@@ -353,6 +367,11 @@ class _FlounderHomeState extends State<FlounderHome> {
   // INIT & DISPOSE FUNCTIONS ///////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   Future<void> _initAudioPlayer() async {
+    // _player.positionUpdater = TimerPositionUpdater(
+    //   getPosition: _player.getCurrentPosition,
+    //   interval: const Duration(milliseconds: 100),
+    // );
+
     _player.onPositionChanged.listen((Duration duration) {
       final int position = duration.inSeconds;
 
@@ -360,6 +379,12 @@ class _FlounderHomeState extends State<FlounderHome> {
         _audioIsPlaying = false;
       }
     });
+
+    if (kIsWeb) {
+      final data = await rootBundle.load('assets/ding.mp3');
+      // -->
+      _soundBytes = data.buffer.asUint8List();
+    }
   }
   
   Future<void> _loadPreferences() async {
