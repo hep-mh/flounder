@@ -403,6 +403,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     final String? activeDropdownValueFromPrefs = _prefs!.getString('activeDropdownValue');
 
+    // TODO: This timer might be unnecessary
     Timer.periodic(const Duration(milliseconds: 5), (Timer t) {
       // Wait for the state to initialize before calling setState
       if (!mounted) return;
