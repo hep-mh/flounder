@@ -7,7 +7,7 @@ fvm flutter build windows --release
 
 # Create a .zip file and save it in the packages\ directory
 Write-Output "Packaging application as .zip..."
-Compress-Archive -Path "build\windows\x64\Runner\Release\*" -DestinationPath "packages/flounder-latest-windows-x86_64.zip" -Force
+Compress-Archive -Path "build\windows\x64\Runner\Release\*" -DestinationPath "packages/flounder-latest-windows-x64.zip" -Force
 
 # Exit
 exit 0

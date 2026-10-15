@@ -101,13 +101,13 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     await _player.resume();
 
-    // Stop was pressed while play() was still loading
-    if (!_soundIsLooping) {
-      await _player.stop();
-      return;
-    }
+    // // Stop was pressed while play() was still loading
+    // if (!_soundIsLooping) {
+    //   await _player.stop();
+    //   return;
+    // }
 
-    _soundLoop?.cancel(); // Cancel any old loop before starting a new one
+    // _soundLoop?.cancel(); // Cancel any old loop before starting a new one
     // Loop back to the beginning every second,
     // unless the actual audio should be played
     _soundLoop = Timer.periodic(const Duration(seconds: 1), (Timer t) {
@@ -360,10 +360,10 @@ class _FlounderHomeState extends State<FlounderHome> {
   // INIT & DISPOSE FUNCTIONS ///////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   Future<void> _initAudioPlayer() async {
-    _player.positionUpdater = TimerPositionUpdater(
-      getPosition: _player.getCurrentPosition,
-      interval: const Duration(milliseconds: 250),
-    );
+    // _player.positionUpdater = TimerPositionUpdater(
+    //   getPosition: _player.getCurrentPosition,
+    //   interval: const Duration(milliseconds: 250),
+    // );
 
     _player.onPositionChanged.listen((Duration duration) {
       final int position = duration.inSeconds;
