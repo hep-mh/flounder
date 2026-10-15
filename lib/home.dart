@@ -121,13 +121,13 @@ class _FlounderHomeState extends State<FlounderHome> {
     // Only break if looping
     if (!_soundIsLooping) return;
 
-    await _player.stop(); // Keep source loaded
-    // -->
-    _audioIsPlaying = false;
-
-    _soundLoop?.cancel();
-    // -->
     _soundIsLooping = false;
+    // -->
+    _soundLoop?.cancel();
+
+    _audioIsPlaying = false;
+    // -->
+    await _player.stop(); // Keep source loaded
   }
 
   Future<void> _playSound() async {
@@ -390,6 +390,9 @@ class _FlounderHomeState extends State<FlounderHome> {
   
   Future<void> _loadPreferences() async {
     _prefs = await SharedPreferences.getInstance();
+
+    // DEBUG
+    debugPrint('_loadPreferences: mounted=$mounted');
 
     // Load the data
     final List<String>? presetsFromPrefs = _prefs!.getStringList('presets');
