@@ -4,7 +4,7 @@ function check_success {
     if [ $? -eq 0 ]; then echo " [Success]"; else echo " [ Error ]"; fi
 }
 
-echo -ne "\n\e[38;5;220m• Building Linux app •\e[0m\r"
+echo -ne "\n\e[38;5;220mBuilding Linux app\e[0m\r"
 fvm flutter build linux --release --no-tree-shake-icons
 
 # Exit if the build failed
@@ -17,17 +17,17 @@ check_success
 
 # Create a .flatpak file and save it in the packages/ directory
 echo -ne "Packaging application as .flatpak... "
-./build_scripts/pack/flatpak.sh > build/flatpak.log 2>&1
+./scripts/pack/flatpak.sh > build/flatpak.log 2>&1
 check_success
 
 # Create a .AppImage file and save it in the packages/ directory
 echo -ne "Packaging application as .AppImage..."
-./build_scripts/pack/AppImage.sh > build/AppImage.log 2>&1
+./scripts/pack/AppImage.sh > build/AppImage.log 2>&1
 check_success
 
 # Create a .deb file and save it in the packages/ directory
 echo -ne "Packaging application as .deb...     "
-./build_scripts/pack/deb.sh > build/deb.log 2>&1
+./scripts/pack/deb.sh > build/deb.log 2>&1
 check_success
 
 # Exit

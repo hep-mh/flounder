@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-echo -e "\e[38;5;209m• Generating launcher icons •\e[0m"
+echo -e "\e[38;5;209mGenerating launcher icons\e[0m"
 fvm dart run flutter_launcher_icons
 # Use a different file for the maskable web icons
 # flutter_launcher_icons does not currently support that
