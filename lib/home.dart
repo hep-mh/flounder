@@ -50,9 +50,6 @@ class FlounderHome extends StatefulWidget {
 class _FlounderHomeState extends State<FlounderHome> {
   final ApplicationState state = ApplicationState();
 
-  // The current list of items in the DropdownMenu
-  List< DropdownMenuItem<String> > dropdownItems = [];
-
   // The current value of the DropdownMenu
   String dropdownValue = 'Custom';
 
@@ -529,30 +526,6 @@ class _FlounderHomeState extends State<FlounderHome> {
 
   // BUILD FUNCTIONS ////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
-  void _buildDropdownMenuIfNeeded() {
-    // Only run if necessary
-    if (!state.presets.hasChanged()) return;
-    // Otherwise commit and rebuild
-    state.presets.commit();
-
-    dropdownItems.clear();
-    // Fill the list of DropdownMenuItem's
-    for (var key in state.presets.keys()) {
-      dropdownItems.add(
-        DropdownMenuItem<String>(
-          value: key,
-          child: Text(''), // will be replaced by the FlounderDrawer widget
-        )
-      );
-    }
-    dropdownItems.add(
-      const DropdownMenuItem<String>(
-        value: 'Custom',
-        child: Text('Custom', style: TextStyle(color: Colors.white))
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // If the state is not yet fully initialized (i.e. the settings have
@@ -561,8 +534,6 @@ class _FlounderHomeState extends State<FlounderHome> {
     if (!_stateIsInitialized) {
       return Container(color: const Color(0xff1f1f1f));
     }
-
-    _buildDropdownMenuIfNeeded();
 
     // Build the PIP_SCREEN /////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
@@ -609,7 +580,6 @@ class _FlounderHomeState extends State<FlounderHome> {
       endDrawer: FlounderDrawer(
         state: state,
         dropdownValue: dropdownValue,
-        dropdownItems: dropdownItems,
         onDropdownValueChanged: _onDropdownValueChanged,
         onDeleteButtonPressed: _onDeleteButtonPressed,
         textFieldControllers: textFieldControllers,

@@ -74,10 +74,6 @@ class ProfileCollection {
   // The central data structure
   final Map _data = {};
 
-  // A flag to check wether the data structure has been
-  // changed since the last call to the commit function
-  bool _hasChanged = false;
-
   ProfileCollection();
   // Empty constructor
 
@@ -85,8 +81,6 @@ class ProfileCollection {
     for (var profile in profiles) {
       _data[profile.key()] = profile.clone();
     }
-
-    _hasChanged = true;
   }
 
   Profile at(String id) {
@@ -111,27 +105,15 @@ class ProfileCollection {
     return _data.keys.isEmpty;
   }
 
-  bool hasChanged() {
-    return _hasChanged;
-  }
-
-  void commit() {
-    _hasChanged = false;
-  }
-
   void add(Profile profile) {
     if (!includes(profile.key())) {
       _data[profile.key()] = profile.clone();
-
-      _hasChanged = true;
     }
   }
 
   void remove(String id) {
     if (includes(id)) {
       _data.removeWhere((key, _) => key == id);
-
-      _hasChanged = true;
     }
   }
 
@@ -141,8 +123,6 @@ class ProfileCollection {
     for (var key in profiles.keys()) {
       _data[key] = profiles.at(key).clone();
     }
-
-    _hasChanged = true;
   }
 
   List<String> export() {

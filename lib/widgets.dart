@@ -391,8 +391,7 @@ class FlounderDrawer extends StatelessWidget {
   final ApplicationState state;
 
   // DropdownButton properties
-  final List<DropdownMenuItem<String>> dropdownItems;
-  final String                         dropdownValue;
+  final String dropdownValue;
   //
   final Function(String?) onDropdownValueChanged;
 
@@ -414,7 +413,6 @@ class FlounderDrawer extends StatelessWidget {
   const FlounderDrawer({
     Key? key,
     required this.state,
-    required this.dropdownItems,
     required this.dropdownValue,
     required this.onDropdownValueChanged,
     required this.onDeleteButtonPressed,
@@ -480,16 +478,16 @@ class FlounderDrawer extends StatelessWidget {
       );
     }
 
-    final scaledDropdownItems = dropdownItems.map((item) {
+    // Fill the list of DropdownMenuItem's
+    final List<String> dropdownKeys = [
+      ...state.presets.keys().cast<String>(),
+      'Custom',
+    ];
+    // -->
+    final List<DropdownMenuItem<String>> dropdownItems = dropdownKeys.map((key) {
       return DropdownMenuItem<String>(
-        value: item.value,
-        enabled: item.enabled,
-        onTap: item.onTap,
-        alignment: item.alignment,
-        child: DefaultTextStyle(
-          style: TextStyle(color: Colors.white, fontSize: 25 * drawerScale),
-          child: Text(item.value ?? ''),
-        ),
+        value: key,
+        child: Text(key, style: TextStyle(color: Colors.white, fontSize: 25 * drawerScale)),
       );
     }).toList();
 
@@ -511,7 +509,7 @@ class FlounderDrawer extends StatelessWidget {
                     underline: Container(height: 0, color: state.mode.color),
                     isExpanded: true,
                     value: dropdownValue,
-                    items: scaledDropdownItems,
+                    items: dropdownItems,
                     dropdownColor: state.mode.color,
                     onChanged: onDropdownValueChanged,
                     iconSize: 24 * drawerScale,
