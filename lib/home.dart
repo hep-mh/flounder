@@ -397,7 +397,7 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     final String? activeDropdownValueFromPrefs = _prefs!.getString('activeDropdownValue');
 
-    // Return if not yet mounted
+    // Return if the widget was already disposed
     if (!mounted) return;
 
     setState(() {
