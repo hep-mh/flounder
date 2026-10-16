@@ -388,9 +388,6 @@ class _FlounderHomeState extends State<FlounderHome> {
   Future<void> _loadPreferences() async {
     _prefs = await SharedPreferences.getInstance();
 
-    // DEBUG
-    debugPrint('_loadPreferences: mounted=$mounted');
-
     // Load the data
     final List<String>? presetsFromPrefs = _prefs!.getStringList('presets');
 
@@ -400,69 +397,64 @@ class _FlounderHomeState extends State<FlounderHome> {
 
     final String? activeDropdownValueFromPrefs = _prefs!.getString('activeDropdownValue');
 
-    // TODO: This timer might be unnecessary
-    Timer.periodic(const Duration(milliseconds: 5), (Timer t) {
-      // Wait for the state to initialize before calling setState
-      if (!mounted) return;
+    // Return if not yet mounted
+    if (!mounted) return;
 
-      setState(() {
-        // 1. PRESETS /////////////////////////////////////////////////////////
-        if (presetsFromPrefs != null) {
-          final ProfileCollection sharedPresets = ProfileCollection();
+    setState(() {
+      // 1. PRESETS /////////////////////////////////////////////////////////
+      if (presetsFromPrefs != null) {
+        final ProfileCollection sharedPresets = ProfileCollection();
 
-          for (var presetStr in presetsFromPrefs) {
-            final Profile profile = Profile.fromString(presetStr);
-            // -->
-            sharedPresets.add(profile);
-          }
-
-          state.presets.swap(sharedPresets);
-        } else {
-          state.presets.swap(defaultPresets);
+        for (var presetStr in presetsFromPrefs) {
+          final Profile profile = Profile.fromString(presetStr);
+          // -->
+          sharedPresets.add(profile);
         }
 
-        state.profile = state.presets.first();
-        // --> Reset state on profile change
-        state.reset();
+        state.presets.swap(sharedPresets);
+      } else {
+        state.presets.swap(defaultPresets);
+      }
 
-        if (presetsFromPrefs?.isNotEmpty ?? true) {
+      state.profile = state.presets.first();
+      // --> Reset state on profile change
+      state.reset();
+
+      if (presetsFromPrefs?.isNotEmpty ?? true) {
+        /**/ dropdownValue = state.profile.key();
+      } // else remain 'Custom'
+
+      // 2. REMIND_ME ///////////////////////////////////////////////////////
+      if (remindMeFromPrefs != null) {
+        state.remindMe = remindMeFromPrefs;
+      }
+
+      // 3. SHOW_SECONDARY_CLOCK ////////////////////////////////////////////
+      if (showSecondaryClockFromPrefs != null) {
+        state.showSecondaryClock = showSecondaryClockFromPrefs;
+      }
+
+      // 4. TIMER_IS_PRIMARY ////////////////////////////////////////////////
+      if (timerIsPrimaryFromPrefs != null) {
+        state.timerIsPrimary = timerIsPrimaryFromPrefs;
+      }
+
+      // 5. ACTIVE_DROPDOWN_VALUE ///////////////////////////////////////////
+      if (activeDropdownValueFromPrefs != null) {
+        if (state.presets.includes(activeDropdownValueFromPrefs)) {
+          state.profile = state.presets.at(activeDropdownValueFromPrefs);
+          // --> Reset state on profile change
+          state.reset();
+
           /**/ dropdownValue = state.profile.key();
-        } // else remain 'Custom'
+        } // else do nothing, e.g. if 'Custom'
+      }
 
-        // 2. REMIND_ME ///////////////////////////////////////////////////////
-        if (remindMeFromPrefs != null) {
-          state.remindMe = remindMeFromPrefs;
-        }
+      // CLEANUP
+      _updateTextFields();
 
-        // 3. SHOW_SECONDARY_CLOCK ////////////////////////////////////////////
-        if (showSecondaryClockFromPrefs != null) {
-          state.showSecondaryClock = showSecondaryClockFromPrefs;
-        }
-
-        // 4. TIMER_IS_PRIMARY ////////////////////////////////////////////////
-        if (timerIsPrimaryFromPrefs != null) {
-          state.timerIsPrimary = timerIsPrimaryFromPrefs;
-        }
-
-        // 5. ACTIVE_DROPDOWN_VALUE ///////////////////////////////////////////
-        if (activeDropdownValueFromPrefs != null) {
-          if (state.presets.includes(activeDropdownValueFromPrefs)) {
-            state.profile = state.presets.at(activeDropdownValueFromPrefs);
-            // --> Reset state on profile change
-            state.reset();
-
-            /**/ dropdownValue = state.profile.key();
-          } // else do nothing, e.g. if 'Custom'
-        }
-
-        // CLEANUP
-        _updateTextFields();
-
-        // Mark the state as initialized
-        _stateIsInitialized = true;
-      });
-
-      t.cancel();
+      // Mark the state as initialized
+      _stateIsInitialized = true;
     });
   }
 
